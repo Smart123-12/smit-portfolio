@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Mail, ExternalLink, Code2, Database, Brain, Globe, Layout, Smartphone, Cloud, Cpu, ArrowRight } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import profileImage from './assets/smit.jpg'; // Using standard profile picture
 import './App.css';
 
 function App() {
@@ -42,7 +43,7 @@ function App() {
       <section className="hero">
         <div className="bg-shape shape-1"></div>
         <div className="bg-shape shape-2"></div>
-        <div className="container">
+        <div className="container hero-container">
           <motion.div 
             className="hero-content"
             initial="hidden"
@@ -59,6 +60,23 @@ function App() {
             <div className="hero-btns">
               <a href="#projects" className="btn btn-primary">View Projects</a>
               <a href="#contact" className="btn btn-secondary">Contact Me</a>
+            </div>
+          </motion.div>
+          <motion.div 
+            className="hero-image-wrapper"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="hero-image-blob">
+              <img 
+                src={profileImage} 
+                alt="Smit Parmar" 
+                onError={(e) => { 
+                  e.target.onerror = null; 
+                  e.target.src = 'https://ui-avatars.com/api/?name=Smit+Parmar&size=512&background=0284c7&color=fff'; 
+                }} 
+              />
             </div>
           </motion.div>
         </div>
@@ -106,9 +124,17 @@ function App() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              {/* Added a stylish abstract graphic representing AI/Cloud instead of a literal picture */}
-              <div style={{ background: 'var(--card-bg)', border: '1px solid var(--card-border)', borderRadius: '24px', padding: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '300px' }}>
-                 <Brain size={120} color="var(--accent-color)" opacity={0.8} />
+              <div className="about-img-container">
+                 <img 
+                   src={profileImage} 
+                   alt="Smit Parmar AI" 
+                   className="about-img" 
+                   onError={(e) => { 
+                     e.target.onerror = null; 
+                     e.target.src = 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop'; 
+                   }} 
+                 />
+                 <div className="about-img-backdrop"></div>
               </div>
             </motion.div>
           </div>
