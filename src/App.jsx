@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Mail, ExternalLink, Code2, Database, Brain, Globe, Layout, Smartphone, Cloud, Cpu, ArrowRight } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import profileImage from './assets/smit_new.jpg'; // Using the newly uploaded image
+import profileImage from './assets/smit.jpg'; // Using standard profile picture
 import './App.css';
 
 function App() {
