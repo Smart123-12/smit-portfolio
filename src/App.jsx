@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Mail, ExternalLink, Code2, Database, Brain, Globe, Layout, Smartphone, Cloud, Cpu, ArrowRight } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import profileImage from './assets/smit.jpg';
-import aboutImage from './assets/smit_about.jpg';
+import profileImage from './assets/smit.jpg'; // Selfie - Hero section
+import aboutImage from './assets/smit_about.jpg'; // Full body - About section
 import './App.css';
 
 function App() {
@@ -132,16 +132,17 @@ function App() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <div className="about-img-container glass-card">
+              <div className="about-img-container">
                  <img 
                    src={aboutImage} 
                    alt="Smit Parmar" 
                    className="about-img" 
                    onError={(e) => { 
                      e.target.onerror = null; 
-                     e.target.src = profileImage; 
+                     e.target.src = 'https://ui-avatars.com/api/?name=Smit+Parmar&size=512&background=6366f1&color=fff'; 
                    }} 
                  />
+                 <div className="about-img-backdrop"></div>
               </div>
             </motion.div>
           </div>
