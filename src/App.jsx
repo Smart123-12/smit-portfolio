@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Mail, ExternalLink, Code2, Database, Brain, Globe, Layout, Smartphone, Cloud, Cpu, ArrowRight } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import profileImage from './assets/smit.jpg'; // Using standard profile picture
+import profileImage from './assets/smit.jpg';
+import aboutImage from './assets/smit_about.jpg';
 import './App.css';
 
 function App() {
@@ -131,17 +132,16 @@ function App() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <div className="about-img-container">
+              <div className="about-img-container glass-card">
                  <img 
-                   src={profileImage} 
-                   alt="Smit Parmar AI" 
+                   src={aboutImage} 
+                   alt="Smit Parmar" 
                    className="about-img" 
                    onError={(e) => { 
                      e.target.onerror = null; 
-                     e.target.src = 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop'; 
+                     e.target.src = profileImage; 
                    }} 
                  />
-                 <div className="about-img-backdrop"></div>
               </div>
             </motion.div>
           </div>
