@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Mail, ExternalLink, Code2, Database, Brain, Globe, Layout, Smartphone, Cloud, Cpu, ArrowRight } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import profileImage from './assets/smit.jpg'; // Using standard profile picture
+import profileImage from './assets/smit_new.jpg'; // Using the newly uploaded image
 import './App.css';
 
 function App() {
@@ -23,6 +23,13 @@ function App() {
 
   return (
     <div className="app">
+      {/* Animated Background */}
+      <div className="mesh-bg">
+        <div className="mesh-blob blob-1"></div>
+        <div className="mesh-blob blob-2"></div>
+        <div className="mesh-blob blob-3"></div>
+      </div>
+
       {/* Navbar */}
       <nav className="navbar">
         <div className="container nav-container">
@@ -108,11 +115,11 @@ function App() {
                 I hold multiple certifications from Google, including Gen AI Agents, Google Cloud Infrastructure, and Prompt Design in Vertex AI. My goal is to leverage these skills to build innovative No-Code SaaS applications and automate workflows.
               </p>
               <div className="about-stats">
-                <div className="stat-card">
+                <div className="stat-card glass-card">
                   <h3>18th</h3>
                   <p>Rank at PromptWars</p>
                 </div>
-                <div className="stat-card">
+                <div className="stat-card glass-card">
                   <h3>5+</h3>
                   <p>Google Certifications</p>
                 </div>
@@ -172,7 +179,7 @@ function App() {
               { icon: <Layout />, name: "n8n Automation" },
               { icon: <Smartphone />, name: "Responsive UI" }
             ].map((skill, index) => (
-              <motion.div key={index} className="skill-card" variants={fadeInUp}>
+              <motion.div key={index} className="skill-card glass-card" variants={fadeInUp}>
                 <div className="skill-icon">{skill.icon}</div>
                 <span className="skill-name">{skill.name}</span>
               </motion.div>
@@ -195,7 +202,7 @@ function App() {
           </motion.h2>
           <div className="projects-grid">
             {/* MediCap */}
-            <motion.div className="project-card" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <motion.div className="project-card glass-card" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <div className="project-image">
                 <Brain size={64} />
               </div>
@@ -215,7 +222,7 @@ function App() {
             </motion.div>
 
             {/* Tattvayan */}
-            <motion.div className="project-card" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <motion.div className="project-card glass-card" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <div className="project-image">
                 <Globe size={64} />
               </div>
@@ -235,7 +242,7 @@ function App() {
             </motion.div>
             
             {/* Agentic Workflows */}
-            <motion.div className="project-card" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <motion.div className="project-card glass-card" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <div className="project-image">
                 <Cpu size={64} />
               </div>
@@ -268,7 +275,7 @@ function App() {
             variants={fadeInUp}
           >
             <h2 className="section-title">Let's Connect</h2>
-            <div className="contact-card">
+            <div className="contact-card glass-card">
               <div className="contact-icon">
                 <Mail size={32} />
               </div>

@@ -1,27 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg-color: #f8fafc;
-  --text-primary: #0f172a;
-  --text-secondary: #64748b;
-  --accent-color: #0284c7;  /* Sky 600 - Professional Blue */
-  --accent-hover: #0369a1;
-  --card-bg: #ffffff;
-  --card-border: #e2e8f0;
-  --nav-bg: rgba(248, 250, 252, 0.85);
-  --glass-border: rgba(15, 23, 42, 0.05);
+  --bg-color: #ffffff;
+  --text-primary: #09090b;
+  --text-secondary: #71717a;
+  --accent-color: #6366f1; /* Indigo */
+  --accent-secondary: #ec4899; /* Pink */
+  --accent-hover: #4f46e5;
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(0, 0, 0, 0.05);
+  --nav-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.05);
+  --glow-color: rgba(99, 102, 241, 0.15);
 }
 
 [data-theme='dark'] {
-  --bg-color: #0b1120;      /* Deep Professional Slate */
+  --bg-color: #030014; /* Deep space black */
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
-  --accent-color: #38bdf8;  /* Vibrant Sky Blue */
-  --accent-hover: #7dd3fc;
-  --card-bg: #1e293b;
-  --card-border: #334155;
-  --nav-bg: rgba(11, 17, 32, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.05);
+  --accent-color: #8b5cf6; /* Vivid Violet */
+  --accent-secondary: #3b82f6; /* Blue */
+  --accent-hover: #a78bfa;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.05);
+  --nav-bg: rgba(3, 0, 20, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glow-color: rgba(139, 92, 246, 0.15);
 }
 
 * {
@@ -31,14 +35,15 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.5s ease, color 0.5s ease;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .logo {
   font-family: 'Outfit', sans-serif;
 }
 
@@ -58,12 +63,6 @@ button {
   font-family: inherit;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -76,5 +75,5 @@ button {
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-secondary);
+  background: var(--accent-color);
 }
