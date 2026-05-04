@@ -5,6 +5,9 @@ import './App.css'
 import photo1 from './assets/smit.jpg'
 import photo2 from './assets/photo2.jpg'
 import photo3 from './assets/photo3.jpg'
+// Note: smit.jpg is the black suit arms-crossed photo (hero)
+// photo2.jpg is the white shirt office photo
+// photo3.jpg is the navy blue suit tie photo
 
 const SERVICES = [
   {
