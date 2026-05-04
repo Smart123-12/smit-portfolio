@@ -305,9 +305,9 @@ function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const subject = encodeURIComponent(`Project Inquiry from ${form.name} — ${form.service}`)
-    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\nService: ${form.service}\n\nMessage:\n${form.message}`)
-    window.open(`mailto:smitparmar@example.com?subject=${subject}&body=${body}`, '_blank')
+    const subject = encodeURIComponent(`🚀 New Project Inquiry from ${form.name} — ${form.service}`)
+    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\nService: ${form.service}\n\nProject Details:\n${form.message}`)
+    window.location.href = `mailto:tattvayan.ai@gmail.com?subject=${subject}&body=${body}`
     setSent(true)
     setTimeout(() => setSent(false), 4000)
   }
@@ -321,6 +321,12 @@ function Contact() {
             <h2 className="section-title">Let's Build Something <span className="grad-text">Amazing</span></h2>
             <p className="section-sub">Send me a message and let's get started today. I respond within 24 hours.</p>
             <div className="contact-info">
+              <div className="contact-item">
+                <span className="contact-item-icon">📧</span>
+                <div className="contact-item-text">
+                  <a href="mailto:tattvayan.ai@gmail.com">tattvayan.ai@gmail.com</a>
+                </div>
+              </div>
               <div className="contact-item">
                 <span className="contact-item-icon">🐙</span>
                 <div className="contact-item-text">
@@ -339,18 +345,14 @@ function Contact() {
                   <span>Revisions until you are 100% satisfied</span>
                 </div>
               </div>
-              <div className="contact-item">
-                <span className="contact-item-icon">🚀</span>
-                <div className="contact-item-text">
-                  <span>Fast delivery — real deployed products</span>
-                </div>
-              </div>
             </div>
           </div>
           <form className="contact-form" onSubmit={handleSubmit}>
             <h3 style={{ fontFamily:'Outfit', fontWeight:700, fontSize:'1.3rem', marginBottom:24, color:'var(--text-dark)' }}>
               Start Your Project
             </h3>
+            {/* Hidden botcheck field for spam protection */}
+            <input type="checkbox" name="botcheck" style={{ display:'none' }} />
             <div className="form-row">
               <div className="form-group">
                 <label>Your Name</label>
@@ -380,8 +382,12 @@ function Contact() {
               <textarea placeholder="Tell me about your project, goals, and timeline..." required
                 value={form.message} onChange={e => setForm({...form, message: e.target.value})} />
             </div>
-            <button type="submit" className="btn-primary" style={{ width:'100%', justifyContent:'center' }}>
-              {sent ? '✅ Message Sent!' : '🚀 Send Message'}
+            <button
+              type="submit"
+              className="btn-primary"
+              style={{ width:'100%', justifyContent:'center' }}
+            >
+              {sent ? '✅ Opening Email App...' : '🚀 Send Message'}
             </button>
           </form>
         </div>
