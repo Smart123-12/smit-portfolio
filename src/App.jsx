@@ -1,142 +1,197 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './index.css'
 import './App.css'
 
 import photo1 from './assets/smit.jpg'
 import photo2 from './assets/photo2.jpg'
 import photo3 from './assets/photo3.jpg'
-// Note: smit.jpg is the black suit arms-crossed photo (hero)
-// photo2.jpg is the white shirt office photo
-// photo3.jpg is the navy blue suit tie photo
+
+// ── DATA ──────────────────────────────────────────────────────
+
+const SKILLS = [
+  { name: 'AI Prompt Engineering', level: 96 },
+  { name: 'Google Antigravity', level: 95 },
+  { name: 'AI Tools (Cursor, Copilot, Claude)', level: 94 },
+  { name: 'No-Code / Low-Code Platforms', level: 92 },
+  { name: 'AI App Building (v0, Bolt, Replit)', level: 90 },
+  { name: 'n8n & Workflow Automation', level: 88 },
+  { name: 'React / Next.js (via AI)', level: 85 },
+  { name: 'Cloud Deployment (GCP, Vercel)', level: 80 },
+]
 
 const SERVICES = [
   {
-    icon: '🤖',
-    color: '#e8f0ff',
-    title: 'AI Apps & Integration',
+    icon: '🤖', title: 'AI Apps & Integration',
     desc: 'Custom AI-powered solutions integrated directly into your business workflows.',
-    list: ['Custom AI chatbots for websites', 'AI-powered customer support', 'Smart workflow automation', 'Prompt engineering for business', 'No-code & low-code AI solutions'],
+    list: ['Custom AI chatbots', 'AI-powered support', 'Smart automation', 'Prompt engineering', 'No-code AI solutions'],
   },
   {
-    icon: '🌐',
-    color: '#eef8f0',
-    title: 'Web & Mobile Design',
+    icon: '🌐', title: 'Full-Stack Web Dev',
     desc: 'Modern, scalable web applications and SaaS products that perform and grow.',
-    list: ['Full-stack web application dev', 'SaaS product from 0 to launch', 'Secure login & user management', 'Database design & API dev', 'Cloud deployment & CI/CD'],
+    list: ['React / Next.js apps', 'Node.js APIs', 'Auth & user management', 'Database design', 'Cloud deployment'],
   },
   {
-    icon: '📝',
-    color: '#fff0f5',
-    title: 'AI Landing Page Content',
+    icon: '📝', title: 'AI Content & Copy',
     desc: 'High-converting copy and content that speaks to your audience and drives action.',
-    list: ['Landing page copy that converts', 'Complete sales funnel content', 'Product & service descriptions', 'Email marketing sequences', 'SEO-friendly content structure'],
+    list: ['Landing page copy', 'Sales funnel content', 'Product descriptions', 'Email sequences', 'SEO optimization'],
   },
   {
-    icon: '🔍',
-    color: '#f5f0ff',
-    title: 'AI Research Reports',
+    icon: '🔍', title: 'AI Research Reports',
     desc: 'Deep research and analysis to inform your business decisions with clarity.',
-    list: ['Market & industry analysis', 'Competitor research reports', 'Business & investment research', 'Product & niche research', 'Executive summaries'],
+    list: ['Market analysis', 'Competitor research', 'Investment research', 'Niche research', 'Executive summaries'],
   },
   {
-    icon: '📊',
-    color: '#e8f8ff',
-    title: 'Excel & Sheets Automation',
+    icon: '📊', title: 'Data & Automation',
     desc: 'Smart spreadsheets and dashboards that save hours of manual work every week.',
-    list: ['Spreadsheet automation', 'Custom dashboards with live data', 'Data cleaning & organization', 'AI-powered data analysis', 'Automated reporting systems'],
+    list: ['Spreadsheet automation', 'Live dashboards', 'Data cleaning', 'AI data analysis', 'Auto reporting'],
   },
   {
-    icon: '🚀',
-    color: '#fff8e8',
-    title: 'Full Delivery & Support',
-    desc: 'End-to-end ownership from idea to deployed, working product — built to last.',
-    list: ['Fast execution, quality output', 'Clear communication always', 'Full ownership & accountability', 'Scalable & maintainable builds', 'Revisions until you\'re satisfied'],
+    icon: '🚀', title: 'End-to-End Delivery',
+    desc: 'From idea to deployed product — built to last with full ownership.',
+    list: ['Fast execution', 'Clear communication', 'Full accountability', 'Scalable builds', 'Unlimited revisions'],
   },
 ]
 
 const PROJECTS = [
   {
-    emoji: '🏥',
-    label: 'LIVE',
-    bg: 'linear-gradient(135deg,#b8d4f0,#d4ccf0)',
+    emoji: '🏥', label: 'LIVE', tech: ['React', 'Node.js', 'MongoDB', 'GCP'],
     title: 'MediCap — Doctor & Patient System',
-    desc: 'Complete Doctor and Patient Management System with role-based dashboards, secure authentication, 20+ API endpoints. Deployed live on Google Cloud with automated CI/CD pipeline from GitHub.',
+    desc: 'Complete Doctor & Patient Management System with role-based dashboards, secure auth, 20+ API endpoints. Live on Google Cloud with CI/CD.',
     link: 'https://github.com/Smart123-12/medicap',
-    linkLabel: 'View on GitHub',
   },
   {
-    emoji: '🦷',
-    label: 'LIVE',
-    bg: 'linear-gradient(135deg,#b8e8d8,#c8e6f8)',
-    title: 'Dental Clinic Management System',
-    desc: 'Full-stack Dental Clinic Management System with admin, doctor & patient roles. Built with React, Node.js and MongoDB. Live deployment on GitHub Pages.',
+    emoji: '🦷', label: 'LIVE', tech: ['React', 'Node.js', 'MongoDB'],
+    title: 'Dental Clinic Management',
+    desc: 'Full-stack Dental Clinic System with admin, doctor & patient roles. Live deployment on GitHub Pages.',
     link: 'https://smart123-12.github.io/dental-clinic_12/',
-    linkLabel: 'Visit Live Site',
   },
   {
-    emoji: '🎓',
-    label: 'DEPLOYED',
-    bg: 'linear-gradient(135deg,#f0d4cc,#f0ccd4)',
-    title: 'Tattavyan School — Edutech System',
-    desc: 'Multi-role school management system (Admin, Teacher, Student) with interactive dashboards, homework management, attendance, and notice boards.',
+    emoji: '🎓', label: 'DEPLOYED', tech: ['React', 'Node.js', 'JavaScript'],
+    title: 'Tattavyan School — Edutech',
+    desc: 'Multi-role school management (Admin, Teacher, Student) with dashboards, homework, attendance & notice boards.',
     link: 'https://github.com/Smart123-12/tattavyan-school',
-    linkLabel: 'View on GitHub',
   },
   {
-    emoji: '🏢',
-    label: 'LIVE',
-    bg: 'linear-gradient(135deg,#d4ccf0,#c8e6f8)',
+    emoji: '💰', label: 'LIVE', tech: ['TypeScript', 'React', 'AI'],
+    title: 'AarthIQ — AI Financial Advisor',
+    desc: 'AI-powered Indian Tax & Financial Advisory Platform for FY 2026-27. Salary optimizer, freelancer planner, NRI tools & AI Money Coach.',
+    link: 'https://github.com/Smart123-12/AarthIQ',
+  },
+  {
+    emoji: '💙', label: 'LIVE', tech: ['TypeScript', 'React', 'IRS API'],
+    title: 'BlueTax — US Tax Optimizer',
+    desc: 'Privacy-first US W2 tax optimizer using 2026 IRS brackets. Keep more of your paycheck with smart tax planning.',
+    link: 'https://github.com/Smart123-12/bluetax',
+  },
+  {
+    emoji: '🧠', label: 'LIVE', tech: ['HTML', 'Node.js', 'Gemini AI'],
+    title: 'Nexus AI — Business Intelligence',
+    desc: 'AI-Powered Business Intelligence SaaS Platform with Chart.js dashboards, MongoDB, and Gemini AI integration.',
+    link: 'https://github.com/Smart123-12/nexus-ai',
+  },
+  {
+    emoji: '📈', label: 'LIVE', tech: ['HTML', 'CSS', 'JavaScript'],
+    title: 'FinWise — Smart Finance',
+    desc: 'Smart Finance Management for Indian families — Tax Calculator, Expense Tracker, Dashboard & Insurance Compare.',
+    link: 'https://github.com/Smart123-12/finwise',
+  },
+  {
+    emoji: '🛒', label: 'LIVE', tech: ['React', 'Node.js', 'PHP', 'MySQL'],
+    title: 'ecom-dashboard — eCommerce',
+    desc: 'Modern Full-Stack eCommerce Dashboard with React frontend, Node.js & PHP backend, MySQL database.',
+    link: 'https://github.com/Smart123-12/ecom-dashboard',
+  },
+  {
+    emoji: '🌾', label: 'DEPLOYED', tech: ['React', 'Node.js', 'JavaScript'],
+    title: 'Khedut — Farmer Platform',
+    desc: 'Agricultural platform connecting farmers with resources, market data, and smart farming tools.',
+    link: 'https://github.com/Smart123-12/khedut',
+  },
+  {
+    emoji: '🏢', label: 'LIVE', tech: ['HTML', 'CSS', 'JavaScript'],
     title: 'Zenvora Tech Solutions',
-    desc: 'Premium portfolio website for USA Job Placement & Search Support Service. Modern, responsive, conversion-focused design deployed on GitHub Pages.',
+    desc: 'Premium portfolio for USA Job Placement & Search Support Service. Conversion-focused responsive design.',
     link: 'https://github.com/Smart123-12/zenvora-tech-solutions',
-    linkLabel: 'View on GitHub',
   },
   {
-    emoji: '🧾',
-    label: 'TOOL',
-    bg: 'linear-gradient(135deg,#b8e8d8,#eef8f0)',
+    emoji: '🧾', label: 'TOOL', tech: ['JavaScript', 'HTML', 'CSS'],
     title: 'Invoice Generator',
-    desc: 'Clean, professional invoice generation web app. Generate, preview and download invoices instantly with custom branding support.',
+    desc: 'Professional invoice generation web app. Generate, preview and download invoices instantly.',
     link: 'https://github.com/Smart123-12/invoice-generator',
-    linkLabel: 'View on GitHub',
   },
   {
-    emoji: '🏗️',
-    label: 'PLATFORM',
-    bg: 'linear-gradient(135deg,#fff0e8,#f0d4cc)',
+    emoji: '🏗️', label: 'PLATFORM', tech: ['JavaScript', 'Node.js'],
     title: 'Neev Platform',
-    desc: 'A modern platform project demonstrating full-stack development capabilities with JavaScript. Scalable architecture built for production.',
+    desc: 'Modern scalable platform demonstrating full-stack dev capabilities. Production-ready architecture.',
     link: 'https://github.com/Smart123-12/neev-platform',
-    linkLabel: 'View on GitHub',
+  },
+  {
+    emoji: '🕉️', label: 'LIVE', tech: ['HTML', 'CSS', 'JavaScript'],
+    title: 'Tattvayan — Spiritual Platform',
+    desc: 'Full-featured spiritual & cultural platform with beautiful UI, content pages, and interactive elements. Live on GitHub Pages.',
+    link: 'https://github.com/Smart123-12/tattvayan',
   },
 ]
 
 const REASONS = [
-  { icon: '⚡', title: 'Fast Execution', desc: 'I deliver quickly without cutting corners. Speed + quality, not a trade-off.' },
-  { icon: '💬', title: 'Clear Communication', desc: 'You know where your project stands at every stage. No ghosting, no guessing.' },
-  { icon: '🏆', title: 'Real Deployed Projects', desc: 'Not just mockups — live, working products you can see and use.' },
-  { icon: '🔄', title: 'Revisions Until Perfect', desc: 'Your satisfaction is the goal. I stay until the work is done right.' },
-  { icon: '📦', title: 'Scalable & Maintainable', desc: 'Clean code built to grow with your business, not fall apart.' },
-  { icon: '🕐', title: 'Available 30+ hrs/week', desc: 'Fully committed. I treat every project personally — your success is mine.' },
+  { icon: '⚡', title: 'Fast Execution', desc: 'Speed + quality, delivered without cutting corners.' },
+  { icon: '💬', title: 'Clear Communication', desc: 'You always know where your project stands.' },
+  { icon: '🏆', title: 'Real Deployed Projects', desc: 'Live, working products — not just mockups.' },
+  { icon: '🔄', title: 'Revisions Until Perfect', desc: 'Your satisfaction is the goal. Always.' },
+  { icon: '📦', title: 'Scalable & Maintainable', desc: 'Clean code built to grow with your business.' },
+  { icon: '🕐', title: 'Available 30+ hrs/week', desc: 'Fully committed to every project.' },
 ]
 
+const STATS = [
+  { num: '13+', label: 'Projects Built' },
+  { num: '9+', label: 'Live Deployments' },
+  { num: '30+', label: 'Hrs/Week Available' },
+  { num: '100%', label: 'Client Satisfaction' },
+]
+
+// ── HOOKS ──────────────────────────────────────────────────────
+
+function useInView(threshold = 0.15) {
+  const ref = useRef(null)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true) }, { threshold })
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [threshold])
+  return [ref, visible]
+}
+
+// ── COMPONENTS ─────────────────────────────────────────────────
+
 function Navbar() {
+  const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`} id="top-nav">
       <div className="navbar-inner">
         <a href="#home" className="navbar-logo">
-          <span className="logo-dot"></span> Smit Parmar
+          <span className="logo-icon">SP</span>
+          <span className="logo-text">Smit Parmar</span>
         </a>
-        <div className="navbar-links">
-          <a href="#services">Services</a>
-          <a href="#projects">Projects</a>
-          <a href="#about">About</a>
-          <a href="#contact" className="btn-primary navbar-cta" style={{padding:'10px 22px',fontSize:'13px'}}>Hire Me →</a>
+        <div className={`navbar-links ${menuOpen ? 'navbar-links--open' : ''}`}>
+          <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+          <a href="#skills" onClick={() => setMenuOpen(false)}>Skills</a>
+          <a href="#services" onClick={() => setMenuOpen(false)}>Services</a>
+          <a href="#projects" onClick={() => setMenuOpen(false)}>Projects</a>
+          <a href="#contact" className="nav-cta" onClick={() => setMenuOpen(false)}>Hire Me</a>
         </div>
-        <button className="hamburger" aria-label="Menu">
-          <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
+        <button className={`hamburger ${menuOpen ? 'hamburger--active' : ''}`} aria-label="Menu" onClick={() => setMenuOpen(!menuOpen)}>
+          <span /><span /><span />
         </button>
       </div>
     </nav>
@@ -144,53 +199,51 @@ function Navbar() {
 }
 
 function Hero() {
+  const [ref, visible] = useInView()
   return (
-    <section className="hero section" id="home">
-      <div className="blob-bg hero-blob1"></div>
-      <div className="blob-bg hero-blob2"></div>
+    <section className={`hero ${visible ? 'in-view' : ''}`} id="home" ref={ref}>
+      <div className="hero-particles">
+        {[...Array(20)].map((_, i) => <div key={i} className="particle" style={{ '--i': i }} />)}
+      </div>
+      <div className="hero-glow" />
       <div className="container">
         <div className="hero-inner">
           <div className="hero-content">
-            <div className="hero-eyebrow">
-              <span className="hero-eyebrow-dot"></span>
-              Available for New Projects
+            <div className="hero-badge-top">
+              <span className="pulse-dot" /> Available for New Projects
             </div>
             <h1 className="hero-title">
-              I Build <span className="grad-text">Scalable Web Apps</span> & AI-Powered Solutions
+              I Build <span className="gradient-text">Real Products</span> Using <span className="gradient-text-alt">AI Tools</span>
             </h1>
             <p className="hero-desc">
-              From ideas to real, working products — delivered fast, built to last. Clean execution, clear communication, and results that move your business forward.
+              Non-IT → AI Builder. I use AI tools like Google Antigravity, Cursor, Claude & no-code platforms to turn ideas into real, deployed products — fast.
             </p>
             <div className="hero-btns">
-              <a href="#contact" className="btn-primary">🚀 Start a Project</a>
-              <a href="#projects" className="btn-outline">View My Work</a>
+              <a href="#contact" className="btn-glow">🚀 Start a Project</a>
+              <a href="#projects" className="btn-glass">View My Work →</a>
             </div>
             <div className="hero-stats">
-              <div className="stat-item">
-                <div className="stat-num">10+</div>
-                <div className="stat-label">Projects Delivered</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-num">5+</div>
-                <div className="stat-label">Live Deployments</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-num">30+</div>
-                <div className="stat-label">Hrs/Week Available</div>
-              </div>
+              {STATS.map((s, i) => (
+                <div className="hero-stat" key={i}>
+                  <div className="hero-stat-num">{s.num}</div>
+                  <div className="hero-stat-label">{s.label}</div>
+                </div>
+              ))}
             </div>
           </div>
-          <div className="hero-photo-wrap">
-            <div className="hero-photo-ring">
-              <div className="hero-photo-inner">
-                <img src={photo1} alt="Smit Parmar" />
+          <div className="hero-visual">
+            <div className="hero-photo-container">
+              <div className="hero-photo-glow" />
+              <div className="hero-photo-border">
+                <img src={photo1} alt="Smitkumar Parmar" />
               </div>
-            </div>
-            <div className="hero-badge">
-              <span className="hero-badge-icon">🤖</span>
-              <div>
-                <div className="hero-badge-text">AI Builder</div>
-                <div className="hero-badge-sub">Non-IT → Full Stack</div>
+              <div className="hero-float-badge hero-float-badge--1">
+                <span>🤖</span>
+                <div><strong>AI Builder</strong><br /><small>Built with AI Tools</small></div>
+              </div>
+              <div className="hero-float-badge hero-float-badge--2">
+                <span>🚀</span>
+                <div><strong>13+ Projects</strong><br /><small>All via AI Tools</small></div>
               </div>
             </div>
           </div>
@@ -200,23 +253,105 @@ function Hero() {
   )
 }
 
-function Services() {
+function About() {
+  const [ref, visible] = useInView()
   return (
-    <section className="services section" id="services">
+    <section className={`about ${visible ? 'in-view' : ''}`} id="about" ref={ref}>
       <div className="container">
-        <div className="section-tag">✨ What I Do</div>
-        <h2 className="section-title">Services That Deliver <span className="grad-text">Real Results</span></h2>
-        <p className="section-sub">Every service is built with the same commitment — clean execution, scalable output, and real business value.</p>
+        <div className="about-inner">
+          <div className="about-photos">
+            <div className="about-photo about-photo--1">
+              <img src={photo2} alt="Smit Parmar professional" />
+            </div>
+            <div className="about-photo about-photo--2">
+              <img src={photo3} alt="Smit Parmar office" />
+            </div>
+            <div className="about-experience-badge">
+              <div className="about-exp-num">100%</div>
+              <div className="about-exp-text">Satisfaction<br/>Guaranteed</div>
+            </div>
+          </div>
+          <div className="about-content">
+            <div className="section-label">About Me</div>
+            <h2 className="section-heading">
+              Non-IT Background → <span className="gradient-text">AI Builder</span>
+            </h2>
+            <p className="about-text">
+              I'm <strong>Smitkumar Parmar</strong> — I don't code the traditional way. I use <strong>AI tools like Google Antigravity, Cursor, GitHub Copilot, Claude, v0, Bolt & Replit Agent</strong> to build real, deployed products from scratch.
+            </p>
+            <p className="about-text">
+              Coming from a <strong>non-IT background</strong>, I taught myself to leverage AI & no-code platforms to create full-stack apps, SaaS products & automation workflows. Currently mastering <strong>Agentic AI & n8n</strong> to build even smarter solutions.
+            </p>
+            <div className="about-highlights">
+              <div className="about-highlight">
+                <span className="about-h-icon">🎯</span>
+                <div>
+                  <strong>Mission</strong>
+                  <p>Turn ideas into real products using AI</p>
+                </div>
+              </div>
+              <div className="about-highlight">
+                <span className="about-h-icon">💡</span>
+                <div>
+                  <strong>Approach</strong>
+                  <p>AI tools + prompt skills = fast delivery</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Skills() {
+  const [ref, visible] = useInView()
+  return (
+    <section className={`skills ${visible ? 'in-view' : ''}`} id="skills" ref={ref}>
+      <div className="container">
+        <div className="section-label center">My AI Toolkit</div>
+        <h2 className="section-heading center">
+          Tools I Use to <span className="gradient-text">Build Products</span>
+        </h2>
+        <div className="skills-grid">
+          {SKILLS.map((s, i) => (
+            <div className="skill-item" key={i} style={{ '--delay': `${i * 0.08}s` }}>
+              <div className="skill-header">
+                <span className="skill-name">{s.name}</span>
+                <span className="skill-pct">{s.level}%</span>
+              </div>
+              <div className="skill-bar">
+                <div className="skill-fill" style={{ width: visible ? `${s.level}%` : '0%' }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Services() {
+  const [ref, visible] = useInView()
+  return (
+    <section className={`services ${visible ? 'in-view' : ''}`} id="services" ref={ref}>
+      <div className="container">
+        <div className="section-label center">What I Do</div>
+        <h2 className="section-heading center">
+          Services That <span className="gradient-text">Deliver Results</span>
+        </h2>
+        <p className="section-sub center">Clean execution, scalable output, and real business value.</p>
         <div className="services-grid">
           {SERVICES.map((s, i) => (
-            <div className="service-card" key={i}>
-              <div className="service-icon" style={{ background: s.color }}>{s.icon}</div>
-              <h3 className="service-title">{s.title}</h3>
+            <div className="service-card" key={i} style={{ '--delay': `${i * 0.1}s` }}>
+              <div className="service-icon-wrap">
+                <span className="service-icon">{s.icon}</span>
+              </div>
+              <h3>{s.title}</h3>
               <p className="service-desc">{s.desc}</p>
-              <ul className="service-list">
-                {s.list.map((item, j) => (
-                  <li key={j}><span className="service-check">✔</span>{item}</li>
-                ))}
+              <ul>
+                {s.list.map((item, j) => <li key={j}><span className="check">✓</span>{item}</li>)}
               </ul>
             </div>
           ))}
@@ -227,32 +362,45 @@ function Services() {
 }
 
 function Projects() {
+  const [ref, visible] = useInView()
+  const [filter, setFilter] = useState('ALL')
+  const labels = ['ALL', 'LIVE', 'DEPLOYED', 'TOOL', 'PLATFORM']
+  const filtered = filter === 'ALL' ? PROJECTS : PROJECTS.filter(p => p.label === filter)
+
   return (
-    <section className="projects section" id="projects">
+    <section className={`projects ${visible ? 'in-view' : ''}`} id="projects" ref={ref}>
       <div className="container">
-        <div className="section-tag">🏆 Portfolio</div>
-        <h2 className="section-title">Real Projects, <span className="grad-text">Real Impact</span></h2>
-        <p className="section-sub">Not just mockups — live deployed applications that clients use every day.</p>
-        <div className="projects-grid">
-          {PROJECTS.map((p, i) => (
-            <div className="project-card" key={i}>
-              <div className="project-thumb" style={{ background: p.bg }}>
-                <span className="project-thumb-icon">{p.emoji}</span>
-                <span className="project-thumb-label">{p.label}</span>
-              </div>
-              <div className="project-body">
-                <h3 className="project-title">{p.title}</h3>
-                <p className="project-desc">{p.desc}</p>
-                <a href={p.link} target="_blank" rel="noopener noreferrer" className="project-link">
-                  {p.linkLabel} →
-                </a>
-              </div>
-            </div>
+        <div className="section-label center">Portfolio</div>
+        <h2 className="section-heading center">
+          Real Projects, <span className="gradient-text">Real Impact</span>
+        </h2>
+        <p className="section-sub center">Live deployed applications — not just mockups.</p>
+        <div className="project-filters">
+          {labels.map(l => (
+            <button key={l} className={`filter-btn ${filter === l ? 'filter-btn--active' : ''}`} onClick={() => setFilter(l)}>
+              {l}
+            </button>
           ))}
         </div>
-        <div style={{ textAlign:'center', marginTop: 40 }}>
-          <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer" className="btn-outline">
-            🐙 View All Projects on GitHub
+        <div className="projects-grid">
+          {filtered.map((p, i) => (
+            <a href={p.link} target="_blank" rel="noopener noreferrer" className="project-card" key={i} style={{ '--delay': `${i * 0.07}s` }}>
+              <div className="project-top">
+                <span className="project-emoji">{p.emoji}</span>
+                <span className={`project-label project-label--${p.label.toLowerCase()}`}>{p.label}</span>
+              </div>
+              <h3>{p.title}</h3>
+              <p>{p.desc}</p>
+              <div className="project-tech">
+                {p.tech.map((t, j) => <span key={j} className="tech-tag">{t}</span>)}
+              </div>
+              <div className="project-link-row">View Project <span>→</span></div>
+            </a>
+          ))}
+        </div>
+        <div className="center" style={{ marginTop: 48 }}>
+          <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer" className="btn-glass">
+            🐙 View All on GitHub
           </a>
         </div>
       </div>
@@ -261,38 +409,22 @@ function Projects() {
 }
 
 function WhyMe() {
+  const [ref, visible] = useInView()
   return (
-    <section className="whyme section" id="about">
+    <section className={`whyme ${visible ? 'in-view' : ''}`} id="whyme" ref={ref}>
       <div className="container">
-        <div className="whyme-inner">
-          <div className="whyme-photo-stack">
-            <div className="whyme-photo-1">
-              <img src={photo2} alt="Smit Parmar professional" />
+        <div className="section-label center">Why Work With Me</div>
+        <h2 className="section-heading center">
+          I Take Every Project <span className="gradient-text">Personally</span>
+        </h2>
+        <div className="reasons-grid">
+          {REASONS.map((r, i) => (
+            <div className="reason-card" key={i} style={{ '--delay': `${i * 0.08}s` }}>
+              <span className="reason-icon">{r.icon}</span>
+              <h4>{r.title}</h4>
+              <p>{r.desc}</p>
             </div>
-            <div className="whyme-photo-2">
-              <img src={photo3} alt="Smit Parmar office" />
-            </div>
-            <div className="whyme-card-badge">
-              <div className="whyme-card-badge-num">100%</div>
-              <div className="whyme-card-badge-text">Satisfaction<br/>Guaranteed</div>
-            </div>
-          </div>
-          <div>
-            <div className="section-tag">💼 Why Work With Me</div>
-            <h2 className="section-title">I Take Every Project <span className="grad-text">Personally</span></h2>
-            <p className="section-sub">Your success is my success — I won't stop until the work is done right. Here's what sets me apart:</p>
-            <div className="reasons-list">
-              {REASONS.map((r, i) => (
-                <div className="reason-item" key={i}>
-                  <span className="reason-icon">{r.icon}</span>
-                  <div className="reason-text">
-                    <h4>{r.title}</h4>
-                    <p>{r.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
@@ -302,67 +434,60 @@ function WhyMe() {
 function Contact() {
   const [form, setForm] = useState({ name: '', email: '', service: '', message: '' })
   const [sent, setSent] = useState(false)
+  const [ref, visible] = useInView()
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const subject = encodeURIComponent(`🚀 New Project Inquiry from ${form.name} — ${form.service}`)
-    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\nService: ${form.service}\n\nProject Details:\n${form.message}`)
-    window.location.href = `mailto:tattvayan.ai@gmail.com?subject=${subject}&body=${body}`
+    const subject = encodeURIComponent(`🚀 Project Inquiry from ${form.name} — ${form.service}`)
+    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\nService: ${form.service}\n\nDetails:\n${form.message}`)
+    window.location.href = `mailto:smitparmar208@gmail.com?subject=${subject}&body=${body}`
     setSent(true)
     setTimeout(() => setSent(false), 4000)
   }
 
   return (
-    <section className="contact section" id="contact">
+    <section className={`contact ${visible ? 'in-view' : ''}`} id="contact" ref={ref}>
       <div className="container">
         <div className="contact-inner">
-          <div>
-            <div className="section-tag">📬 Get In Touch</div>
-            <h2 className="section-title">Let's Build Something <span className="grad-text">Amazing</span></h2>
-            <p className="section-sub">Send me a message and let's get started today. I respond within 24 hours.</p>
-            <div className="contact-info">
+          <div className="contact-info">
+            <div className="section-label">Get In Touch</div>
+            <h2 className="section-heading">
+              Let's Build <span className="gradient-text">Something Amazing</span>
+            </h2>
+            <p className="section-sub">Send me a message and let's get started. I respond within 24 hours.</p>
+            <div className="contact-items">
               <div className="contact-item">
-                <span className="contact-item-icon">📧</span>
-                <div className="contact-item-text">
-                  <a href="mailto:tattvayan.ai@gmail.com">tattvayan.ai@gmail.com</a>
-                </div>
+                <span className="ci-icon">📧</span>
+                <a href="mailto:smitparmar208@gmail.com">smitparmar208@gmail.com</a>
               </div>
               <div className="contact-item">
-                <span className="contact-item-icon">🐙</span>
-                <div className="contact-item-text">
-                  <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer">github.com/Smart123-12</a>
-                </div>
+                <span className="ci-icon">📱</span>
+                <a href="tel:+918140148302">+91 8140148302</a>
               </div>
               <div className="contact-item">
-                <span className="contact-item-icon">⏰</span>
-                <div className="contact-item-text">
-                  <span>Available 30+ hours per week</span>
-                </div>
+                <span className="ci-icon">🐙</span>
+                <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer">github.com/Smart123-12</a>
               </div>
               <div className="contact-item">
-                <span className="contact-item-icon">✅</span>
-                <div className="contact-item-text">
-                  <span>Revisions until you are 100% satisfied</span>
-                </div>
+                <span className="ci-icon">⏰</span>
+                <span>Available 30+ hours per week</span>
+              </div>
+              <div className="contact-item">
+                <span className="ci-icon">✅</span>
+                <span>Revisions until 100% satisfied</span>
               </div>
             </div>
           </div>
           <form className="contact-form" onSubmit={handleSubmit}>
-            <h3 style={{ fontFamily:'Outfit', fontWeight:700, fontSize:'1.3rem', marginBottom:24, color:'var(--text-dark)' }}>
-              Start Your Project
-            </h3>
-            {/* Hidden botcheck field for spam protection */}
-            <input type="checkbox" name="botcheck" style={{ display:'none' }} />
+            <h3>Start Your Project</h3>
             <div className="form-row">
               <div className="form-group">
                 <label>Your Name</label>
-                <input type="text" placeholder="John Smith" required
-                  value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
+                <input type="text" placeholder="John Smith" required value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
               </div>
               <div className="form-group">
                 <label>Email Address</label>
-                <input type="email" placeholder="john@email.com" required
-                  value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
+                <input type="email" placeholder="john@email.com" required value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
               </div>
             </div>
             <div className="form-group">
@@ -370,24 +495,19 @@ function Contact() {
               <select value={form.service} onChange={e => setForm({...form, service: e.target.value})} required>
                 <option value="">Select a service...</option>
                 <option>AI Apps & Integration</option>
-                <option>Web & Mobile Design</option>
-                <option>AI Landing Page Content</option>
+                <option>Full-Stack Web Dev</option>
+                <option>AI Content & Copy</option>
                 <option>AI Research Report</option>
-                <option>Excel & Sheets Automation</option>
+                <option>Data & Automation</option>
                 <option>Other / Full Project</option>
               </select>
             </div>
             <div className="form-group">
               <label>Project Details</label>
-              <textarea placeholder="Tell me about your project, goals, and timeline..." required
-                value={form.message} onChange={e => setForm({...form, message: e.target.value})} />
+              <textarea placeholder="Tell me about your project, goals, and timeline..." required value={form.message} onChange={e => setForm({...form, message: e.target.value})} />
             </div>
-            <button
-              type="submit"
-              className="btn-primary"
-              style={{ width:'100%', justifyContent:'center' }}
-            >
-              {sent ? '✅ Opening Email App...' : '🚀 Send Message'}
+            <button type="submit" className="btn-glow btn-full">
+              {sent ? '✅ Opening Email...' : '🚀 Send Message'}
             </button>
           </form>
         </div>
@@ -399,33 +519,40 @@ function Contact() {
 function Footer() {
   return (
     <footer className="footer">
-      <div style={{ maxWidth: 1180, margin:'0 auto' }}>
+      <div className="container">
         <div className="footer-inner">
           <div>
-            <div className="footer-logo">Smit Parmar</div>
-            <div className="footer-copy">© 2026 Smit Parmar. All rights reserved.</div>
+            <div className="footer-logo">
+              <span className="logo-icon">SP</span> Smit Parmar
+            </div>
+            <p className="footer-tagline">Non-IT → AI Builder | Full-Stack Developer</p>
           </div>
           <div className="footer-links">
+            <a href="#about">About</a>
             <a href="#services">Services</a>
             <a href="#projects">Projects</a>
             <a href="#contact">Contact</a>
             <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer">GitHub</a>
           </div>
         </div>
-        <hr className="footer-divider" />
-        <p style={{ textAlign:'center', fontSize:12, marginTop:16, opacity:0.5 }}>
-          Built with ❤️ — Fast execution, clean code, real results.
-        </p>
+        <div className="footer-bottom">
+          <p>© 2026 Smitkumar Parmar. All rights reserved.</p>
+          <p>Built with ❤️ — Fast execution, clean code, real results.</p>
+        </div>
       </div>
     </footer>
   )
 }
+
+// ── APP ────────────────────────────────────────────────────────
 
 export default function App() {
   return (
     <>
       <Navbar />
       <Hero />
+      <About />
+      <Skills />
       <Services />
       <Projects />
       <WhyMe />
