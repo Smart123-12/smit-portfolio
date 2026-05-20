@@ -367,7 +367,7 @@ function Services() {
   )
 }
 
-function Projects() {
+function Projects({ onShowAIAnalyst }) {
   const [ref, visible] = useInView()
   const [filter, setFilter] = useState('ALL')
   const labels = ['ALL', 'LIVE', 'DEPLOYED', 'TOOL', 'PLATFORM']
@@ -389,20 +389,37 @@ function Projects() {
           ))}
         </div>
         <div className="projects-grid">
-          {filtered.map((p, i) => (
-            <a href={p.link} target="_blank" rel="noopener noreferrer" className="project-card" key={i} style={{ '--delay': `${i * 0.07}s` }}>
-              <div className="project-top">
-                <span className="project-emoji">{p.emoji}</span>
-                <span className={`project-label project-label--${p.label.toLowerCase()}`}>{p.label}</span>
+          {filtered.map((p, i) => {
+            const isAIAnalyst = p.title.includes('AI Analyst')
+            return isAIAnalyst ? (
+              <div className="project-card project-card--featured" key={i} style={{ '--delay': `${i * 0.07}s`, cursor: 'pointer' }} onClick={onShowAIAnalyst}>
+                <div className="project-featured-badge">⭐ Featured Case Study</div>
+                <div className="project-top">
+                  <span className="project-emoji">{p.emoji}</span>
+                  <span className={`project-label project-label--${p.label.toLowerCase()}`}>{p.label}</span>
+                </div>
+                <h3>{p.title}</h3>
+                <p>{p.desc}</p>
+                <div className="project-tech">
+                  {p.tech.map((t, j) => <span key={j} className="tech-tag">{t}</span>)}
+                </div>
+                <div className="project-link-row">View Full Case Study <span>→</span></div>
               </div>
-              <h3>{p.title}</h3>
-              <p>{p.desc}</p>
-              <div className="project-tech">
-                {p.tech.map((t, j) => <span key={j} className="tech-tag">{t}</span>)}
-              </div>
-              <div className="project-link-row">View Project <span>→</span></div>
-            </a>
-          ))}
+            ) : (
+              <a href={p.link} target="_blank" rel="noopener noreferrer" className="project-card" key={i} style={{ '--delay': `${i * 0.07}s` }}>
+                <div className="project-top">
+                  <span className="project-emoji">{p.emoji}</span>
+                  <span className={`project-label project-label--${p.label.toLowerCase()}`}>{p.label}</span>
+                </div>
+                <h3>{p.title}</h3>
+                <p>{p.desc}</p>
+                <div className="project-tech">
+                  {p.tech.map((t, j) => <span key={j} className="tech-tag">{t}</span>)}
+                </div>
+                <div className="project-link-row">View Project <span>→</span></div>
+              </a>
+            )
+          })}
         </div>
         <div className="center" style={{ marginTop: 48 }}>
           <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer" className="btn-glass">
@@ -550,20 +567,239 @@ function Footer() {
   )
 }
 
+// ── AI ANALYST DETAIL PAGE ─────────────────────────────────────
+
+const AI_AGENTS = [
+  { icon: '🏗️', name: 'Architecture Agent', desc: 'Analyzes project structure, dependency graphs, module boundaries, and architectural patterns. Flags circular dependencies and anti-patterns.' },
+  { icon: '🔒', name: 'Security Agent', desc: 'Scans for OWASP vulnerabilities, injection risks, auth bypass, exposed secrets, and insecure configurations across all files.' },
+  { icon: '📋', name: 'PRD Compliance Agent', desc: 'Validates every feature requirement against actual code implementation. Ensures 100% coverage of product specifications.' },
+  { icon: '⚡', name: 'Performance Agent', desc: 'Identifies bottlenecks, N+1 queries, memory leaks, unoptimized loops, and suggests caching strategies.' },
+  { icon: '🧪', name: 'Testing Agent', desc: 'Audits test coverage, identifies untested edge cases, validates test quality, and ensures critical paths are covered.' },
+  { icon: '📦', name: 'Dependency Agent', desc: 'Checks for outdated packages, known CVEs, license conflicts, and unnecessary dependencies bloating the bundle.' },
+  { icon: '📝', name: 'Code Quality Agent', desc: 'Reviews naming conventions, code duplication, complexity metrics, documentation coverage, and best practices.' },
+  { icon: '🚀', name: 'Deploy Readiness Agent', desc: 'Validates CI/CD configs, environment variables, health checks, monitoring setup, and production deployment checklist.' },
+  { icon: '🤖', name: 'AI Orchestrator Agent', desc: 'Coordinates all 8 specialist agents, merges reports, resolves conflicts, and generates the final executive summary.' },
+]
+
+const AI_FEATURES = [
+  { icon: '🧠', title: 'Multi-Agent AI System', desc: '9 autonomous AI agents working in parallel to analyze every aspect of your codebase simultaneously.' },
+  { icon: '📄', title: 'PRD-Aware Analysis', desc: 'Upload your PRD and the AI validates whether your code actually implements every requirement — no guessing.' },
+  { icon: '🔍', title: 'Deep Code Scanning', desc: 'Goes beyond linting — understands business logic, data flows, and architectural decisions at a semantic level.' },
+  { icon: '📊', title: 'Interactive Dashboards', desc: 'Chart.js powered dashboards with real-time metrics on code health, security score, and PRD compliance.' },
+  { icon: '🛡️', title: 'Security-First Audit', desc: 'OWASP-aligned security scanning, secret detection, SQL injection checks, and XSS vulnerability analysis.' },
+  { icon: '⚡', title: 'NVIDIA Nemotron Powered', desc: 'Built on NVIDIA Nemotron LLM with vLLM inference engine and TensorRT-LLM for blazing-fast analysis.' },
+  { icon: '📑', title: 'Executive Reports', desc: 'Auto-generated professional audit reports with severity ratings, fix suggestions, and priority rankings.' },
+  { icon: '🔄', title: 'CI/CD Integration', desc: 'Plug into your GitHub Actions, GitLab CI, or any pipeline for automated code review on every commit.' },
+]
+
+const AI_TECH = [
+  { name: 'Next.js 15', category: 'Frontend' },
+  { name: 'React 19', category: 'Frontend' },
+  { name: 'TypeScript', category: 'Frontend' },
+  { name: 'Tailwind CSS', category: 'Frontend' },
+  { name: 'NVIDIA Nemotron', category: 'AI Engine' },
+  { name: 'vLLM', category: 'AI Inference' },
+  { name: 'TensorRT-LLM', category: 'AI Optimization' },
+  { name: 'Chart.js', category: 'Visualization' },
+  { name: 'Node.js', category: 'Backend' },
+  { name: 'GitHub Pages', category: 'Deployment' },
+]
+
+function AIAnalystPage({ onBack }) {
+  useEffect(() => { window.scrollTo(0, 0) }, [])
+
+  return (
+    <div className="ai-page">
+      {/* Back Nav */}
+      <nav className="ai-page-nav">
+        <div className="container">
+          <button className="ai-back-btn" onClick={onBack}>
+            ← Back to Portfolio
+          </button>
+          <a href="https://smart123-12.github.io/ai-analyst/" target="_blank" rel="noopener noreferrer" className="btn-glow" style={{padding:'10px 28px',fontSize:'13px'}}>
+            🚀 Visit Live Site
+          </a>
+        </div>
+      </nav>
+
+      {/* Hero */}
+      <section className="ai-hero">
+        <div className="ai-hero-glow" />
+        <div className="container">
+          <div className="ai-hero-badge">Powered by NVIDIA Nemotron · vLLM · TensorRT-LLM</div>
+          <h1 className="ai-hero-title">
+            AI Analyst — <span className="gradient-text">Engineering Intelligence</span> Platform
+          </h1>
+          <p className="ai-hero-desc">
+            The world's first AI-powered PRD-aware engineering analyst. 9 autonomous AI agents validate whether your software implementations satisfy product requirements, engineering standards, and production-readiness criteria — all in one click.
+          </p>
+          <div className="ai-hero-stats">
+            <div className="ai-stat"><div className="ai-stat-num">9</div><div className="ai-stat-label">AI Agents</div></div>
+            <div className="ai-stat"><div className="ai-stat-num">100%</div><div className="ai-stat-label">PRD Coverage</div></div>
+            <div className="ai-stat"><div className="ai-stat-num">&lt;30s</div><div className="ai-stat-label">Analysis Time</div></div>
+            <div className="ai-stat"><div className="ai-stat-num">NVIDIA</div><div className="ai-stat-label">Nemotron LLM</div></div>
+          </div>
+        </div>
+      </section>
+
+      {/* Problem & Solution */}
+      <section className="section" style={{background:'#fff'}}>
+        <div className="container">
+          <div className="ai-two-col">
+            <div className="ai-problem-card">
+              <div className="section-label" style={{background:'#fef2f2',color:'#dc2626',borderColor:'#fecaca'}}>❌ The Problem</div>
+              <h3>Manual Code Reviews Are Broken</h3>
+              <ul>
+                <li>PR reviews miss 60% of architectural issues</li>
+                <li>Security vulnerabilities slip into production</li>
+                <li>PRD requirements are never validated against code</li>
+                <li>Teams waste 15+ hours/week on manual reviews</li>
+                <li>No single tool checks everything — devs use 5+ tools</li>
+              </ul>
+            </div>
+            <div className="ai-solution-card">
+              <div className="section-label" style={{background:'#ecfdf5',color:'#059669',borderColor:'#a7f3d0'}}>✅ The Solution</div>
+              <h3>AI Analyst Does It All Automatically</h3>
+              <ul>
+                <li>9 specialized AI agents analyze everything in parallel</li>
+                <li>Upload PRD → AI validates every requirement against code</li>
+                <li>OWASP-aligned security scanning in every analysis</li>
+                <li>Full audit report generated in under 30 seconds</li>
+                <li>One platform replaces 5+ separate tools</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 9 AI Agents */}
+      <section className="section" style={{background:'var(--bg-light)'}}>
+        <div className="container">
+          <div className="section-label center">🤖 Multi-Agent Architecture</div>
+          <h2 className="section-heading center">
+            Meet the <span className="gradient-text">9 AI Agents</span>
+          </h2>
+          <p className="section-sub center">Each agent is a specialist, trained to analyze one critical aspect of your codebase with laser focus.</p>
+          <div className="ai-agents-grid">
+            {AI_AGENTS.map((a, i) => (
+              <div className="ai-agent-card" key={i}>
+                <div className="ai-agent-icon">{a.icon}</div>
+                <h4>{a.name}</h4>
+                <p>{a.desc}</p>
+                <div className="ai-agent-num">Agent {i + 1}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="section" style={{background:'#fff'}}>
+        <div className="container">
+          <div className="section-label center">⚡ Platform Features</div>
+          <h2 className="section-heading center">
+            Everything You Need for <span className="gradient-text">Code Intelligence</span>
+          </h2>
+          <div className="ai-features-grid">
+            {AI_FEATURES.map((f, i) => (
+              <div className="ai-feature-card" key={i}>
+                <span className="ai-feature-icon">{f.icon}</span>
+                <h4>{f.title}</h4>
+                <p>{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="section" style={{background:'var(--bg-light)'}}>
+        <div className="container">
+          <div className="section-label center">🔄 How It Works</div>
+          <h2 className="section-heading center">
+            From Code to <span className="gradient-text">Full Audit</span> in 3 Steps
+          </h2>
+          <div className="ai-steps">
+            <div className="ai-step">
+              <div className="ai-step-num">1</div>
+              <h4>Upload Your Code & PRD</h4>
+              <p>Connect your GitHub repo or paste code directly. Upload your Product Requirements Document for PRD-aware analysis.</p>
+            </div>
+            <div className="ai-step-arrow">→</div>
+            <div className="ai-step">
+              <div className="ai-step-num">2</div>
+              <h4>9 Agents Analyze in Parallel</h4>
+              <p>All 9 AI agents activate simultaneously — security, architecture, performance, PRD compliance, testing, and more.</p>
+            </div>
+            <div className="ai-step-arrow">→</div>
+            <div className="ai-step">
+              <div className="ai-step-num">3</div>
+              <h4>Get Executive Report</h4>
+              <p>Receive a comprehensive audit report with severity ratings, fix suggestions, compliance scores, and action items.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Tech Stack */}
+      <section className="section" style={{background:'#fff'}}>
+        <div className="container">
+          <div className="section-label center">🛠️ Built With</div>
+          <h2 className="section-heading center">
+            Powered by <span className="gradient-text">Cutting-Edge Tech</span>
+          </h2>
+          <div className="ai-tech-grid">
+            {AI_TECH.map((t, i) => (
+              <div className="ai-tech-tag" key={i}>
+                <span className="ai-tech-cat">{t.category}</span>
+                <span className="ai-tech-name">{t.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="ai-cta-section">
+        <div className="container center">
+          <h2 className="section-heading">
+            Ready to <span className="gradient-text">Analyze Your Code?</span>
+          </h2>
+          <p className="section-sub center" style={{marginBottom:36}}>Try AI Analyst free — no signup required. See what 9 AI agents find in your codebase.</p>
+          <div style={{display:'flex',gap:16,justifyContent:'center',flexWrap:'wrap'}}>
+            <a href="https://smart123-12.github.io/ai-analyst/" target="_blank" rel="noopener noreferrer" className="btn-glow">🚀 Try AI Analyst Live</a>
+            <button onClick={onBack} className="btn-glass">← Back to Portfolio</button>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  )
+}
+
 // ── APP ────────────────────────────────────────────────────────
 
 export default function App() {
+  const [page, setPage] = useState('home')
+
   return (
     <>
-      <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      <Services />
-      <Projects />
-      <WhyMe />
-      <Contact />
-      <Footer />
+      {page === 'home' ? (
+        <>
+          <Navbar />
+          <Hero />
+          <About />
+          <Skills />
+          <Services />
+          <Projects onShowAIAnalyst={() => setPage('ai-analyst')} />
+          <WhyMe />
+          <Contact />
+          <Footer />
+        </>
+      ) : (
+        <AIAnalystPage onBack={() => setPage('home')} />
+      )}
     </>
   )
 }
