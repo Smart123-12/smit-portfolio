@@ -54,6 +54,12 @@ const SERVICES = [
 
 const PROJECTS = [
   {
+    emoji: '🧪', label: 'LIVE', tech: ['Next.js', 'NVIDIA Nemotron', 'AI Agents', 'TensorRT'],
+    title: 'AI Analyst — Engineering Intelligence',
+    desc: 'AI-powered Engineering Intelligence Platform with 9 autonomous agents. Validates code against PRDs, runs security audits, architecture analysis & production-readiness checks. Powered by NVIDIA Nemotron & vLLM. White-label SaaS with clean indigo UI.',
+    link: 'https://smart123-12.github.io/ai-analyst/',
+  },
+  {
     emoji: '🏥', label: 'LIVE', tech: ['React', 'Node.js', 'MongoDB', 'GCP'],
     title: 'MediCap — Doctor & Patient System',
     desc: 'Complete Doctor & Patient Management System with role-based dashboards, secure auth, 20+ API endpoints. Live on Google Cloud with CI/CD.',
@@ -143,8 +149,8 @@ const REASONS = [
 ]
 
 const STATS = [
-  { num: '13+', label: 'Projects Built' },
-  { num: '9+', label: 'Live Deployments' },
+  { num: '14+', label: 'Projects Built' },
+  { num: '10+', label: 'Live Deployments' },
   { num: '30+', label: 'Hrs/Week Available' },
   { num: '100%', label: 'Client Satisfaction' },
 ]
@@ -243,7 +249,7 @@ function Hero() {
               </div>
               <div className="hero-float-badge hero-float-badge--2">
                 <span>🚀</span>
-                <div><strong>13+ Projects</strong><br /><small>All via AI Tools</small></div>
+                <div><strong>14+ Projects</strong><br /><small>All via AI Tools</small></div>
               </div>
             </div>
           </div>
