@@ -531,11 +531,19 @@ function Contact() {
           </div>
           <form className="contact-form" onSubmit={e => { e.preventDefault(); alert('Message sent! I will get back to you soon.') }}>
             <div className="form-row">
-              <input type="text" placeholder="Your Name" required />
-              <input type="email" placeholder="Your Email" required />
+              <div className="form-group">
+                <input type="text" placeholder="Your Name" required />
+              </div>
+              <div className="form-group">
+                <input type="email" placeholder="Your Email" required />
+              </div>
             </div>
-            <input type="text" placeholder="Subject" required />
-            <textarea placeholder="Your Message" rows={6} required />
+            <div className="form-group">
+              <input type="text" placeholder="Subject" required />
+            </div>
+            <div className="form-group">
+              <textarea placeholder="Your Message" rows={6} required />
+            </div>
             <button type="submit" className="btn-glow" style={{ width: '100%' }}>Send Message</button>
           </form>
         </div>
