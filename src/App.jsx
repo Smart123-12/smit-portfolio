@@ -522,14 +522,33 @@ function Contact() {
             <div className="contact-card">
               <h3>Let's Connect</h3>
               <p>Whether you need an AI-powered app, a full-stack platform, or automation - I deliver production-ready solutions at speed.</p>
-              <div className="contact-details">
-                <div className="contact-item"><span>Email</span><a href="mailto:tattvayan.ai@gmail.com">tattvayan.ai@gmail.com</a></div>
-                <div className="contact-item"><span>Phone</span><a href="tel:+918488809478">+91 8488809478</a></div>
-                <div className="contact-item"><span>GitHub</span><a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer">github.com/Smart123-12</a></div>
+              <div className="contact-items">
+                <div className="contact-item">
+                  <div className="contact-icon-wrap" style={{ background: '#ede9fe', color: 'var(--accent-1)' }}>📧</div>
+                  <div className="contact-item-text">
+                    <span>Email Address</span>
+                    <a href="mailto:tattvayan.ai@gmail.com">tattvayan.ai@gmail.com</a>
+                  </div>
+                </div>
+                <div className="contact-item">
+                  <div className="contact-icon-wrap" style={{ background: '#e0f2fe', color: '#0284c7' }}>📞</div>
+                  <div className="contact-item-text">
+                    <span>Phone Number</span>
+                    <a href="tel:+918488809478">+91 8488809478</a>
+                  </div>
+                </div>
+                <div className="contact-item">
+                  <div className="contact-icon-wrap" style={{ background: '#f1f5f9', color: '#0f172a' }}>💻</div>
+                  <div className="contact-item-text">
+                    <span>GitHub Profile</span>
+                    <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer">github.com/Smart123-12</a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <form className="contact-form" onSubmit={e => { e.preventDefault(); alert('Message sent! I will get back to you soon.') }}>
+            <h3 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-dark)', marginBottom: '24px' }}>Send a Message</h3>
             <div className="form-row">
               <div className="form-group">
                 <input type="text" placeholder="Your Name" required />
@@ -542,9 +561,9 @@ function Contact() {
               <input type="text" placeholder="Subject" required />
             </div>
             <div className="form-group">
-              <textarea placeholder="Your Message" rows={6} required />
+              <textarea placeholder="Your Message" rows={5} required />
             </div>
-            <button type="submit" className="btn-glow" style={{ width: '100%' }}>Send Message</button>
+            <button type="submit" className="btn-glow btn-full" style={{ marginTop: '8px' }}>Send Message</button>
           </form>
         </div>
       </div>
