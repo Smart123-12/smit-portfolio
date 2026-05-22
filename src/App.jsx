@@ -690,16 +690,16 @@ function ProjectDetailPage({ project, onBack }) {
         </div>
       </section>
 
-      <section className="section" style={{background:'#fff'}}>
+      <section className="section" style={{background:'var(--bg-white)'}}>
         <div className="container">
           <div className="ai-two-col">
             <div className="ai-problem-card">
-              <div className="section-label" style={{background:'#fef2f2',color:'#dc2626',borderColor:'#fecaca'}}>The Problem</div>
+              <div className="section-label" style={{background:'rgba(244, 63, 94, 0.08)',color:'#f43f5e',borderColor:'rgba(244, 63, 94, 0.25)'}}>The Problem</div>
               <h3>What Problem Does It Solve?</h3>
               <ul>{d.problem.map((p, i) => <li key={i}>{p}</li>)}</ul>
             </div>
             <div className="ai-solution-card">
-              <div className="section-label" style={{background:'#ecfdf5',color:'#059669',borderColor:'#a7f3d0'}}>The Solution</div>
+              <div className="section-label" style={{background:'rgba(16, 185, 129, 0.08)',color:'#10b981',borderColor:'rgba(16, 185, 129, 0.25)'}}>The Solution</div>
               <h3>How {project.title} Solves It</h3>
               <ul>{d.solution.map((s, i) => <li key={i}>{s}</li>)}</ul>
             </div>
