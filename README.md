@@ -64,6 +64,7 @@ I'm **Smit Parmar** — a Non-IT background builder who became a full-stack deve
 
 | Project | Description | Status |
 |---------|-------------|--------|
+| [**Manufactory CRM**](https://github.com/Smart123-12/manufactory-crm) | SME Factory Operations & CRM OS replacing Excel/WhatsApp with AI/WhatsApp alerts | 🌐 Live |
 | [**MediCap**](https://github.com/Smart123-12/medicap) | Doctor & Patient Management System with role-based dashboards, 20+ API endpoints, deployed on Google Cloud | ✅ Live |
 | [**Dental Clinic Management System**](https://github.com/Smart123-12/dental-clinic-management-system) | Full-stack clinic system with Admin, Doctor & Patient roles | ✅ Deployed |
 | [**Dental Clinic**](https://smart123-12.github.io/dental-clinic_12/) | Modern dental clinic landing page with appointment booking | 🌐 Live |
