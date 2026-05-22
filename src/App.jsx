@@ -523,8 +523,8 @@ function Contact() {
               <h3>Let's Connect</h3>
               <p>Whether you need an AI-powered app, a full-stack platform, or automation - I deliver production-ready solutions at speed.</p>
               <div className="contact-details">
-                <div className="contact-item"><span>Email</span><a href="mailto:smitparmar208@gmail.com">smitparmar208@gmail.com</a></div>
-                <div className="contact-item"><span>Phone</span><a href="tel:+918140148302">+91 8140148302</a></div>
+                <div className="contact-item"><span>Email</span><a href="mailto:tattvayan.ai@gmail.com">tattvayan.ai@gmail.com</a></div>
+                <div className="contact-item"><span>Phone</span><a href="tel:+918488809478">+91 8488809478</a></div>
                 <div className="contact-item"><span>GitHub</span><a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer">github.com/Smart123-12</a></div>
               </div>
             </div>
@@ -573,7 +573,7 @@ function Footer() {
         </div>
         <div className="footer-bottom">
           <p>2025 Smitkumar Parmar. Built with AI tools.</p>
-          <p>smitparmar208@gmail.com | +91 8140148302</p>
+          <p>tattvayan.ai@gmail.com | +91 8488809478</p>
         </div>
       </div>
     </footer>
