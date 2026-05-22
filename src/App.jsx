@@ -55,40 +55,42 @@ const PROJECTS = [
   {
     emoji: '\u{267B}', label: 'LIVE', tech: ['Vite', 'React', 'TypeScript', 'TailwindCSS', 'Framer Motion'],
     title: 'EcoLoop', subtitle: 'Circular Economy Tech',
-    desc: 'AI-powered B2B Circular Economy Platform connecting factories, certified recyclers, and buyers to exchange industrial waste and audit Scope 3 ESG metrics.',
+    desc: 'AI-powered B2B Circular Economy Platform connecting factories, certified recyclers, and raw material manufacturers to monetize byproducts, automate logistics routing, and track Scope 3 ESG compliance.',
     link: 'https://smart123-12.github.io/ecoloop/',
     details: {
-      tagline: 'Futuristic Climate-Tech Circular Infrastructure Platform',
-      fullDesc: 'EcoLoop is an AI-powered B2B Circular Economy Platform that connects factories, certified recyclers, and raw material manufacturers to exchange industrial waste streams, optimize regional logistics, and track carbon offsets automatically.',
+      tagline: 'National B2B Circular Economics & Industrial Waste Exchange',
+      fullDesc: 'EcoLoop is a national B2B Circular Economy & Industrial Waste Exchange Platform designed to disrupt unorganized local scrap brokers and bring direct digital monetization to small-to-medium factories (GIDC & workshop units). Using a sophisticated B2B circular economics framework, EcoLoop connects raw material manufacturers with verified, KYC-compliant recycling processors, automates regional logistics routing with real-time GreenTruck dispatch coordinates, and generates auditable Scope 3 ESG carbon certificates.',
       problem: [
-        'Factories dump valuable industrial byproducts into landfills',
-        'Finding certified regional recyclers is a manual, tedious process',
-        'SMEs overpay for raw materials due to high waste-disposal costs',
-        'Carbon credit tracking and ESG compliance lacks audit transparency',
-        'Logistics transport adds high Scope 3 carbon overhead to waste streams'
+        'Unorganized & Opaque Scrap Market — Factories rely on unverified WhatsApp scrap groups and manual brokers who capture huge margins.',
+        'Severe Disposal stress & yard blockages — Large lots of valuable metal, chemical, and organic byproducts pile up, incurring heavy yard holding costs.',
+        'Sourcing deficits for recyclers — Secondary processing mills face high operational downtime due to irregular, scattered material supply feeds.',
+        'Zero chemical grade assurance — Recyclers purchase uninspected waste, leading to chemical contamination and high processing failure rates.',
+        'Fragmented transport & heavy carbon load — Manual truck dispatch and long-distance transport routes create excessive freight emissions.',
+        'ESG & audit compliance overhead — Small scale units struggle to calculate circular ESG savings and lack auditable Scope 3 certifications.'
       ],
       solution: [
-        'AI matching matches industrial waste lots with verified buyers',
-        'A real-time price & carbon savings estimator automates quotes',
-        'Live RFP bidding simulation streamlines raw material allocation',
-        'Dynamic animated material flow charts visualize the circular chain',
-        'Automated ESG scorecard & BRSR metrics reports verify sustainability points'
+        'Digital B2B Marketplace Sourcing — Enables factories to declare surplus waste streams in 30 seconds and directly access verified, high-volume buyers.',
+        'Neural Purity Purity Matchmaker — EcoLoop AI estimates precise spot rates and matches lots based on moisture, chemical purity, and regional demand.',
+        'Instant Waste-to-Recycler Dispatcher — Features a quick-dispatch tool that matches local lots to certified recyclers and books logistics routes.',
+        'EcoLoop AI Value & Carbon Estimator — Real-time price and carbon offsets calculator with responsive tons slider for instant B2B quotes.',
+        'B2B Corporate Pricing Model — Professional licensing tiers for startups, scaling factories, and high-volume corporate enterprises.',
+        'Scope 3 ESG Prescriptions — An AI money coach recommendation desk for carbon-offset certification and automated environmental audits.'
       ],
       features: [
-        'Interactive AI Value & Carbon Estimator',
-        'B2B Marketplace with advanced search & location filters',
-        'Certified Recyclers Directory with ratings & ESG scores',
-        'Real-time Active Lot Auction & Bidding stream simulator',
-        'ESG Scorecard & Scope 3 carbon auditing dashboard',
-        'Animated Material Flow Sankey Loop diagram (Live SVG)',
-        'Comprehensive 3-tier corporate licensing plans',
-        'CI/CD pipeline automated hosting on GitHub Actions'
+        'Surplus Waste Dispatcher — Specify material, lot volume, and city to instantly scan and connect with local certified recycling businesses.',
+        'Interactive AI Value Calculator — Live slider modeling spot rate estimations (INR) and carbon credit offsets based on material density.',
+        'B2B Marketplace Feed — Complete listing desk with advanced coordinate mapping and material classification filters.',
+        'Active Lot Bidding Simulator — Real-time bidding interface replicating active corporate RFP lot matching in Vapi, Surat, and Coimbatore.',
+        'Strategic B2B Features Matrix — Detailed product capability profiles tailored separately for Manufacturers, Recyclers, and Platform Admins.',
+        'Animated Material Flow Loop — Custom high-performance SVG Sankey diagram visualizing raw inputs passing through the EcoLoop matching engine.',
+        'KYC Verification Audits — Comprehensive onboarding checking GSTIN, Pollution Control board certificates, and tax compliance indices.',
+        'Scope 3 Environmental Prescriptions — Auto-generated ESG scorecards and downloadable carbon offset audit certificates.'
       ],
       stats: [
-        { num: '840k+ T', label: 'Waste Processed' },
-        { num: '1,240+', label: 'Verified Recyclers' },
-        { num: '420k+ T', label: 'CO₂ Saved' },
-        { num: '98.2%', label: 'AI Match Score' }
+        { num: '₹45.2 Cr', label: 'Annual Traded GTV' },
+        { num: '842k+ T', label: 'Waste Processed' },
+        { num: '99.4%', label: 'Logistics Completion' },
+        { num: '88%', label: 'Repeat Trade Index' }
       ],
     }
   },
