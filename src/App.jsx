@@ -53,6 +53,44 @@ const SERVICES = [
 
 const PROJECTS = [
   {
+    emoji: '🏭', label: 'LIVE', tech: ['React', 'Recharts', 'TailwindCSS', 'Vite', 'Twilio API'],
+    title: 'Manufactory CRM', subtitle: 'Factory & CRM OS',
+    desc: 'Lightweight factory management software replacing Excel & WhatsApp for Indian SMEs. Dynamic role-based modules, AI-powered shop floor OEE analytics, and automated B2B WhatsApp alerts.',
+    link: 'https://smart123-12.github.io/manufactory-crm/',
+    details: {
+      tagline: 'Simple Factory Management & CRM Platform for Indian SMEs',
+      fullDesc: 'Manufactory CRM is a high-fidelity B2B factory operations platform built specifically for Indian small and medium manufacturing businesses (MIDC units, GIDC workshops, molding lines, and CNC operations). It completely replaces fragmented offline Excel logs and unorganized WhatsApp coordinator threads by unifying CRM inquiries, GST quotations, live machine diagnostics (OEE), automatic raw material safety stock notifications, shift attendance, and GST invoice/dispatch logs in one beautifully styled Pastel White workspace.',
+      problem: [
+        'Chaotic B2B CRM Tracking — Client inquiry registers, dealer lists, and price sheets are scattered across offline files, leading to lost leads.',
+        'Zero shop floor visibility — Factory owners and supervisors rely on manual operator calls, leading to unknown machine downtime and unlogged wastage.',
+        'Shortage-driven shutdowns — Raw polymer granules or metal coil stock counts are tracked on whiteboards, causing abrupt inventory shortages.',
+        'Delayed carrier dispatch — Manual vehicle challans and paper invoices cause transportation delays at checkposts.',
+        'Heavy staff dependency — Standard workflows break down entirely when a supervisor or billing accountant is absent.'
+      ],
+      solution: [
+        'Dynamic B2B CRM Pipeline — Simple customer directory, automated GST quotation constructor, and 1-click sales order converter.',
+        'Live Shop Floor Telemetries — Digital Machine Matrix monitoring utilization, runtime logs, OEE efficiency, and daily scrap counts.',
+        'Automatic Safety Stock Reminders — Instant system triggers warning store managers the second critical raw materials dip below safety thresholds.',
+        'Transporter Cargo Dispatch & Invoicing — Fully styled GST tax invoices mapping truck numbers and shipping logs automatically.',
+        'Role-Based Operational Access — Complete role-gated login modal offering customized, filtered workspaces for Owners, Admins, Sales Team, Store Managers, Supervisors, and Accountants.'
+      ],
+      features: [
+        'SME Dynamic Role Gating — One-click role-gated accounts simulating filtered operation layouts for Owners, Store Managers, and Accountants.',
+        'Live Machine Diagnostics — Complete OEE visualization dashboard showing active runtimes, scrap metrics, and active supervisor duty rosters.',
+        'AI Operations Advisor — Smart diagnostic panel solving critical SME questions (highest-margin SKUs, scrap wastage %, machine delays, and top client revenues) with colored grids.',
+        'WhatsApp Automations Hub — Twilio sandbox configurations for low-stock warnings, payment due reminders, and dispatch notices with live preview logs.',
+        'GST Compliant Invoicing — Printable Tax Invoice templates with dynamic calculations and transporter details.',
+        'Fast Pastel White Theme — Premium Stripe-style minimalist aesthetic with soft shadows, clear typography, and responsive menus.'
+      ],
+      stats: [
+        { num: '100%', label: 'CRM-to-Production Sync' },
+        { num: '₹17.2L', label: 'Monitored Ledgers' },
+        { num: '<15m', label: 'Onboarding Time' },
+        { num: '12+', label: 'Role-Gated Modules' }
+      ]
+    }
+  },
+  {
     emoji: '\u{267B}', label: 'LIVE', tech: ['Vite', 'React', 'TypeScript', 'TailwindCSS', 'Framer Motion'],
     title: 'EcoLoop', subtitle: 'Circular Economy Tech',
     desc: 'AI-powered B2B Circular Economy Platform connecting factories, certified recyclers, and raw material manufacturers to monetize byproducts, automate logistics routing, and track Scope 3 ESG compliance.',
@@ -348,8 +386,8 @@ function Hero() {
             <a href="#projects" className="btn-glass">View My Work</a>
           </div>
           <div className="hero-stats">
-            <div className="hero-stat"><span className="hero-stat-num">14</span><span className="hero-stat-label">Projects Shipped</span></div>
-            <div className="hero-stat"><span className="hero-stat-num">14</span><span className="hero-stat-label">Live & Deployed</span></div>
+            <div className="hero-stat"><span className="hero-stat-num">15</span><span className="hero-stat-label">Projects Shipped</span></div>
+            <div className="hero-stat"><span className="hero-stat-num">15</span><span className="hero-stat-label">Live & Deployed</span></div>
             <div className="hero-stat"><span className="hero-stat-num">AI</span><span className="hero-stat-label">First Approach</span></div>
           </div>
         </div>
@@ -360,7 +398,7 @@ function Hero() {
               <img src={photo2} alt="Smitkumar Parmar" />
             </div>
             <div className="hero-float-badge hero-float-badge--1">
-              <span>14</span>
+              <span>15</span>
               <div><strong>Projects</strong><br /><small>Shipped & Live</small></div>
             </div>
             <div className="hero-float-badge hero-float-badge--2">
