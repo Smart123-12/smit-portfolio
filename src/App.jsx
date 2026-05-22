@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react'
 import './index.css'
 import './App.css'
 
-import photo1 from './assets/smit.jpg'
 import photo2 from './assets/photo2.jpg'
 import photo3 from './assets/photo3.jpg'
 
@@ -330,7 +329,7 @@ function Hero() {
           <div className="hero-photo-container">
             <div className="hero-photo-glow" />
             <div className="hero-photo-border">
-              <img src={photo1} alt="Smitkumar Parmar" />
+              <img src={photo2} alt="Smitkumar Parmar" />
             </div>
             <div className="hero-float-badge hero-float-badge--1">
               <span>14+</span>
@@ -352,13 +351,19 @@ function About() {
   return (
     <section className={`about section ${visible ? 'in-view' : ''}`} id="about" ref={ref}>
       <div className="container about-inner">
-        <div className="about-left">
-          <div className="about-photos">
-            <div className="about-photo about-photo--1"><img src={photo2} alt="Smit working" /></div>
-            <div className="about-photo about-photo--2"><img src={photo3} alt="Smit coding" /></div>
-            <div className="about-experience-badge">
-              <span className="exp-number">AI</span>
-              <span className="exp-text">Builder</span>
+        <div className="about-left" style={{ display: 'flex', justifyContent: 'center' }}>
+          <div className="hero-photo-container">
+            <div className="hero-photo-glow" />
+            <div className="hero-photo-border">
+              <img src={photo3} alt="Smit Parmar - AI Builder" />
+            </div>
+            <div className="hero-float-badge hero-float-badge--1" style={{ bottom: '50px', right: '-20px' }}>
+              <span>🚀</span>
+              <div><strong>AI Builder</strong><br /><small>Non-IT Advantage</small></div>
+            </div>
+            <div className="hero-float-badge hero-float-badge--2" style={{ top: '40px', left: '-30px', animationDelay: '0.7s' }}>
+              <span>⚡</span>
+              <div><strong>Fast Ship</strong><br /><small>Rapid Delivery</small></div>
             </div>
           </div>
         </div>
