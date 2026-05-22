@@ -694,7 +694,7 @@ function ProjectDetailPage({ project, onBack }) {
         <div className="container">
           <div className="ai-two-col">
             <div className="ai-problem-card">
-              <div className="section-label" style={{background:'rgba(244, 63, 94, 0.08)',color:'#f43f5e',borderColor:'rgba(244, 63, 94, 0.25)'}}>The Problem</div>
+              <div className="section-label" style={{background:'rgba(249, 115, 22, 0.08)',color:'#f97316',borderColor:'rgba(249, 115, 22, 0.25)'}}>The Problem</div>
               <h3>What Problem Does It Solve?</h3>
               <ul>{d.problem.map((p, i) => <li key={i}>{p}</li>)}</ul>
             </div>

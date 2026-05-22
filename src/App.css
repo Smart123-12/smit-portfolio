@@ -70,7 +70,7 @@
 .hero {
   min-height: 100vh; display: flex; align-items: center;
   position: relative; overflow: hidden;
-  background: linear-gradient(150deg, #030014 0%, #090526 50%, #0e0a38 100%);
+  background: linear-gradient(150deg, #04020a 0%, #0b0918 50%, #15102a 100%);
   padding-top: 74px;
 }
 .hero-badge {
@@ -436,7 +436,7 @@
 
 /* ===== CONTACT ===== */
 .contact {
-  background: linear-gradient(150deg, #030014 0%, #090526 50%, #0e0a38 100%);
+  background: linear-gradient(150deg, #04020a 0%, #0b0918 50%, #15102a 100%);
 }
 .contact::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
@@ -647,7 +647,7 @@
 
 .ai-page-nav {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(3, 0, 20, 0.75);
+  background: rgba(4, 2, 10, 0.75);
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid var(--border);
   padding: 14px 0;
@@ -670,20 +670,20 @@
 
 .ai-hero {
   padding: 100px 0 80px; text-align: center;
-  background: linear-gradient(150deg, #030014 0%, #090526 50%, #0e0a38 100%);
+  background: linear-gradient(150deg, #04020a 0%, #0b0918 50%, #15102a 100%);
   position: relative; overflow: hidden;
 }
 .ai-hero-glow {
   position: absolute; width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(217, 70, 239, 0.12), transparent 60%);
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.12), transparent 60%);
   top: -100px; right: 20%; border-radius: 50%;
   filter: blur(80px); pointer-events: none;
 }
 .ai-hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(217, 70, 239, 0.08); color: var(--accent-1);
+  background: rgba(251, 191, 36, 0.08); color: var(--accent-1);
   font-size: 12px; font-weight: 700; padding: 8px 24px;
-  border-radius: 99px; border: 1px solid rgba(217, 70, 239, 0.25);
+  border-radius: 99px; border: 1px solid rgba(251, 191, 36, 0.25);
   margin-bottom: 28px; letter-spacing: 0.04em;
 }
 .ai-hero-title {
@@ -717,16 +717,16 @@
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .ai-problem-card {
-  background: linear-gradient(135deg, rgba(244, 63, 94, 0.04) 0%, rgba(3, 0, 20, 0.55) 100%);
-  border-color: rgba(244, 63, 94, 0.16);
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.04) 0%, rgba(4, 2, 10, 0.55) 100%);
+  border-color: rgba(249, 115, 22, 0.16);
 }
 .ai-problem-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(244, 63, 94, 0.5);
-  box-shadow: 0 12px 40px rgba(244, 63, 94, 0.15);
+  border-color: rgba(249, 115, 22, 0.5);
+  box-shadow: 0 12px 40px rgba(249, 115, 22, 0.15);
 }
 .ai-solution-card {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.04) 0%, rgba(3, 0, 20, 0.55) 100%);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.04) 0%, rgba(4, 2, 10, 0.55) 100%);
   border-color: rgba(16, 185, 129, 0.16);
 }
 .ai-solution-card:hover {
@@ -857,7 +857,7 @@
 /* CTA */
 .ai-cta-section {
   padding: 80px 0;
-  background: linear-gradient(150deg, #030014 0%, #090526 50%, #0e0a38 100%);
+  background: linear-gradient(150deg, #04020a 0%, #0b0918 50%, #15102a 100%);
 }
 
 /* AI Page Responsive */
