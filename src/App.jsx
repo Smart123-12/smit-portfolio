@@ -99,7 +99,7 @@ const PROJECTS = [
     link: 'https://smart123-12.github.io/ai-analyst/',
     details: {
       tagline: 'Powered by NVIDIA Nemotron - vLLM - TensorRT-LLM',
-      fullDesc: 'The world\'s first AI-powered PRD-aware engineering analyst. 9 autonomous AI agents validate whether your software implementations satisfy product requirements, engineering standards, and production-readiness criteria - all in one click.',
+      fullDesc: 'The world\'s first PRD-aware engineering analyst. 9 autonomous AI agents validate whether your software implementations satisfy product requirements, engineering standards, and production-readiness criteria - all in one click.',
       problem: ['PR reviews miss 60% of architectural issues', 'Security vulnerabilities slip into production', 'PRD requirements are never validated against code', 'Teams waste 15+ hours/week on manual reviews', 'No single tool checks everything - devs use 5+ tools'],
       solution: ['9 specialized AI agents analyze everything in parallel', 'Upload PRD - AI validates every requirement against code', 'OWASP-aligned security scanning in every analysis', 'Full audit report generated in under 30 seconds', 'One platform replaces 5+ separate tools'],
       features: ['Multi-Agent AI System - 9 agents in parallel', 'PRD-Aware Analysis - validates every requirement', 'Deep Code Scanning - beyond linting', 'Interactive Chart.js Dashboards', 'OWASP Security Audit', 'NVIDIA Nemotron LLM powered', 'Executive Reports auto-generated', 'CI/CD pipeline integration'],
@@ -109,8 +109,8 @@ const PROJECTS = [
   {
     emoji: '\u{1F3E5}', label: 'LIVE', tech: ['React', 'Node.js', 'MongoDB', 'GCP'],
     title: 'MediCap', subtitle: 'Doctor & Patient System',
-    desc: 'Complete Doctor & Patient Management System with role-based dashboards, secure auth, 20+ API endpoints. Live on Google Cloud with CI/CD.',
-    link: 'https://github.com/Smart123-12/medicap',
+    desc: 'Complete Doctor & Patient Management System with role-based dashboards, secure auth, 20+ API endpoints. Deployed live on GCP.',
+    link: 'https://smart123-12.github.io/medicap/',
     details: {
       tagline: 'Live on Google Cloud Platform with CI/CD',
       fullDesc: 'A comprehensive healthcare management system enabling doctors and patients to interact seamlessly. Features role-based access, appointment scheduling, medical records, and real-time dashboards - all deployed live on Google Cloud.',
@@ -137,8 +137,8 @@ const PROJECTS = [
   {
     emoji: '\u{1F393}', label: 'DEPLOYED', tech: ['React', 'Node.js', 'JavaScript'],
     title: 'Tattavyan School', subtitle: 'Edutech Platform',
-    desc: 'Multi-role school management (Admin, Teacher, Student) with dashboards, homework, attendance & notice boards.',
-    link: 'https://github.com/Smart123-12/tattavyan-school',
+    desc: 'Multi-role school management (Admin, Teacher, Student) with dashboards, homework, attendance & notice boards. Live on GitHub Pages.',
+    link: 'https://smart123-12.github.io/tattavyan-school/',
     details: {
       tagline: 'Complete School Management Ecosystem',
       fullDesc: 'A comprehensive school management system designed for real educational institutions. Features separate portals for administrators, teachers, and students with homework management, attendance tracking, grade management, and notice boards.',
@@ -151,8 +151,8 @@ const PROJECTS = [
   {
     emoji: '\u{1F4B0}', label: 'LIVE', tech: ['TypeScript', 'React', 'AI'],
     title: 'AarthIQ', subtitle: 'AI Financial Advisor',
-    desc: 'AI-powered Indian Tax & Financial Advisory Platform for FY 2026-27. Salary optimizer, freelancer planner, NRI tools & AI Money Coach.',
-    link: 'https://github.com/Smart123-12/AarthIQ',
+    desc: 'AI-powered Indian Tax & Financial Advisory Platform for FY 2026-27. Salary optimizer, freelancer planner, NRI tools & AI Money Coach. Live on GitHub Pages.',
+    link: 'https://smart123-12.github.io/AarthIQ/',
     details: {
       tagline: 'AI-Powered Financial Intelligence for India',
       fullDesc: 'AarthIQ is an intelligent Indian tax and financial advisory platform for FY 2026-27. It uses AI to help salaried professionals, freelancers, and NRIs optimize their taxes, plan investments, and get personalized financial advice through an AI Money Coach.',
@@ -165,8 +165,8 @@ const PROJECTS = [
   {
     emoji: '\u{1F499}', label: 'LIVE', tech: ['TypeScript', 'React', 'IRS API'],
     title: 'BlueTax', subtitle: 'US Tax Optimizer',
-    desc: 'Privacy-first US W2 tax optimizer using 2026 IRS brackets. Keep more of your paycheck with smart tax planning.',
-    link: 'https://github.com/Smart123-12/bluetax',
+    desc: 'Privacy-first US W2 tax optimizer using 2026 IRS brackets. Keep more of your paycheck with smart tax planning. Live on GitHub Pages.',
+    link: 'https://smart123-12.github.io/bluetax/',
     details: {
       tagline: 'Privacy-First US Tax Intelligence',
       fullDesc: 'BlueTax helps American W2 employees optimize their tax withholdings using official 2026 IRS tax brackets. All calculations run locally in the browser - zero data is sent to any server.',
@@ -179,8 +179,8 @@ const PROJECTS = [
   {
     emoji: '\u{1F9E0}', label: 'LIVE', tech: ['HTML', 'Node.js', 'Gemini AI'],
     title: 'Nexus AI', subtitle: 'Business Intelligence',
-    desc: 'AI-Powered Business Intelligence SaaS Platform with Chart.js dashboards, MongoDB, and Gemini AI integration.',
-    link: 'https://github.com/Smart123-12/nexus-ai',
+    desc: 'AI-Powered Business Intelligence SaaS Platform with Chart.js dashboards, MongoDB, and Gemini AI integration. Live on GitHub Pages.',
+    link: 'https://smart123-12.github.io/nexus-ai/',
     details: {
       tagline: 'AI-Powered Business Intelligence SaaS',
       fullDesc: 'Nexus AI is a full-featured Business Intelligence platform that combines real-time analytics dashboards with Google Gemini AI to provide intelligent business insights. Upload your data, visualize trends, and let AI generate actionable recommendations.',
@@ -193,8 +193,8 @@ const PROJECTS = [
   {
     emoji: '\u{1F4C8}', label: 'LIVE', tech: ['HTML', 'CSS', 'JavaScript'],
     title: 'FinWise', subtitle: 'Smart Finance',
-    desc: 'Smart Finance Management for Indian families - Tax Calculator, Expense Tracker, Dashboard & Insurance Compare.',
-    link: 'https://github.com/Smart123-12/finwise',
+    desc: 'Smart Finance Management for Indian families - Tax Calculator, Expense Tracker, Dashboard & Insurance Compare. Live on GitHub Pages.',
+    link: 'https://smart123-12.github.io/finwise/',
     details: {
       tagline: 'Smart Finance for Indian Families',
       fullDesc: 'FinWise is a comprehensive personal finance management tool designed specifically for Indian households. Features tax calculators, expense tracking, budget planning, insurance comparison, and investment guidance - all in one beautiful interface.',
@@ -207,8 +207,8 @@ const PROJECTS = [
   {
     emoji: '\u{1F6D2}', label: 'LIVE', tech: ['React', 'Node.js', 'PHP', 'MySQL'],
     title: 'ecom-dashboard', subtitle: 'eCommerce Platform',
-    desc: 'Modern Full-Stack eCommerce Dashboard with React frontend, Node.js & PHP backend, MySQL database.',
-    link: 'https://github.com/Smart123-12/ecom-dashboard',
+    desc: 'Modern Full-Stack eCommerce Dashboard with React frontend, Node.js & PHP backend, MySQL database. Live on GitHub Pages.',
+    link: 'https://smart123-12.github.io/ecom-dashboard/',
     details: {
       tagline: 'Full-Stack eCommerce Management System',
       fullDesc: 'A powerful eCommerce admin dashboard for managing products, orders, customers, and inventory. Built with React on the frontend, dual backend in Node.js and PHP, and MySQL for data management.',
@@ -221,8 +221,8 @@ const PROJECTS = [
   {
     emoji: '\u{1F33E}', label: 'DEPLOYED', tech: ['React', 'Node.js', 'JavaScript'],
     title: 'Khedut', subtitle: 'Farmer Platform',
-    desc: 'Agricultural platform connecting farmers with resources, market data, and smart farming tools.',
-    link: 'https://github.com/Smart123-12/khedut',
+    desc: 'Agricultural platform connecting farmers with resources, market data, and smart farming tools. Deployed live on GitHub Pages.',
+    link: 'https://smart123-12.github.io/khedut/',
     details: {
       tagline: 'Digital Agriculture for Indian Farmers',
       fullDesc: 'Khedut is a digital agriculture platform designed to empower Indian farmers with market price information, weather updates, crop guidance, and government scheme details. Built to bridge the information gap between farmers and agricultural resources.',
@@ -233,24 +233,10 @@ const PROJECTS = [
     }
   },
   {
-    emoji: '\u{1F3E2}', label: 'LIVE', tech: ['HTML', 'CSS', 'JavaScript'],
-    title: 'Zenvora Tech', subtitle: 'Solutions Website',
-    desc: 'Premium portfolio for USA Job Placement & Search Support Service. Conversion-focused responsive design.',
-    link: 'https://github.com/Smart123-12/zenvora-tech-solutions',
-    details: {
-      tagline: 'USA Job Placement & Support - Premium Website',
-      fullDesc: 'A premium, conversion-optimized portfolio website built for Zenvora Tech Solutions - a USA-based job placement and search support service. Features modern animations, lead capture forms, service breakdowns, and testimonials designed to convert visitors into clients.',
-      problem: ['Job placement services struggle with online presence', 'Generic templates do not convert visitors', 'No professional web presence means no trust', 'Competitors have better digital marketing'],
-      solution: ['Custom premium design with brand identity', 'Conversion-optimized landing sections', 'Lead capture forms with service selection', 'Professional UI that builds instant trust', 'SEO-optimized for organic traffic'],
-      features: ['Premium conversion-focused design', 'Lead Capture Forms', 'Service Breakdown sections', 'Testimonials & Social proof', 'Fully responsive on all devices', 'Fast loading performance', 'SEO optimized structure', 'Live deployed on GitHub Pages'],
-      stats: [{ num: 'USA', label: 'Market' }, { num: 'Premium', label: 'Design' }, { num: 'SEO', label: 'Optimized' }, { num: 'Live', label: 'Deployed' }],
-    }
-  },
-  {
     emoji: '\u{1F9FE}', label: 'TOOL', tech: ['JavaScript', 'HTML', 'CSS'],
     title: 'Invoice Generator', subtitle: 'Business Tool',
-    desc: 'Professional invoice generation web app. Generate, preview and download invoices instantly.',
-    link: 'https://github.com/Smart123-12/invoice-generator',
+    desc: 'Professional invoice generation web app. Generate, preview and download invoices instantly. Live on GitHub Pages.',
+    link: 'https://smart123-12.github.io/invoice-generator/',
     details: {
       tagline: 'Generate Professional Invoices in Seconds',
       fullDesc: 'A clean, professional invoice generation tool that lets freelancers and small businesses create, preview, and download invoices instantly. Add custom branding, line items, taxes, and export as PDF - all running in the browser with no signup required.',
@@ -263,8 +249,8 @@ const PROJECTS = [
   {
     emoji: '\u{1F3D7}', label: 'PLATFORM', tech: ['JavaScript', 'Node.js'],
     title: 'Neev Platform', subtitle: 'Scalable Architecture',
-    desc: 'Modern scalable platform demonstrating full-stack dev capabilities. Production-ready architecture.',
-    link: 'https://github.com/Smart123-12/neev-platform',
+    desc: 'Modern scalable platform demonstrating full-stack dev capabilities. Production-ready architecture. Live on GitHub Pages.',
+    link: 'https://smart123-12.github.io/neev-platform/',
     details: {
       tagline: 'Scalable Full-Stack Platform Architecture',
       fullDesc: 'Neev is a modern full-stack platform built with production-ready architecture patterns. Demonstrates scalable design, clean code structure, and enterprise-level patterns including modular routing, middleware, and database abstraction.',
@@ -278,7 +264,7 @@ const PROJECTS = [
     emoji: '\u{1F549}', label: 'LIVE', tech: ['HTML', 'CSS', 'JavaScript'],
     title: 'Tattvayan', subtitle: 'Spiritual Platform',
     desc: 'Full-featured spiritual & cultural platform with beautiful UI, content pages, and interactive elements. Live on GitHub Pages.',
-    link: 'https://github.com/Smart123-12/tattvayan',
+    link: 'https://smart123-12.github.io/tattvayan/',
     details: {
       tagline: 'Spiritual & Cultural Digital Experience',
       fullDesc: 'Tattvayan is a beautifully designed spiritual and cultural platform that brings traditional Indian wisdom to the digital world. Features rich content pages, interactive UI elements, spiritual resources, and a meditation-focused user experience.',
@@ -360,8 +346,8 @@ function Hero() {
             <a href="#projects" className="btn-glass">View My Work</a>
           </div>
           <div className="hero-stats">
-            <div className="hero-stat"><span className="hero-stat-num">14+</span><span className="hero-stat-label">Projects Shipped</span></div>
-            <div className="hero-stat"><span className="hero-stat-num">10+</span><span className="hero-stat-label">Live & Deployed</span></div>
+            <div className="hero-stat"><span className="hero-stat-num">14</span><span className="hero-stat-label">Projects Shipped</span></div>
+            <div className="hero-stat"><span className="hero-stat-num">14</span><span className="hero-stat-label">Live & Deployed</span></div>
             <div className="hero-stat"><span className="hero-stat-num">AI</span><span className="hero-stat-label">First Approach</span></div>
           </div>
         </div>
@@ -372,7 +358,7 @@ function Hero() {
               <img src={photo2} alt="Smitkumar Parmar" />
             </div>
             <div className="hero-float-badge hero-float-badge--1">
-              <span>14+</span>
+              <span>14</span>
               <div><strong>Projects</strong><br /><small>Shipped & Live</small></div>
             </div>
             <div className="hero-float-badge hero-float-badge--2">
@@ -415,10 +401,10 @@ function About() {
           <p className="about-text">I am not from a traditional IT background - and that is exactly my advantage. While others write code line by line, I leverage the most powerful AI tools in the world to build, ship, and deploy production-ready applications at unprecedented speed.</p>
           <p className="about-text">My toolkit includes Google Antigravity, Cursor AI, GitHub Copilot, Claude, v0, Bolt, Replit, and n8n for workflow automation. I do not just use AI - I think in AI. Every project I build is a testament to what is possible when you combine human creativity with machine intelligence.</p>
           <div className="about-highlights">
-            <div className="highlight-item"><span className="highlight-icon">🧠</span><div><strong>AI-First Mindset</strong><p>Every solution starts with AI strategy</p></div></div>
-            <div className="highlight-item"><span className="highlight-icon">🚀</span><div><strong>Rapid Delivery</strong><p>Ship in days, not months</p></div></div>
-            <div className="highlight-item"><span className="highlight-icon">🎯</span><div><strong>Result-Focused</strong><p>Built for real users, not demos</p></div></div>
-            <div className="highlight-item"><span className="highlight-icon">💻</span><div><strong>Full-Stack</strong><p>Frontend to deployment, end-to-end</p></div></div>
+            <div className="about-highlight"><span className="about-h-icon">🧠</span><div><strong>AI-First Mindset</strong><p>Every solution starts with AI strategy</p></div></div>
+            <div className="about-highlight"><span className="about-h-icon">🚀</span><div><strong>Rapid Delivery</strong><p>Ship in days, not months</p></div></div>
+            <div className="about-highlight"><span className="about-h-icon">🎯</span><div><strong>Result-Focused</strong><p>Built for real users, not demos</p></div></div>
+            <div className="about-highlight"><span className="about-h-icon">💻</span><div><strong>Full-Stack</strong><p>Frontend to deployment, end-to-end</p></div></div>
           </div>
         </div>
       </div>
