@@ -53,6 +53,46 @@ const SERVICES = [
 
 const PROJECTS = [
   {
+    emoji: '\u{267B}', label: 'LIVE', tech: ['Vite', 'React', 'TypeScript', 'TailwindCSS', 'Framer Motion'],
+    title: 'EcoLoop', subtitle: 'Circular Economy Tech',
+    desc: 'AI-powered B2B Circular Economy Platform connecting factories, certified recyclers, and buyers to exchange industrial waste and audit Scope 3 ESG metrics.',
+    link: 'https://smart123-12.github.io/ecoloop/',
+    details: {
+      tagline: 'Futuristic Climate-Tech Circular Infrastructure Platform',
+      fullDesc: 'EcoLoop is an AI-powered B2B Circular Economy Platform that connects factories, certified recyclers, and raw material manufacturers to exchange industrial waste streams, optimize regional logistics, and track carbon offsets automatically.',
+      problem: [
+        'Factories dump valuable industrial byproducts into landfills',
+        'Finding certified regional recyclers is a manual, tedious process',
+        'SMEs overpay for raw materials due to high waste-disposal costs',
+        'Carbon credit tracking and ESG compliance lacks audit transparency',
+        'Logistics transport adds high Scope 3 carbon overhead to waste streams'
+      ],
+      solution: [
+        'AI matching matches industrial waste lots with verified buyers',
+        'A real-time price & carbon savings estimator automates quotes',
+        'Live RFP bidding simulation streamlines raw material allocation',
+        'Dynamic animated material flow charts visualize the circular chain',
+        'Automated ESG scorecard & BRSR metrics reports verify sustainability points'
+      ],
+      features: [
+        'Interactive AI Value & Carbon Estimator',
+        'B2B Marketplace with advanced search & location filters',
+        'Certified Recyclers Directory with ratings & ESG scores',
+        'Real-time Active Lot Auction & Bidding stream simulator',
+        'ESG Scorecard & Scope 3 carbon auditing dashboard',
+        'Animated Material Flow Sankey Loop diagram (Live SVG)',
+        'Comprehensive 3-tier corporate licensing plans',
+        'CI/CD pipeline automated hosting on GitHub Actions'
+      ],
+      stats: [
+        { num: '840k+ T', label: 'Waste Processed' },
+        { num: '1,240+', label: 'Verified Recyclers' },
+        { num: '420k+ T', label: 'CO₂ Saved' },
+        { num: '98.2%', label: 'AI Match Score' }
+      ],
+    }
+  },
+  {
     emoji: '\u{1F9EA}', label: 'LIVE', tech: ['Next.js', 'NVIDIA Nemotron', 'AI Agents', 'TensorRT'],
     title: 'AI Analyst', subtitle: 'Engineering Intelligence',
     desc: 'AI-powered Engineering Intelligence Platform with 9 autonomous agents. Validates code against PRDs, runs security audits, architecture analysis & production-readiness checks.',
