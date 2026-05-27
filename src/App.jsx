@@ -1,845 +1,1102 @@
-import { useState, useEffect, useRef } from 'react'
-import './index.css'
-import './App.css'
+import { useState, useEffect } from 'react'
+import {
+  Sparkles,
+  BarChart3,
+  TrendingUp,
+  Cpu,
+  ClipboardList,
+  Database,
+  Mail,
+  MapPin,
+  ChevronRight,
+  Menu,
+  X,
+  ArrowRight,
+  CheckCircle2,
+  AlertTriangle,
+  Play,
+  FileSpreadsheet,
+  Check,
+  Send,
+  Zap
+} from 'lucide-react'
 
+// Custom robust SVGs to replace Github and Linkedin
+const Github = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+    <path d="M9 18c-4.51 2-5-2-7-2" />
+  </svg>
+)
+
+const Linkedin = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect x="2" y="9" width="4" height="12" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+)
+
+// Import assets
 import photo2 from './assets/photo2.jpg'
 import photo3 from './assets/photo3.jpg'
+import smitPhoto from './assets/smit.jpg'
+import smitAboutPhoto from './assets/smit_about.jpg'
 
-// -- DATA --
-
+// SKILLS DATA
 const SKILLS = [
-  { name: 'AI Prompt Engineering', level: 96 },
-  { name: 'Google Antigravity', level: 95 },
-  { name: 'AI Tools (Cursor, Copilot, Claude)', level: 94 },
-  { name: 'No-Code / Low-Code Platforms', level: 92 },
-  { name: 'AI App Building (v0, Bolt, Replit)', level: 90 },
-  { name: 'n8n & Workflow Automation', level: 88 },
-  { name: 'React / Next.js (via AI)', level: 85 },
-  { name: 'Cloud Deployment (GCP, Vercel)', level: 80 },
+  { name: 'Advanced Excel', level: 95, desc: 'Nested formulas, dynamic arrays, solver & data modeling' },
+  { name: 'Dashboard Creation', level: 92, desc: 'Interactive KPI dashboards, dynamic slicers & advanced charting' },
+  { name: 'MIS Reporting', level: 90, desc: 'Structured corporate reporting, periodic summaries & auditing' },
+  { name: 'Pivot Tables & Charting', level: 95, desc: 'Consolidated source modeling, group trends & filters' },
+  { name: 'VLOOKUP / XLOOKUP', level: 98, desc: 'Complex relational lookups, error-handling & matrix indexing' },
+  { name: 'AI Tools Integration', level: 88, desc: 'Leveraging Claude, Gemini, ChatGPT for daily coding & writing' },
+  { name: 'Prompt Engineering', level: 90, desc: 'Structured prompts, systemic instructions & custom models' },
+  { name: 'Basic n8n Automation', level: 82, desc: 'Webhook triggers, API nodes, sheets sync & slack alerts' },
+  { name: 'Power BI', level: 75, desc: 'Data modeling, DAX fundamentals & custom reports (Active Learning)' },
+  { name: 'GitHub & Versioning', level: 80, desc: 'Repo management, branch pipelines & deployment hooks' }
 ]
 
-const SERVICES = [
-  {
-    icon: '\u{1F916}', title: 'AI Apps & Integration',
-    desc: 'Custom AI-powered solutions integrated directly into your business workflows.',
-    list: ['Custom AI chatbots', 'AI-powered support', 'Smart automation', 'Prompt engineering', 'No-code AI solutions'],
-  },
-  {
-    icon: '\u{1F310}', title: 'Full-Stack Web Dev',
-    desc: 'Modern, scalable web applications and SaaS products that perform and grow.',
-    list: ['React / Next.js apps', 'Node.js APIs', 'Auth & user management', 'Database design', 'Cloud deployment'],
-  },
-  {
-    icon: '\u{1F4DD}', title: 'AI Content & Copy',
-    desc: 'High-converting copy and content that speaks to your audience and drives action.',
-    list: ['Landing page copy', 'Sales funnel content', 'Product descriptions', 'Email sequences', 'SEO optimization'],
-  },
-  {
-    icon: '\u{1F50D}', title: 'AI Research Reports',
-    desc: 'Deep research and analysis to inform your business decisions with clarity.',
-    list: ['Market analysis', 'Competitor research', 'Investment research', 'Niche research', 'Executive summaries'],
-  },
-  {
-    icon: '\u{1F4CA}', title: 'Data & Automation',
-    desc: 'Smart spreadsheets and dashboards that save hours of manual work every week.',
-    list: ['Spreadsheet automation', 'Live dashboards', 'Data cleaning', 'AI data analysis', 'Auto reporting'],
-  },
-  {
-    icon: '\u{1F680}', title: 'End-to-End Delivery',
-    desc: 'From idea to deployed product - built to last with full ownership.',
-    list: ['Fast execution', 'Clear communication', 'Full accountability', 'Scalable builds', 'Unlimited revisions'],
-  },
-]
-
+// PROJECTS DATA
 const PROJECTS = [
   {
-    emoji: '🏭', label: 'LIVE', tech: ['React', 'Recharts', 'TailwindCSS', 'Vite', 'Twilio API'],
-    title: 'Manufactory CRM', subtitle: 'Factory & CRM OS',
-    desc: 'Lightweight factory management software replacing Excel & WhatsApp for Indian SMEs. Dynamic role-based modules, AI-powered shop floor OEE analytics, and automated B2B WhatsApp alerts.',
-    link: 'https://smart123-12.github.io/manufactory-crm/',
-    details: {
-      tagline: 'Simple Factory Management & CRM Platform for Indian SMEs',
-      fullDesc: 'Manufactory CRM is a high-fidelity B2B factory operations platform built specifically for Indian small and medium manufacturing businesses (MIDC units, GIDC workshops, molding lines, and CNC operations). It completely replaces fragmented offline Excel logs and unorganized WhatsApp coordinator threads by unifying CRM inquiries, GST quotations, live machine diagnostics (OEE), automatic raw material safety stock notifications, shift attendance, and GST invoice/dispatch logs in one beautifully styled Pastel White workspace.',
-      problem: [
-        'Chaotic B2B CRM Tracking — Client inquiry registers, dealer lists, and price sheets are scattered across offline files, leading to lost leads.',
-        'Zero shop floor visibility — Factory owners and supervisors rely on manual operator calls, leading to unknown machine downtime and unlogged wastage.',
-        'Shortage-driven shutdowns — Raw polymer granules or metal coil stock counts are tracked on whiteboards, causing abrupt inventory shortages.',
-        'Delayed carrier dispatch — Manual vehicle challans and paper invoices cause transportation delays at checkposts.',
-        'Heavy staff dependency — Standard workflows break down entirely when a supervisor or billing accountant is absent.'
-      ],
-      solution: [
-        'Dynamic B2B CRM Pipeline — Simple customer directory, automated GST quotation constructor, and 1-click sales order converter.',
-        'Live Shop Floor Telemetries — Digital Machine Matrix monitoring utilization, runtime logs, OEE efficiency, and daily scrap counts.',
-        'Automatic Safety Stock Reminders — Instant system triggers warning store managers the second critical raw materials dip below safety thresholds.',
-        'Transporter Cargo Dispatch & Invoicing — Fully styled GST tax invoices mapping truck numbers and shipping logs automatically.',
-        'Role-Based Operational Access — Complete role-gated login modal offering customized, filtered workspaces for Owners, Admins, Sales Team, Store Managers, Supervisors, and Accountants.'
-      ],
+    id: 'excel-sales',
+    title: 'Excel Sales Dashboard',
+    subtitle: 'Interactive Multi-Region Sales Intelligence',
+    emoji: '📊',
+    shortDesc: 'Consolidates multi-region store transactions into an interactive, visual sales intelligence hub with dynamic dynamic slicers and charts.',
+    tools: ['Excel', 'Pivot Tables', 'XLOOKUP', 'Dynamic Charts', 'Data Validation'],
+    githubUrl: 'https://github.com/Smart123-12',
+    demoUrl: '#',
+    caseStudy: {
+      problem: 'The regional sales managers consolidated weekly spreadsheets manually, taking over 6 hours per week. This resulted in frequent copy-paste errors, broken formulas, and slow corporate decision-making cycles.',
+      solution: 'Designed an fully automated Excel data ingestion pipe. Using advanced nested formulas, named ranges, and conditional formatting, the sheet compiles records automatically into a sleek, visual dashboard.',
       features: [
-        'SME Dynamic Role Gating — One-click role-gated accounts simulating filtered operation layouts for Owners, Store Managers, and Accountants.',
-        'Live Machine Diagnostics — Complete OEE visualization dashboard showing active runtimes, scrap metrics, and active supervisor duty rosters.',
-        'AI Operations Advisor — Smart diagnostic panel solving critical SME questions (highest-margin SKUs, scrap wastage %, machine delays, and top client revenues) with colored grids.',
-        'WhatsApp Automations Hub — Twilio sandbox configurations for low-stock warnings, payment due reminders, and dispatch notices with live preview logs.',
-        'GST Compliant Invoicing — Printable Tax Invoice templates with dynamic calculations and transporter details.',
-        'Fast Pastel White Theme — Premium Stripe-style minimalist aesthetic with soft shadows, clear typography, and responsive menus.'
+        'Dynamic Region & Category Filters using interactive slicers',
+        'Automatic Top-Performing Product ranking lists',
+        'Visual heatmaps utilizing conditional formatting for outlier identification',
+        'Auto-updating trend lines and KPI cards for gross margins'
       ],
       stats: [
-        { num: '100%', label: 'CRM-to-Production Sync' },
-        { num: '₹17.2L', label: 'Monitored Ledgers' },
-        { num: '<15m', label: 'Onboarding Time' },
-        { num: '12+', label: 'Role-Gated Modules' }
+        { label: 'Time Saved', val: '95%' },
+        { label: 'Refresh Time', val: '< 1 min' },
+        { label: 'Formula Errors', val: '0' }
       ]
     }
   },
   {
-    emoji: '\u{267B}', label: 'LIVE', tech: ['Vite', 'React', 'TypeScript', 'TailwindCSS', 'Framer Motion'],
-    title: 'EcoLoop', subtitle: 'Circular Economy Tech',
-    desc: 'AI-powered B2B Circular Economy Platform connecting factories, certified recyclers, and raw material manufacturers to monetize byproducts, automate logistics routing, and track Scope 3 ESG compliance.',
-    link: 'https://smart123-12.github.io/ecoloop/',
-    details: {
-      tagline: 'National B2B Circular Economics & Industrial Waste Exchange',
-      fullDesc: 'EcoLoop is a national B2B Circular Economy & Industrial Waste Exchange Platform designed to disrupt unorganized local scrap brokers and bring direct digital monetization to small-to-medium factories (GIDC & workshop units). Using a sophisticated B2B circular economics framework, EcoLoop connects raw material manufacturers with verified, KYC-compliant recycling processors, automates regional logistics routing with real-time GreenTruck dispatch coordinates, and generates auditable Scope 3 ESG carbon certificates.',
-      problem: [
-        'Unorganized & Opaque Scrap Market — Factories rely on unverified WhatsApp scrap groups and manual brokers who capture huge margins.',
-        'Severe Disposal stress & yard blockages — Large lots of valuable metal, chemical, and organic byproducts pile up, incurring heavy yard holding costs.',
-        'Sourcing deficits for recyclers — Secondary processing mills face high operational downtime due to irregular, scattered material supply feeds.',
-        'Zero chemical grade assurance — Recyclers purchase uninspected waste, leading to chemical contamination and high processing failure rates.',
-        'Fragmented transport & heavy carbon load — Manual truck dispatch and long-distance transport routes create excessive freight emissions.',
-        'ESG & audit compliance overhead — Small scale units struggle to calculate circular ESG savings and lack auditable Scope 3 certifications.'
-      ],
-      solution: [
-        'Digital B2B Marketplace Sourcing — Enables factories to declare surplus waste streams in 30 seconds and directly access verified, high-volume buyers.',
-        'Neural Purity Purity Matchmaker — EcoLoop AI estimates precise spot rates and matches lots based on moisture, chemical purity, and regional demand.',
-        'Instant Waste-to-Recycler Dispatcher — Features a quick-dispatch tool that matches local lots to certified recyclers and books logistics routes.',
-        'EcoLoop AI Value & Carbon Estimator — Real-time price and carbon offsets calculator with responsive tons slider for instant B2B quotes.',
-        'B2B Corporate Pricing Model — Professional licensing tiers for startups, scaling factories, and high-volume corporate enterprises.',
-        'Scope 3 ESG Prescriptions — An AI money coach recommendation desk for carbon-offset certification and automated environmental audits.'
-      ],
+    id: 'inventory-mis',
+    title: 'Inventory MIS Report',
+    subtitle: 'Automated Operations & Supply Forecasting',
+    emoji: '🏭',
+    shortDesc: 'Corporate replenishment workbook calculating inventory safety metrics, monthly turnover ratios, and automated reorder point alerts.',
+    tools: ['Advanced Excel', 'Conditional Formatting', 'Data Auditing', 'MIS Reporting'],
+    githubUrl: 'https://github.com/Smart123-12',
+    demoUrl: '#',
+    caseStudy: {
+      problem: 'Critical raw materials dipped below safety stock parameters causing sudden halts in production schedules, while overstocked goods unnecessarily locked up operating cash flow.',
+      solution: 'Developed an automated Inventory Management and Replenishment MIS workbook containing safety stock matrices and automated visual alerts.',
       features: [
-        'Surplus Waste Dispatcher — Specify material, lot volume, and city to instantly scan and connect with local certified recycling businesses.',
-        'Interactive AI Value Calculator — Live slider modeling spot rate estimations (INR) and carbon credit offsets based on material density.',
-        'B2B Marketplace Feed — Complete listing desk with advanced coordinate mapping and material classification filters.',
-        'Active Lot Bidding Simulator — Real-time bidding interface replicating active corporate RFP lot matching in Vapi, Surat, and Coimbatore.',
-        'Strategic B2B Features Matrix — Detailed product capability profiles tailored separately for Manufacturers, Recyclers, and Platform Admins.',
-        'Animated Material Flow Loop — Custom high-performance SVG Sankey diagram visualizing raw inputs passing through the EcoLoop matching engine.',
-        'KYC Verification Audits — Comprehensive onboarding checking GSTIN, Pollution Control board certificates, and tax compliance indices.',
-        'Scope 3 Environmental Prescriptions — Auto-generated ESG scorecards and downloadable carbon offset audit certificates.'
+        'Automatic Reorder Alert warnings when stock dips below defined limits',
+        'Monthly inventory turnover ratio and velocity performance charts',
+        'Structured supplier data verification checks to prevent manual intake errors',
+        'Dynamic vendor lead-time estimation tables'
       ],
       stats: [
-        { num: '₹45.2 Cr', label: 'Annual Traded GTV' },
-        { num: '842k+ T', label: 'Waste Processed' },
-        { num: '99.4%', label: 'Logistics Completion' },
-        { num: '88%', label: 'Repeat Trade Index' }
+        { label: 'Stockouts', val: '0' },
+        { label: 'Holding Cost', val: '-18%' },
+        { label: 'Accuracy Rate', val: '100%' }
+      ]
+    }
+  },
+  {
+    id: 'ai-researcher',
+    title: 'AI Research Assistant',
+    subtitle: 'Systemic LLM Report Generator & Summarizer',
+    emoji: '🤖',
+    shortDesc: 'Prompt-engineered analytical pipeline that ingests raw documents, performs structural audits, and generates custom executive summaries.',
+    tools: ['AI Prompts', 'Claude / Gemini', 'Workflow Structure', 'Content Prep'],
+    githubUrl: 'https://github.com/Smart123-12',
+    demoUrl: '#',
+    caseStudy: {
+      problem: 'Manually reading, extracting, and formatting 40-page market intelligence PDF files took freelancers hours of research, leading to inconsistent reports.',
+      solution: 'Constructed an advanced, prompt-engineered pipeline using system prompts and custom models. Ingests unstructured logs, executes deep content analysis, and exports structured files.',
+      features: [
+        'Structured system prompts targeting specific analytical constraints',
+        'Automatic citation checks to cross-reference quantitative claims',
+        'Tabular formatting conversions for clean CSV/Excel database uploads',
+        'Optimized custom instruction sets for professional narrative tones'
       ],
+      stats: [
+        { label: 'Research Speed', val: '8x Faster' },
+        { label: 'Synthesized Data', val: '100%' },
+        { label: 'Output Bias', val: '0%' }
+      ]
     }
   },
   {
-    emoji: '\u{1F9EA}', label: 'LIVE', tech: ['Next.js', 'NVIDIA Nemotron', 'AI Agents', 'TensorRT'],
-    title: 'AI Analyst', subtitle: 'Engineering Intelligence',
-    desc: 'AI-powered Engineering Intelligence Platform with 9 autonomous agents. Validates code against PRDs, runs security audits, architecture analysis & production-readiness checks.',
-    link: 'https://smart123-12.github.io/ai-analyst/',
-    details: {
-      tagline: 'Powered by NVIDIA Nemotron - vLLM - TensorRT-LLM',
-      fullDesc: 'The world\'s first PRD-aware engineering analyst. 9 autonomous AI agents validate whether your software implementations satisfy product requirements, engineering standards, and production-readiness criteria - all in one click.',
-      problem: ['PR reviews miss 60% of architectural issues', 'Security vulnerabilities slip into production', 'PRD requirements are never validated against code', 'Teams waste 15+ hours/week on manual reviews', 'No single tool checks everything - devs use 5+ tools'],
-      solution: ['9 specialized AI agents analyze everything in parallel', 'Upload PRD - AI validates every requirement against code', 'OWASP-aligned security scanning in every analysis', 'Full audit report generated in under 30 seconds', 'One platform replaces 5+ separate tools'],
-      features: ['Multi-Agent AI System - 9 agents in parallel', 'PRD-Aware Analysis - validates every requirement', 'Deep Code Scanning - beyond linting', 'Interactive Chart.js Dashboards', 'OWASP Security Audit', 'NVIDIA Nemotron LLM powered', 'Executive Reports auto-generated', 'CI/CD pipeline integration'],
-      stats: [{ num: '9', label: 'AI Agents' }, { num: '100%', label: 'PRD Coverage' }, { num: '<30s', label: 'Analysis Time' }, { num: 'NVIDIA', label: 'Nemotron LLM' }],
+    id: 'n8n-workflow',
+    title: 'n8n Workflow Automation',
+    subtitle: 'Active Webhook & API Business Router',
+    emoji: '⚡',
+    shortDesc: 'SaaS automation flow connecting online lead triggers to Google Sheets, sending custom Slack notification blocks and automatic Gmail drafts.',
+    tools: ['n8n', 'Webhooks', 'Google Sheets API', 'Slack API', 'Automation'],
+    githubUrl: 'https://github.com/Smart123-12',
+    demoUrl: '#',
+    caseStudy: {
+      problem: 'Incoming customer inquiries sat unassigned for hours in a cluttered inbox, causing a high lead drop-off rate due to slow team response times.',
+      solution: 'Built and hosted an autonomous n8n workflow. Incoming webhooks instantly trigger lead qualification, spreadsheet routing, and notify supervisors in real-time.',
+      features: [
+        'Multi-branch qualification conditional routing trees',
+        'Automatic Slack message block updates showing client budget indicators',
+        'Instant automated personalized email responder drafts',
+        'Robust webhook fallbacks in case of external API timeouts'
+      ],
+      stats: [
+        { label: 'Lead Routing', val: '< 10 sec' },
+        { label: 'Form Processing', val: '100%' },
+        { label: 'Manual Entry', val: 'Eliminated' }
+      ]
     }
   },
   {
-    emoji: '\u{1F3E5}', label: 'LIVE', tech: ['React', 'Node.js', 'MongoDB', 'GCP'],
-    title: 'MediCap', subtitle: 'Doctor & Patient System',
-    desc: 'Complete Doctor & Patient Management System with role-based dashboards, secure auth, 20+ API endpoints. Deployed live on GCP.',
-    link: 'https://smart123-12.github.io/medicap/',
-    details: {
-      tagline: 'Live on Google Cloud Platform with CI/CD',
-      fullDesc: 'A comprehensive healthcare management system enabling doctors and patients to interact seamlessly. Features role-based access, appointment scheduling, medical records, and real-time dashboards - all deployed live on Google Cloud.',
-      problem: ['Clinics manage patient records on paper', 'No centralized system for doctor-patient communication', 'Manual appointment scheduling wastes time', 'No real-time visibility into clinic operations'],
-      solution: ['Role-based dashboards for Admin, Doctor & Patient', '20+ secure REST API endpoints', 'JWT authentication & authorization', 'Automated CI/CD pipeline from GitHub to GCP', 'Real-time appointment & records management'],
-      features: ['Doctor Dashboard - manage patients & appointments', 'Patient Portal - book appointments, view records', 'Secure JWT Authentication', 'Admin Analytics Dashboard', 'MongoDB database with Mongoose ORM', 'Google Cloud Platform deployment', 'GitHub CI/CD automated pipeline', 'Fully responsive design'],
-      stats: [{ num: '20+', label: 'API Endpoints' }, { num: '3', label: 'User Roles' }, { num: 'GCP', label: 'Cloud Deploy' }, { num: 'CI/CD', label: 'Auto Pipeline' }],
+    id: 'data-cleaning',
+    title: 'Data Cleaning Project',
+    subtitle: 'Automated Record Normalization & Sanitization',
+    emoji: '🧹',
+    shortDesc: 'Excel Power Query workflow sanitizing 10k+ rows of unformatted CRM customer directories, removing duplicates, and standardizing schemas.',
+    tools: ['Power Query', 'Data Sanitization', 'Excel Formulas', 'Regex Parsing'],
+    githubUrl: 'https://github.com/Smart123-12',
+    demoUrl: '#',
+    caseStudy: {
+      problem: 'A database of 10,000+ client transactions arrived corrupted with duplicate phone tags, missing region categories, inconsistent formatting, and invalid character hashes.',
+      solution: 'Created an audit script and a reproducible Power Query sanitization funnel. The model cleanses, formats, parses, and normalizes rows with zero manual cell editing.',
+      features: [
+        'Auto-removal of duplicate records using custom key combinations',
+        'Text formula sanitization layers extracting emails from unstructured remarks',
+        'Automated local region classification tagging using postcode arrays',
+        'Standardization of country codes and telephone schemas'
+      ],
+      stats: [
+        { label: 'Sanitized Rows', val: '10,000+' },
+        { label: 'Schema Audit', val: 'Passed' },
+        { label: 'Manual Fixes', val: 'None' }
+      ]
     }
-  },
-  {
-    emoji: '\u{1F9B7}', label: 'LIVE', tech: ['React', 'Node.js', 'MongoDB'],
-    title: 'Dental Clinic', subtitle: 'Management System',
-    desc: 'Full-stack Dental Clinic System with admin, doctor & patient roles. Live deployment on GitHub Pages.',
-    link: 'https://smart123-12.github.io/dental-clinic_12/',
-    details: {
-      tagline: 'Live on GitHub Pages - Multi-Role Healthcare System',
-      fullDesc: 'A specialized dental clinic management application built for real-world use. Manages patient appointments, treatment records, billing, and staff coordination with separate dashboards for admin, dentist, and patient roles.',
-      problem: ['Dental clinics rely on paper-based records', 'Scheduling conflicts with manual booking', 'No digital treatment history tracking', 'Billing and payment tracking is manual'],
-      solution: ['Digital patient records with treatment history', 'Automated appointment scheduling system', 'Role-based access for admin, doctor & patient', 'Treatment tracking & billing management', 'Live deployed and accessible from anywhere'],
-      features: ['Treatment Records & History tracking', 'Appointment Scheduling system', 'Multi-role access (Admin/Doctor/Patient)', 'Billing & Payment management', 'Dashboard with clinic analytics', 'Secure authentication system', 'Mobile-responsive interface', 'Live on GitHub Pages'],
-      stats: [{ num: '3', label: 'User Roles' }, { num: 'Live', label: 'Deployed' }, { num: 'Full', label: 'CRUD Ops' }, { num: '100%', label: 'Responsive' }],
-    }
-  },
-  {
-    emoji: '\u{1F393}', label: 'DEPLOYED', tech: ['React', 'Node.js', 'JavaScript'],
-    title: 'Tattavyan School', subtitle: 'Edutech Platform',
-    desc: 'Multi-role school management (Admin, Teacher, Student) with dashboards, homework, attendance & notice boards. Live on GitHub Pages.',
-    link: 'https://smart123-12.github.io/tattavyan-school/',
-    details: {
-      tagline: 'Complete School Management Ecosystem',
-      fullDesc: 'A comprehensive school management system designed for real educational institutions. Features separate portals for administrators, teachers, and students with homework management, attendance tracking, grade management, and notice boards.',
-      problem: ['Schools manage records manually on registers', 'No centralized homework submission system', 'Attendance tracking is error-prone on paper', 'Parents have no visibility into student progress'],
-      solution: ['Digital dashboards for Admin, Teacher & Student', 'Online homework assignment & submission', 'Digital attendance tracking with reports', 'Notice board for announcements', 'Grade management & progress tracking'],
-      features: ['Admin Dashboard - manage teachers, students, classes', 'Teacher Portal - assign homework, mark attendance', 'Student Portal - submit homework, view grades', 'Attendance Management system', 'Homework Assignment & Submission', 'Notice Board for announcements', 'Grade & Progress tracking', 'Responsive design for all devices'],
-      stats: [{ num: '3', label: 'User Roles' }, { num: '6+', label: 'Modules' }, { num: 'Full', label: 'Stack' }, { num: 'Real', label: 'Use Case' }],
-    }
-  },
-  {
-    emoji: '\u{1F4B0}', label: 'LIVE', tech: ['TypeScript', 'React', 'AI'],
-    title: 'AarthIQ', subtitle: 'AI Financial Advisor',
-    desc: 'AI-powered Indian Tax & Financial Advisory Platform for FY 2026-27. Salary optimizer, freelancer planner, NRI tools & AI Money Coach. Live on GitHub Pages.',
-    link: 'https://smart123-12.github.io/AarthIQ/',
-    details: {
-      tagline: 'AI-Powered Financial Intelligence for India',
-      fullDesc: 'AarthIQ is an intelligent Indian tax and financial advisory platform for FY 2026-27. It uses AI to help salaried professionals, freelancers, and NRIs optimize their taxes, plan investments, and get personalized financial advice through an AI Money Coach.',
-      problem: ['Indians overpay taxes due to lack of knowledge', 'Freelancers struggle with tax compliance', 'NRIs face complex double-taxation issues', 'Financial advisors charge high fees per session'],
-      solution: ['AI-powered salary tax optimizer with HRA, 80C, 80D', 'Freelancer tax planner with GST guidance', 'NRI-specific tax tools for double taxation', 'Free AI Money Coach for personalized advice', 'Updated for FY 2026-27 tax slabs'],
-      features: ['Salary Tax Optimizer - maximize savings', 'Freelancer Tax Planner with GST', 'NRI Tax Tools for double taxation', 'AI Money Coach - personalized advice', 'Investment Planning recommendations', 'Compare Old vs New Tax Regime', 'Privacy-first - no data stored', 'Built with TypeScript & React'],
-      stats: [{ num: 'AI', label: 'Money Coach' }, { num: '2026-27', label: 'FY Updated' }, { num: '5+', label: 'Tax Tools' }, { num: '0', label: 'Data Stored' }],
-    }
-  },
-  {
-    emoji: '\u{1F499}', label: 'LIVE', tech: ['TypeScript', 'React', 'IRS API'],
-    title: 'BlueTax', subtitle: 'US Tax Optimizer',
-    desc: 'Privacy-first US W2 tax optimizer using 2026 IRS brackets. Keep more of your paycheck with smart tax planning. Live on GitHub Pages.',
-    link: 'https://smart123-12.github.io/bluetax/',
-    details: {
-      tagline: 'Privacy-First US Tax Intelligence',
-      fullDesc: 'BlueTax helps American W2 employees optimize their tax withholdings using official 2026 IRS tax brackets. All calculations run locally in the browser - zero data is sent to any server.',
-      problem: ['Americans overpay $1000+ in taxes annually', 'Tax withholding calculators are confusing', 'Most tools require personal data uploads', 'IRS bracket changes are not reflected quickly'],
-      solution: ['Smart W2 tax optimization with 2026 brackets', 'All calculations run 100% in browser', 'Zero data sent to servers - complete privacy', 'Visual breakdown of federal & state taxes', 'Actionable steps to reduce withholding'],
-      features: ['Updated 2026 IRS Tax Brackets', '100% client-side - zero data leaves browser', 'Visual tax breakdown charts', 'Paycheck optimization recommendations', 'Filing status comparison (Single/Married)', 'Instant calculations in real-time', 'Mobile-friendly responsive UI', 'Built with TypeScript for reliability'],
-      stats: [{ num: '2026', label: 'IRS Brackets' }, { num: '0', label: 'Data Sent' }, { num: '100%', label: 'Client-Side' }, { num: 'W2', label: 'Optimized' }],
-    }
-  },
-  {
-    emoji: '\u{1F9E0}', label: 'LIVE', tech: ['HTML', 'Node.js', 'Gemini AI'],
-    title: 'Nexus AI', subtitle: 'Business Intelligence',
-    desc: 'AI-Powered Business Intelligence SaaS Platform with Chart.js dashboards, MongoDB, and Gemini AI integration. Live on GitHub Pages.',
-    link: 'https://smart123-12.github.io/nexus-ai/',
-    details: {
-      tagline: 'AI-Powered Business Intelligence SaaS',
-      fullDesc: 'Nexus AI is a full-featured Business Intelligence platform that combines real-time analytics dashboards with Google Gemini AI to provide intelligent business insights. Upload your data, visualize trends, and let AI generate actionable recommendations.',
-      problem: ['Small businesses cannot afford BI tools like Tableau', 'Data analysis requires technical expertise', 'No AI-powered insights in affordable tools', 'Manual report generation wastes hours'],
-      solution: ['Affordable AI-powered BI platform', 'Chart.js interactive dashboards', 'Gemini AI generates smart insights automatically', 'MongoDB for scalable data storage', 'Auto-generated business reports'],
-      features: ['Interactive Chart.js Dashboards', 'Gemini AI Business Insights', 'MongoDB data management', 'Real-time analytics & trends', 'Auto-generated reports', 'Secure authentication', 'AI-powered recommendations', 'Cloud-ready architecture'],
-      stats: [{ num: 'Gemini', label: 'AI Powered' }, { num: 'Real-time', label: 'Analytics' }, { num: 'MongoDB', label: 'Database' }, { num: 'SaaS', label: 'Platform' }],
-    }
-  },
-  {
-    emoji: '\u{1F4C8}', label: 'LIVE', tech: ['HTML', 'CSS', 'JavaScript'],
-    title: 'FinWise', subtitle: 'Smart Finance',
-    desc: 'Smart Finance Management for Indian families - Tax Calculator, Expense Tracker, Dashboard & Insurance Compare. Live on GitHub Pages.',
-    link: 'https://smart123-12.github.io/finwise/',
-    details: {
-      tagline: 'Smart Finance for Indian Families',
-      fullDesc: 'FinWise is a comprehensive personal finance management tool designed specifically for Indian households. Features tax calculators, expense tracking, budget planning, insurance comparison, and investment guidance - all in one beautiful interface.',
-      problem: ['Indian families do not track daily expenses', 'Tax calculation is confusing for middle class', 'Insurance comparison requires visiting 10+ sites', 'No single tool for complete financial planning'],
-      solution: ['All-in-one financial dashboard for families', 'Indian tax calculator with latest slabs', 'Daily expense tracker with categories', 'Insurance comparison tool built-in', 'Budget planning with visual charts'],
-      features: ['Indian Tax Calculator (Old & New Regime)', 'Expense Tracker with categories', 'Financial Dashboard with charts', 'Insurance Comparison tool', 'Budget Planning & Savings goals', 'Mobile-first responsive design', 'Monthly financial reports', 'Clean, intuitive interface'],
-      stats: [{ num: '5+', label: 'Finance Tools' }, { num: 'India', label: 'Focused' }, { num: '0', label: 'Cost to Use' }, { num: '100%', label: 'Offline Ready' }],
-    }
-  },
-  {
-    emoji: '\u{1F6D2}', label: 'LIVE', tech: ['React', 'Node.js', 'PHP', 'MySQL'],
-    title: 'ecom-dashboard', subtitle: 'eCommerce Platform',
-    desc: 'Modern Full-Stack eCommerce Dashboard with React frontend, Node.js & PHP backend, MySQL database. Live on GitHub Pages.',
-    link: 'https://smart123-12.github.io/ecom-dashboard/',
-    details: {
-      tagline: 'Full-Stack eCommerce Management System',
-      fullDesc: 'A powerful eCommerce admin dashboard for managing products, orders, customers, and inventory. Built with React on the frontend, dual backend in Node.js and PHP, and MySQL for data management.',
-      problem: ['Small eCommerce stores use spreadsheets for orders', 'No real-time inventory tracking', 'Customer management is scattered across tools', 'Sales analytics require expensive tools'],
-      solution: ['Centralized dashboard for all eCommerce operations', 'Real-time inventory management', 'Order tracking & status management', 'Customer database with purchase history', 'Built-in sales analytics & reports'],
-      features: ['Product Management (CRUD)', 'Order Tracking & Status updates', 'Customer Database management', 'Sales Analytics Dashboard', 'Inventory Management', 'Admin Authentication system', 'Responsive admin interface', 'Dual Backend (Node.js + PHP)'],
-      stats: [{ num: 'React', label: 'Frontend' }, { num: 'Node+PHP', label: 'Backend' }, { num: 'MySQL', label: 'Database' }, { num: 'Full', label: 'CRUD Ops' }],
-    }
-  },
-  {
-    emoji: '\u{1F33E}', label: 'DEPLOYED', tech: ['React', 'Node.js', 'JavaScript'],
-    title: 'Khedut', subtitle: 'Farmer Platform',
-    desc: 'Agricultural platform connecting farmers with resources, market data, and smart farming tools. Deployed live on GitHub Pages.',
-    link: 'https://smart123-12.github.io/khedut/',
-    details: {
-      tagline: 'Digital Agriculture for Indian Farmers',
-      fullDesc: 'Khedut is a digital agriculture platform designed to empower Indian farmers with market price information, weather updates, crop guidance, and government scheme details. Built to bridge the information gap between farmers and agricultural resources.',
-      problem: ['Farmers lack access to real-time market prices', 'No awareness of government schemes & subsidies', 'Weather prediction tools are not farmer-friendly', 'Agricultural guidance is expensive & inaccessible'],
-      solution: ['Real-time market price data', 'Government scheme information & eligibility', 'Simple weather updates for farming decisions', 'Crop guidance & seasonal recommendations', 'Built with regional language support'],
-      features: ['Crop Price & Market data', 'Government Scheme information', 'Weather Updates for farmers', 'Crop Guidance & Recommendations', 'Farm Dashboard', 'Mobile-first design for rural areas', 'Designed for Indian agriculture', 'Fast & lightweight app'],
-      stats: [{ num: 'India', label: 'Agriculture' }, { num: 'Real-time', label: 'Market Data' }, { num: 'Free', label: 'For Farmers' }, { num: 'Mobile', label: 'First Design' }],
-    }
-  },
-  {
-    emoji: '\u{1F9FE}', label: 'TOOL', tech: ['JavaScript', 'HTML', 'CSS'],
-    title: 'Invoice Generator', subtitle: 'Business Tool',
-    desc: 'Professional invoice generation web app. Generate, preview and download invoices instantly. Live on GitHub Pages.',
-    link: 'https://smart123-12.github.io/invoice-generator/',
-    details: {
-      tagline: 'Generate Professional Invoices in Seconds',
-      fullDesc: 'A clean, professional invoice generation tool that lets freelancers and small businesses create, preview, and download invoices instantly. Add custom branding, line items, taxes, and export as PDF - all running in the browser with no signup required.',
-      problem: ['Freelancers waste time creating invoices manually', 'Invoice tools require paid subscriptions', 'Excel invoices look unprofessional', 'No quick tool for one-off invoice needs'],
-      solution: ['Instant invoice generation in browser', 'Professional template with custom branding', 'Add line items, taxes & discounts', 'PDF download with one click', 'No signup, no subscription, 100% free'],
-      features: ['Professional Invoice Templates', 'Custom Business Branding', 'Add Line Items, Tax & Discounts', 'PDF Download with one click', 'Live Preview as you type', 'Auto-calculate totals', 'Works on mobile browsers', 'No data stored - 100% private'],
-      stats: [{ num: '0', label: 'Cost' }, { num: 'PDF', label: 'Export' }, { num: 'Instant', label: 'Generate' }, { num: 'Free', label: 'Forever' }],
-    }
-  },
-  {
-    emoji: '\u{1F3D7}', label: 'PLATFORM', tech: ['JavaScript', 'Node.js'],
-    title: 'Neev Platform', subtitle: 'Scalable Architecture',
-    desc: 'Modern scalable platform demonstrating full-stack dev capabilities. Production-ready architecture. Live on GitHub Pages.',
-    link: 'https://smart123-12.github.io/neev-platform/',
-    details: {
-      tagline: 'Scalable Full-Stack Platform Architecture',
-      fullDesc: 'Neev is a modern full-stack platform built with production-ready architecture patterns. Demonstrates scalable design, clean code structure, and enterprise-level patterns including modular routing, middleware, and database abstraction.',
-      problem: ['Most starter projects lack production patterns', 'Beginners do not learn scalable architecture', 'No reference for clean full-stack structure', 'Enterprise patterns are hard to learn alone'],
-      solution: ['Production-ready architecture from day one', 'Modular, scalable code organization', 'Best practices for routing & middleware', 'Database abstraction layer', 'Ready-to-deploy project structure'],
-      features: ['Production-ready architecture', 'Modular project structure', 'RESTful API design', 'Middleware & Error handling', 'Database abstraction layer', 'NPM package management', 'Deployment ready', 'Clean, documented codebase'],
-      stats: [{ num: 'Node.js', label: 'Backend' }, { num: 'Modular', label: 'Architecture' }, { num: 'REST', label: 'API Design' }, { num: 'Deploy', label: 'Ready' }],
-    }
-  },
-  {
-    emoji: '\u{1F549}', label: 'LIVE', tech: ['HTML', 'CSS', 'JavaScript'],
-    title: 'Tattvayan', subtitle: 'Spiritual Platform',
-    desc: 'Full-featured spiritual & cultural platform with beautiful UI, content pages, and interactive elements. Live on GitHub Pages.',
-    link: 'https://smart123-12.github.io/tattvayan/',
-    details: {
-      tagline: 'Spiritual & Cultural Digital Experience',
-      fullDesc: 'Tattvayan is a beautifully designed spiritual and cultural platform that brings traditional Indian wisdom to the digital world. Features rich content pages, interactive UI elements, spiritual resources, and a meditation-focused user experience.',
-      problem: ['Spiritual content is scattered across the internet', 'Most spiritual sites have outdated designs', 'No modern platform for Indian cultural content', 'Young generation needs accessible spiritual resources'],
-      solution: ['Modern, beautiful UI for spiritual content', 'Curated spiritual resources & articles', 'Interactive & engaging user experience', 'Mobile-first design for accessibility', 'Live deployed for worldwide access'],
-      features: ['Curated Spiritual Content', 'Beautiful Modern UI Design', 'Articles & Wisdom resources', 'Meditation-focused experience', 'Mobile-responsive design', 'Interactive UI elements', 'Live on GitHub Pages', 'Fast & lightweight'],
-      stats: [{ num: 'Live', label: 'Deployed' }, { num: 'Modern', label: 'UI Design' }, { num: 'Rich', label: 'Content' }, { num: 'Mobile', label: 'Friendly' }],
-    }
-  },
+  }
 ]
-
-const REASONS = [
-  { icon: '\u26A1', title: 'Fast Execution', desc: 'Speed + quality, delivered without cutting corners.' },
-  { icon: '\u{1F4AC}', title: 'Clear Communication', desc: 'You always know where your project stands.' },
-  { icon: '\u{1F3C6}', title: 'Real Deployed Projects', desc: 'Live, working products - not just mockups.' },
-  { icon: '\u{1F504}', title: 'Unlimited Revisions', desc: 'I iterate until you are 100% satisfied.' },
-  { icon: '\u{1F512}', title: 'Full Ownership', desc: 'You own everything - code, assets, data.' },
-  { icon: '\u{1F680}', title: 'End-to-End Delivery', desc: 'From idea to deployment, I handle it all.' },
-]
-
-// -- HOOKS --
-
-function useInView(threshold = 0.12) {
-  const ref = useRef(null)
-  const [visible, setVisible] = useState(false)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect() } }, { threshold })
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [threshold])
-  return [ref, visible]
-}
-
-// -- COMPONENTS --
-
-function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [open, setOpen] = useState(false)
-  useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', fn)
-    return () => window.removeEventListener('scroll', fn)
-  }, [])
-  return (
-    <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
-      <div className="container navbar-inner">
-        <a href="#" className="navbar-logo">
-          <span className="logo-icon">SP</span> Smit Parmar
-        </a>
-        <div className={`navbar-links ${open ? 'navbar-links--open' : ''}`}>
-          {['About', 'Skills', 'Services', 'Projects', 'Contact'].map(s => (
-            <a key={s} href={`#${s.toLowerCase()}`} onClick={() => setOpen(false)}>{s}</a>
-          ))}
-          <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer" className="btn-glow btn-glow--sm">GitHub</a>
-        </div>
-        <button className="hamburger" onClick={() => setOpen(!open)} aria-label="Menu">
-          <span /><span /><span />
-        </button>
-      </div>
-    </nav>
-  )
-}
-
-function Hero() {
-  const [ref, visible] = useInView()
-  return (
-    <section className={`hero ${visible ? 'in-view' : ''}`} ref={ref}>
-      <div className="container hero-inner">
-        <div className="hero-text">
-          <div className="hero-badge">Available for Projects</div>
-          <h1 className="hero-title">
-            I Build <span className="gradient-text">AI-Powered</span> Digital Products
-          </h1>
-          <p className="hero-desc">Non-IT background. Self-taught AI builder. I use cutting-edge AI tools to ship full-stack web apps, SaaS platforms, and automation systems - faster than traditional dev teams.</p>
-          <div className="hero-btns">
-            <a href="#contact" className="btn-glow">Let's Work Together</a>
-            <a href="#projects" className="btn-glass">View My Work</a>
-          </div>
-          <div className="hero-stats">
-            <div className="hero-stat"><span className="hero-stat-num">15</span><span className="hero-stat-label">Projects Shipped</span></div>
-            <div className="hero-stat"><span className="hero-stat-num">15</span><span className="hero-stat-label">Live & Deployed</span></div>
-            <div className="hero-stat"><span className="hero-stat-num">AI</span><span className="hero-stat-label">First Approach</span></div>
-          </div>
-        </div>
-        <div className="hero-visual">
-          <div className="hero-photo-container">
-            <div className="hero-photo-glow" />
-            <div className="hero-photo-border">
-              <img src={photo2} alt="Smitkumar Parmar" />
-            </div>
-            <div className="hero-float-badge hero-float-badge--1">
-              <span>15</span>
-              <div><strong>Projects</strong><br /><small>Shipped & Live</small></div>
-            </div>
-            <div className="hero-float-badge hero-float-badge--2">
-              <span>AI</span>
-              <div><strong>First</strong><br /><small>Builder</small></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function About() {
-  const [ref, visible] = useInView()
-  return (
-    <section className={`about section ${visible ? 'in-view' : ''}`} id="about" ref={ref}>
-      <div className="container about-inner">
-        <div className="about-left" style={{ display: 'flex', justifyContent: 'center' }}>
-          <div className="hero-photo-container">
-            <div className="hero-photo-glow" />
-            <div className="hero-photo-border">
-              <img src={photo3} alt="Smit Parmar - AI Builder" />
-            </div>
-            <div className="hero-float-badge hero-float-badge--1" style={{ bottom: '50px', right: '-20px' }}>
-              <span>🚀</span>
-              <div><strong>AI Builder</strong><br /><small>Non-IT Advantage</small></div>
-            </div>
-            <div className="hero-float-badge hero-float-badge--2" style={{ top: '40px', left: '-30px', animationDelay: '0.7s' }}>
-              <span>⚡</span>
-              <div><strong>Fast Ship</strong><br /><small>Rapid Delivery</small></div>
-            </div>
-          </div>
-        </div>
-        <div className="about-right">
-          <div className="section-label">About Me</div>
-          <h2 className="section-heading">
-            From <span className="gradient-text">Non-IT to AI Builder</span>
-          </h2>
-          <p className="about-text">I am not from a traditional IT background - and that is exactly my advantage. While others write code line by line, I leverage the most powerful AI tools in the world to build, ship, and deploy production-ready applications at unprecedented speed.</p>
-          <p className="about-text">My toolkit includes Google Antigravity, Cursor AI, GitHub Copilot, Claude, v0, Bolt, Replit, and n8n for workflow automation. I do not just use AI - I think in AI. Every project I build is a testament to what is possible when you combine human creativity with machine intelligence.</p>
-          <div className="about-highlights">
-            <div className="about-highlight"><span className="about-h-icon">🧠</span><div><strong>AI-First Mindset</strong><p>Every solution starts with AI strategy</p></div></div>
-            <div className="about-highlight"><span className="about-h-icon">🚀</span><div><strong>Rapid Delivery</strong><p>Ship in days, not months</p></div></div>
-            <div className="about-highlight"><span className="about-h-icon">🎯</span><div><strong>Result-Focused</strong><p>Built for real users, not demos</p></div></div>
-            <div className="about-highlight"><span className="about-h-icon">💻</span><div><strong>Full-Stack</strong><p>Frontend to deployment, end-to-end</p></div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Skills() {
-  const [ref, visible] = useInView()
-  return (
-    <section className={`skills section ${visible ? 'in-view' : ''}`} id="skills" ref={ref}>
-      <div className="container">
-        <div className="section-label center">My AI Toolkit</div>
-        <h2 className="section-heading center">
-          Tools I Use to <span className="gradient-text">Build Products</span>
-        </h2>
-        <div className="skills-grid">
-          {SKILLS.map((s, i) => (
-            <div className="skill-item" key={i} style={{ '--delay': `${i * 0.08}s` }}>
-              <div className="skill-header">
-                <span className="skill-name">{s.name}</span>
-                <span className="skill-pct">{s.level}%</span>
-              </div>
-              <div className="skill-bar">
-                <div className="skill-fill" style={{ width: visible ? `${s.level}%` : '0%' }} />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Services() {
-  const [ref, visible] = useInView()
-  return (
-    <section className={`services ${visible ? 'in-view' : ''}`} id="services" ref={ref}>
-      <div className="container">
-        <div className="section-label center">What I Do</div>
-        <h2 className="section-heading center">
-          Services That <span className="gradient-text">Deliver Results</span>
-        </h2>
-        <p className="section-sub center">Clean execution, scalable output, and real business value.</p>
-        <div className="services-grid">
-          {SERVICES.map((s, i) => (
-            <div className="service-card" key={i} style={{ '--delay': `${i * 0.1}s` }}>
-              <div className="service-icon-wrap">
-                <span className="service-icon">{s.icon}</span>
-              </div>
-              <h3>{s.title}</h3>
-              <p className="service-desc">{s.desc}</p>
-              <ul>
-                {s.list.map((item, j) => <li key={j}><span className="check">{'\u2713'}</span>{item}</li>)}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Projects({ onSelectProject }) {
-  const [ref, visible] = useInView()
-  const [filter, setFilter] = useState('ALL')
-  const labels = ['ALL', 'LIVE', 'DEPLOYED', 'TOOL', 'PLATFORM']
-  const filtered = filter === 'ALL' ? PROJECTS : PROJECTS.filter(p => p.label === filter)
-
-  return (
-    <section className={`projects ${visible ? 'in-view' : ''}`} id="projects" ref={ref}>
-      <div className="container">
-        <div className="section-label center">Portfolio</div>
-        <h2 className="section-heading center">
-          Real Projects, <span className="gradient-text">Real Impact</span>
-        </h2>
-        <p className="section-sub center">Live deployed applications - not just mockups. Click any project for full details.</p>
-        <div className="project-filters">
-          {labels.map(l => (
-            <button key={l} className={`filter-btn ${filter === l ? 'filter-btn--active' : ''}`} onClick={() => setFilter(l)}>
-              {l}
-            </button>
-          ))}
-        </div>
-        <div className="projects-grid">
-          {filtered.map((p, i) => (
-            <div className="project-card" key={i} style={{ '--delay': `${i * 0.07}s`, cursor: 'pointer' }} onClick={() => onSelectProject(p)}>
-              <div className="project-top">
-                <span className="project-emoji">{p.emoji}</span>
-                <span className={`project-label project-label--${p.label.toLowerCase()}`}>{p.label}</span>
-              </div>
-              <h3>{p.title}</h3>
-              <p>{p.desc}</p>
-              <div className="project-tech">
-                {p.tech.map((t, j) => <span key={j} className="tech-tag">{t}</span>)}
-              </div>
-              <div className="project-link-row">View Case Study <span>{'\u2192'}</span></div>
-            </div>
-          ))}
-        </div>
-        <div className="center" style={{ marginTop: 48 }}>
-          <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer" className="btn-glass">
-            View All on GitHub
-          </a>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function WhyMe() {
-  const [ref, visible] = useInView()
-  return (
-    <section className={`whyme ${visible ? 'in-view' : ''}`} id="whyme" ref={ref}>
-      <div className="container">
-        <div className="section-label center">Why Work With Me</div>
-        <h2 className="section-heading center">
-          I Take Every Project <span className="gradient-text">Personally</span>
-        </h2>
-        <div className="reasons-grid">
-          {REASONS.map((r, i) => (
-            <div className="reason-card" key={i} style={{ '--delay': `${i * 0.08}s` }}>
-              <span className="reason-icon">{r.icon}</span>
-              <h4>{r.title}</h4>
-              <p>{r.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Contact() {
-  const [ref, visible] = useInView()
-  return (
-    <section className={`contact section ${visible ? 'in-view' : ''}`} id="contact" ref={ref}>
-      <div className="container">
-        <div className="section-label center">Get In Touch</div>
-        <h2 className="section-heading center">
-          Ready to <span className="gradient-text">Start Your Project?</span>
-        </h2>
-        <p className="section-sub center">Have an idea? Let's build something incredible together.</p>
-        <div className="contact-inner">
-          <div className="contact-info">
-            <div className="contact-card">
-              <h3>Let's Connect</h3>
-              <p>Whether you need an AI-powered app, a full-stack platform, or automation - I deliver production-ready solutions at speed.</p>
-              <div className="contact-items">
-                <div className="contact-item">
-                  <div className="contact-icon-wrap" style={{ background: '#ede9fe', color: 'var(--accent-1)' }}>📧</div>
-                  <div className="contact-item-text">
-                    <span>Email Address</span>
-                    <a href="mailto:tattvayan.ai@gmail.com">tattvayan.ai@gmail.com</a>
-                  </div>
-                </div>
-                <div className="contact-item">
-                  <div className="contact-icon-wrap" style={{ background: '#e0f2fe', color: '#0284c7' }}>📞</div>
-                  <div className="contact-item-text">
-                    <span>Phone Number</span>
-                    <a href="tel:+918488809478">+91 8488809478</a>
-                  </div>
-                </div>
-                <div className="contact-item">
-                  <div className="contact-icon-wrap" style={{ background: '#f1f5f9', color: '#0f172a' }}>💻</div>
-                  <div className="contact-item-text">
-                    <span>GitHub Profile</span>
-                    <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer">github.com/Smart123-12</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <form className="contact-form" onSubmit={e => { e.preventDefault(); alert('Message sent! I will get back to you soon.') }}>
-            <h3 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-dark)', marginBottom: '24px' }}>Send a Message</h3>
-            <div className="form-row">
-              <div className="form-group">
-                <input type="text" placeholder="Your Name" required />
-              </div>
-              <div className="form-group">
-                <input type="email" placeholder="Your Email" required />
-              </div>
-            </div>
-            <div className="form-group">
-              <input type="text" placeholder="Subject" required />
-            </div>
-            <div className="form-group">
-              <textarea placeholder="Your Message" rows={5} required />
-            </div>
-            <button type="submit" className="btn-glow btn-full" style={{ marginTop: '8px' }}>Send Message</button>
-          </form>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Footer() {
-  return (
-    <footer className="footer">
-      <div className="container">
-        <div className="footer-inner">
-          <div>
-            <div className="footer-logo">
-              <span className="logo-icon">SP</span> Smit Parmar
-            </div>
-            <p className="footer-tagline">Non-IT to AI Builder | Full-Stack Developer</p>
-          </div>
-          <div className="footer-links">
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
-            <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer">GitHub</a>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>2025 Smitkumar Parmar. Built with AI tools.</p>
-          <p>tattvayan.ai@gmail.com | +91 8488809478</p>
-        </div>
-      </div>
-    </footer>
-  )
-}
-
-// -- PROJECT DETAIL PAGE --
-
-function getFeatureIcon(text = '') {
-  const t = text.toLowerCase()
-  if (t.includes('agent') || t.includes('bot') || t.includes('coach')) return '🤖'
-  if (t.includes('prd') || t.includes('requirement')) return '📋'
-  if (t.includes('code') || t.includes('lint') || t.includes('architecture') || t.includes('restful') || t.includes('backend') || t.includes('api')) return '💻'
-  if (t.includes('dashboard') || t.includes('chart') || t.includes('analytics') || t.includes('visual')) return '📊'
-  if (t.includes('security') || t.includes('owasp') || t.includes('auth') || t.includes('jwt') || t.includes('private') || t.includes('privacy')) return '🛡️'
-  if (t.includes('gemini') || t.includes('nemotron') || t.includes('brain') || t.includes('intelligence') || t.includes('recommendation')) return '🧠'
-  if (t.includes('report') || t.includes('invoice') || t.includes('pdf') || t.includes('document')) return '🧾'
-  if (t.includes('pipeline') || t.includes('ci/cd') || t.includes('git') || t.includes('automation') || t.includes('workflow')) return '🔄'
-  if (t.includes('tax') || t.includes('w2') || t.includes('finance') || t.includes('money') || t.includes('billing') || t.includes('payment') || t.includes('price')) return '💰'
-  if (t.includes('doctor') || t.includes('dental') || t.includes('patient') || t.includes('medical') || t.includes('clinic') || t.includes('treatment')) return '🏥'
-  if (t.includes('school') || t.includes('teacher') || t.includes('student') || t.includes('homework') || t.includes('notice')) return '🎓'
-  if (t.includes('farmer') || t.includes('crop') || t.includes('agriculture') || t.includes('rural')) return '🌾'
-  if (t.includes('ecommerce') || t.includes('store') || t.includes('product') || t.includes('inventory') || t.includes('order')) return '🛒'
-  if (t.includes('spiritual') || t.includes('meditation') || t.includes('wisdom') || t.includes('traditional')) return '🧘'
-  if (t.includes('design') || t.includes('ui') || t.includes('theme') || t.includes('responsive') || t.includes('mobile') || t.includes('modern') || t.includes('animation') || t.includes('look')) return '✨'
-  if (t.includes('live') || t.includes('deploy') || t.includes('gcp') || t.includes('cloud') || t.includes('pages')) return '🚀'
-  return '⚡'
-}
-
-function ProjectDetailPage({ project, onBack }) {
-  const d = project.details
-  useEffect(() => { window.scrollTo(0, 0) }, [])
-
-  const isGitHub = project.link.includes('github.com')
-  const buttonText = isGitHub ? 'View GitHub Repo' : 'Visit Live Site'
-
-  return (
-    <div className="ai-page">
-      <nav className="ai-page-nav">
-        <div className="container">
-          <button className="ai-back-btn" onClick={onBack}>{'\u2190'} Back to Portfolio</button>
-          <a href={project.link} target="_blank" rel="noopener noreferrer" className="btn-glow" style={{padding:'10px 28px',fontSize:'13px'}}>
-            {buttonText}
-          </a>
-        </div>
-      </nav>
-
-      <section className="ai-hero">
-        <div className="ai-hero-glow" />
-        <div className="container">
-          <div className="ai-hero-badge">{d.tagline}</div>
-          <h1 className="ai-hero-title">
-            {project.emoji} {project.title} <span className="gradient-text">{project.subtitle}</span>
-          </h1>
-          <p className="ai-hero-desc">{d.fullDesc}</p>
-          <div className="ai-hero-stats">
-            {d.stats.map((s, i) => (
-              <div className="ai-stat" key={i}><div className="ai-stat-num">{s.num}</div><div className="ai-stat-label">{s.label}</div></div>
-            ))}
-          </div>
-          <div style={{marginTop:32,display:'flex',gap:8,justifyContent:'center',flexWrap:'wrap'}}>
-            {project.tech.map((t, i) => <span key={i} className="tech-tag" style={{background:'rgba(99,102,241,0.08)',borderColor:'rgba(99,102,241,0.2)',color:'var(--accent-1)',padding:'6px 16px',fontSize:'12px'}}>{t}</span>)}
-          </div>
-        </div>
-      </section>
-
-      <section className="section" style={{background:'var(--bg-white)'}}>
-        <div className="container">
-          <div className="ai-two-col">
-            <div className="ai-problem-card">
-              <div className="section-label" style={{background:'rgba(249, 115, 22, 0.08)',color:'#f97316',borderColor:'rgba(249, 115, 22, 0.25)'}}>The Problem</div>
-              <h3>What Problem Does It Solve?</h3>
-              <ul>{d.problem.map((p, i) => <li key={i}>{p}</li>)}</ul>
-            </div>
-            <div className="ai-solution-card">
-              <div className="section-label" style={{background:'rgba(16, 185, 129, 0.08)',color:'#10b981',borderColor:'rgba(16, 185, 129, 0.25)'}}>The Solution</div>
-              <h3>How {project.title} Solves It</h3>
-              <ul>{d.solution.map((s, i) => <li key={i}>{s}</li>)}</ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section" style={{background:'var(--bg-light)'}}>
-        <div className="container">
-          <div className="section-label center">Key Features</div>
-          <h2 className="section-heading center">
-            Everything Inside <span className="gradient-text">{project.title}</span>
-          </h2>
-          <div className="ai-features-grid">
-            {d.features.map((f, i) => {
-              // Handle title - description splitting dynamically
-              const parts = f.includes(' — ') ? f.split(' — ') : f.split(' - ')
-              const title = parts[0]
-              const desc = parts[1] || ''
-              const icon = getFeatureIcon(f)
-              return (
-                <div className="ai-feature-card" key={i}>
-                  <span className="ai-feature-icon">{icon}</span>
-                  <h4>{title}</h4>
-                  {desc && <p style={{marginTop:8,fontSize:'13px',color:'var(--text-gray)',lineHeight:'1.5'}}>{desc}</p>}
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="ai-cta-section">
-        <div className="container center">
-          <h2 className="section-heading">
-            Check Out <span className="gradient-text">{project.title}</span> Live
-          </h2>
-          <p className="section-sub center" style={{marginBottom:36}}>See it in action - fully deployed and working.</p>
-          <div style={{display:'flex',gap:16,justifyContent:'center',flexWrap:'wrap'}}>
-            <a href={project.link} target="_blank" rel="noopener noreferrer" className="btn-glow">
-              {isGitHub ? 'View on GitHub' : 'Visit Live Project'}
-            </a>
-            <button onClick={onBack} className="btn-glass">Back to Portfolio</button>
-          </div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  )
-}
-
-// -- APP --
 
 export default function App() {
+  const [activeTab, setActiveTab] = useState('ALL')
   const [selectedProject, setSelectedProject] = useState(null)
+  const [scrolled, setScrolled] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [contactSubmitted, setContactSubmitted] = useState(false)
+  const [formState, setFormState] = useState({ name: '', email: '', message: '' })
 
   useEffect(() => {
-    if (selectedProject) {
-      // Push state so back button acts as close details
-      window.history.pushState({ project: selectedProject.title }, '')
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50)
     }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
-    const handlePopState = (e) => {
-      // If back is pressed, close the open project details page
-      setSelectedProject(null)
-    }
+  const handleContactSubmit = (e) => {
+    e.preventDefault()
+    setContactSubmitted(true)
+    setFormState({ name: '', email: '', message: '' })
+    setTimeout(() => setContactSubmitted(false), 5000)
+  }
 
-    window.addEventListener('popstate', handlePopState)
-    return () => {
-      window.removeEventListener('popstate', handlePopState)
-    }
-  }, [selectedProject])
+  // Live CSS Component Mockups to draw in cards instead of static image placeholders
+  const renderProjectVisual = (projectId) => {
+    switch (projectId) {
+      case 'excel-sales':
+        return (
+          <div className="w-full h-44 bg-slate-950/60 rounded-t-xl border-b border-white/5 relative overflow-hidden flex flex-col justify-between p-3 font-mono text-[9px] text-emerald-400">
+            <div className="flex items-center justify-between border-b border-white/10 pb-2">
+              <span className="flex items-center gap-1 font-semibold text-white text-[10px]">
+                <FileSpreadsheet className="w-3 h-3 text-emerald-500" /> SALES_INTELLIGENCE_2026.xlsx
+              </span>
+              <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[8px] animate-pulse">LIVE REFRESH</span>
+            </div>
+            
+            <div className="grid grid-cols-3 gap-2 my-2">
+              <div className="p-1.5 rounded bg-white/5 border border-white/5 text-center">
+                <div className="text-white/40 text-[7px] uppercase">GTV Sales</div>
+                <div className="text-[11px] font-bold text-amber-400">₹8,42,900</div>
+                <div className="text-[7px] text-emerald-500">+14.2% MoM</div>
+              </div>
+              <div className="p-1.5 rounded bg-white/5 border border-white/5 text-center">
+                <div className="text-white/40 text-[7px] uppercase">Active Region</div>
+                <div className="text-[11px] font-bold text-cyan-400">West India</div>
+                <div className="text-[7px] text-emerald-500">GIDC Clusters</div>
+              </div>
+              <div className="p-1.5 rounded bg-white/5 border border-white/5 text-center">
+                <div className="text-white/40 text-[7px] uppercase">Net Margin</div>
+                <div className="text-[11px] font-bold text-emerald-400">22.8%</div>
+                <div className="text-[7px] text-emerald-500">Above Target</div>
+              </div>
+            </div>
 
-  const handleBack = () => {
-    // If user clicked standard back button on UI, pop state if we pushed it
-    if (window.history.state && window.history.state.project) {
-      window.history.back()
-    } else {
-      setSelectedProject(null)
+            <div className="flex items-end justify-between gap-1 h-14 mt-1 border-t border-white/5 pt-2">
+              <span className="text-[7px] text-white/30 self-center">Monthly Slicer:</span>
+              <div className="flex items-end gap-1.5 h-full w-[160px] justify-end">
+                <div className="w-4 bg-emerald-500/30 rounded-t h-[40%] flex items-center justify-center text-[6px] text-white/80">Jan</div>
+                <div className="w-4 bg-emerald-500/50 rounded-t h-[65%] flex items-center justify-center text-[6px] text-white/80">Feb</div>
+                <div className="w-4 bg-emerald-500/80 rounded-t h-[85%] flex items-center justify-center text-[6px] text-white/80 font-bold border-t border-emerald-300">Mar</div>
+                <div className="w-4 bg-emerald-400 rounded-t h-[95%] flex items-center justify-center text-[6px] text-slate-950 font-bold border-t-2 border-white">Apr</div>
+              </div>
+            </div>
+          </div>
+        )
+      case 'inventory-mis':
+        return (
+          <div className="w-full h-44 bg-slate-950/60 rounded-t-xl border-b border-white/5 relative overflow-hidden flex flex-col justify-between p-3 font-mono text-[9px]">
+            <div className="flex items-center justify-between border-b border-white/10 pb-2">
+              <span className="flex items-center gap-1 font-semibold text-white text-[10px]">
+                <BarChart3 className="w-3 h-3 text-amber-500" /> INVENTORY_MIS_RUN.xlsx
+              </span>
+              <div className="flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"></span>
+                <span className="text-red-400 text-[8px] font-bold uppercase">Low Stock Triggered</span>
+              </div>
+            </div>
+
+            <div className="space-y-1.5 my-2.5">
+              <div className="flex justify-between items-center bg-white/5 p-1 rounded border border-white/5">
+                <span className="text-white/60">SKU-4929 polymer_granules</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-14 bg-white/10 rounded-full h-2 overflow-hidden">
+                    <div className="bg-red-500 h-full w-[20%]"></div>
+                  </div>
+                  <span className="text-red-400 font-semibold text-[8px]">20% (REORDER)</span>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center bg-white/5 p-1 rounded border border-white/5">
+                <span className="text-white/60">SKU-8022 chemical_binders</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-14 bg-white/10 rounded-full h-2 overflow-hidden">
+                    <div className="bg-emerald-500 h-full w-[85%]"></div>
+                  </div>
+                  <span className="text-emerald-400 font-semibold text-[8px]">85% (OPTIMAL)</span>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center bg-white/5 p-1 rounded border border-white/5">
+                <span className="text-white/60">SKU-1122 organic_colors</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-14 bg-white/10 rounded-full h-2 overflow-hidden">
+                    <div className="bg-amber-400 h-full w-[45%]"></div>
+                  </div>
+                  <span className="text-amber-400 font-semibold text-[8px]">45% (WARNING)</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between border-t border-white/5 pt-1.5 text-[8px] text-white/40">
+              <span>Safety Stock Factor: <strong className="text-white">1.25x</strong></span>
+              <span>Reorder Automation: <strong className="text-emerald-400">ENABLED</strong></span>
+            </div>
+          </div>
+        )
+      case 'ai-researcher':
+        return (
+          <div className="w-full h-44 bg-slate-950/60 rounded-t-xl border-b border-white/5 relative overflow-hidden flex flex-col justify-between p-3 font-mono text-[9px] text-cyan-400">
+            <div className="flex items-center justify-between border-b border-white/10 pb-2">
+              <span className="flex items-center gap-1 font-semibold text-white text-[10px]">
+                <Cpu className="w-3 h-3 text-cyan-400" /> AI_ANALYST_AGENT
+              </span>
+              <span className="text-cyan-300/60 text-[8px]">SYSTEM READY</span>
+            </div>
+
+            <div className="space-y-2 flex-grow overflow-y-auto mt-2 text-[8.5px]">
+              <div className="flex items-start gap-1.5">
+                <div className="bg-white/10 p-0.5 rounded text-white text-[7px] mt-0.5">USER</div>
+                <div className="bg-white/5 p-1 rounded border border-white/5 text-white/80 max-w-[85%] leading-snug">
+                  Analyze and summarize chemical safety report sheet...
+                </div>
+              </div>
+
+              <div className="flex items-start gap-1.5">
+                <div className="bg-cyan-500/20 p-0.5 rounded text-cyan-400 text-[7px] mt-0.5">AGENT</div>
+                <div className="bg-cyan-500/10 p-1 rounded border border-cyan-500/20 text-cyan-300 max-w-[85%] leading-snug">
+                  <span className="font-bold">Summary:</span> Extracted 4 risks. Outliers detected in GIDC Unit 4 chemical pH index level. <span className="underline">PDF-Report.pdf [L12]</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1 border-t border-white/5 pt-1 text-[7.5px] text-white/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
+              <span>Gemini 1.5 Pro | Prompt Temperature: 0.15</span>
+            </div>
+          </div>
+        )
+      case 'n8n-workflow':
+        return (
+          <div className="w-full h-44 bg-slate-950/60 rounded-t-xl border-b border-white/5 relative overflow-hidden flex flex-col justify-between p-3 font-mono text-[9px]">
+            <div className="flex items-center justify-between border-b border-white/10 pb-2">
+              <span className="flex items-center gap-1 font-semibold text-white text-[10px]">
+                <Zap className="w-3 h-3 text-amber-400" /> n8n WORKFLOW ENGINE
+              </span>
+              <span className="text-emerald-400 text-[8px] font-bold">ACTIVE RUNNING</span>
+            </div>
+
+            <div className="flex items-center justify-center gap-2 h-24 my-1">
+              <div className="flex flex-col items-center p-1 rounded bg-white/5 border border-white/10 text-center w-14">
+                <div className="text-[12px]">🔗</div>
+                <div className="text-[7px] text-white font-semibold">Web Hook</div>
+                <div className="text-[6px] text-emerald-400">Triggered</div>
+              </div>
+
+              <div className="h-0.5 w-4 bg-emerald-500 relative flex items-center">
+                <div className="absolute right-0 w-1 h-1 rounded-full bg-white animate-ping"></div>
+              </div>
+
+              <div className="flex flex-col items-center p-1 rounded bg-white/5 border border-white/10 text-center w-14 border-amber-500/30">
+                <div className="text-[12px]">🤖</div>
+                <div className="text-[7px] text-white font-semibold">AI Parse</div>
+                <div className="text-[6px] text-cyan-400">Complete</div>
+              </div>
+
+              <div className="h-0.5 w-4 bg-emerald-500 relative flex items-center">
+                <div className="absolute right-0 w-1 h-1 rounded-full bg-white animate-ping"></div>
+              </div>
+
+              <div className="flex flex-col items-center p-1 rounded bg-white/5 border border-white/10 text-center w-14">
+                <div className="text-[12px]">💬</div>
+                <div className="text-[7px] text-white font-semibold">Slack Bot</div>
+                <div className="text-[6px] text-emerald-400">Alerted</div>
+              </div>
+            </div>
+
+            <div className="flex justify-between text-[7px] text-white/30 border-t border-white/5 pt-1.5">
+              <span>Next Execute: <strong className="text-white">On Lead Webhook</strong></span>
+              <span>Error Fallback: <strong className="text-amber-400">Active</strong></span>
+            </div>
+          </div>
+        )
+      case 'data-cleaning':
+        return (
+          <div className="w-full h-44 bg-slate-950/60 rounded-t-xl border-b border-white/5 relative overflow-hidden flex flex-col justify-between p-3 font-mono text-[9px]">
+            <div className="flex items-center justify-between border-b border-white/10 pb-2">
+              <span className="flex items-center gap-1 font-semibold text-white text-[10px]">
+                <Database className="w-3 h-3 text-cyan-500" /> POWER_QUERY_CLEANER.pkg
+              </span>
+              <span className="text-emerald-400 text-[8px] font-bold">10k+ ROWS SANITIZED</span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 my-2 text-[7.5px] h-20 items-center">
+              <div className="p-1 rounded bg-red-950/40 border border-red-500/20 text-red-300">
+                <div className="font-bold uppercase text-[6px] text-red-400 pb-0.5 border-b border-red-500/10">Dirty Input Sample</div>
+                <div className="truncate mt-1">"smit. parmar @gmail"</div>
+                <div className="truncate">"phone: +9184888--09"</div>
+                <div className="truncate">"ID: #092 (DUPLICATE)"</div>
+              </div>
+              
+              <div className="p-1 rounded bg-emerald-950/40 border border-emerald-500/20 text-emerald-300">
+                <div className="font-bold uppercase text-[6px] text-emerald-400 pb-0.5 border-b border-emerald-500/10">Cleaned & Formatted</div>
+                <div className="truncate mt-1">"tattvayan.ai@gmail.com"</div>
+                <div className="truncate">"+91 84888 09478"</div>
+                <div className="truncate">"ID: #092 (MERGED)"</div>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center text-[7px] text-white/30 border-t border-white/5 pt-1">
+              <span>Duplication Rate: <strong className="text-red-400">12% Deduplicated</strong></span>
+              <span>Validation Schema: <strong className="text-emerald-400">ISO Standard</strong></span>
+            </div>
+          </div>
+        )
+      default:
+        return null
     }
   }
 
   return (
-    <>
-      {!selectedProject ? (
-        <>
-          <Navbar />
-          <Hero />
-          <About />
-          <Skills />
-          <Services />
-          <Projects onSelectProject={setSelectedProject} />
-          <WhyMe />
-          <Contact />
-          <Footer />
-        </>
-      ) : (
-        <ProjectDetailPage project={selectedProject} onBack={handleBack} />
+    <div className="min-h-screen bg-obsidian-deep text-white selection:bg-gold-accent/25 selection:text-white overflow-x-hidden font-sans relative antialiased">
+      
+      {/* Background Gradient Blurs */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-accent/10 rounded-full blur-[100px] -z-10 animate-pulse-glow" />
+      <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-emerald-accent/5 rounded-full blur-[80px] -z-10 animate-pulse-glow" style={{ animationDelay: '3s' }} />
+      <div className="absolute bottom-1/4 left-1/3 w-[600px] h-[600px] bg-gold-accent/5 rounded-full blur-[120px] -z-10 animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
+
+      {/* HEADER / NAVBAR */}
+      <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? 'glass-nav py-3' : 'bg-transparent py-5'}`}>
+        <div className="max-w-6xl mx-auto px-4 md:px-6 flex items-center justify-between">
+          <a href="#" className="flex items-center gap-2.5 font-bold text-lg md:text-xl tracking-tight text-white hover:opacity-90 group font-outfit">
+            <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-gold-accent to-emerald-accent text-slate-950 flex items-center justify-center font-extrabold text-sm shadow-lg shadow-emerald-500/10 group-hover:scale-105 transition-transform duration-300">
+              SP
+            </span>
+            Smit Parmar
+          </a>
+
+          {/* Desktop Nav Links */}
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+            {['About', 'Skills', 'Projects', 'Experience', 'Contact'].map((sec) => (
+              <a key={sec} href={`#${sec.toLowerCase()}`} className="hover:text-gold-accent transition-colors duration-200 py-1 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-gradient-to-r after:from-gold-accent after:to-emerald-accent after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">
+                {sec}
+              </a>
+            ))}
+          </nav>
+
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center gap-4">
+            <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer" className="p-2 text-slate-300 hover:text-white transition-colors duration-200">
+              <Github className="w-5 h-5" />
+            </a>
+            <a href="#contact" className="px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-full bg-gradient-to-r from-gold-accent to-emerald-accent text-slate-950 shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/20 hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-100 transition-all duration-300">
+              Hire Me
+            </a>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-1.5 rounded-lg text-slate-300 hover:text-white bg-white/5 border border-white/5 active:scale-95 transition-all">
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-full inset-x-0 glass-nav py-6 px-5 border-b border-white/5 shadow-2xl flex flex-col gap-4 animate-fade-in">
+            {['About', 'Skills', 'Projects', 'Experience', 'Contact'].map((sec) => (
+              <a key={sec} href={`#${sec.toLowerCase()}`} onClick={() => setMobileMenuOpen(false)} className="text-slate-200 hover:text-gold-accent font-medium py-2 border-b border-white/5 transition-colors">
+                {sec}
+              </a>
+            ))}
+            <div className="flex items-center justify-between pt-4 mt-2">
+              <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-slate-300 hover:text-white">
+                <Github className="w-5 h-5" /> @Smart123-12
+              </a>
+              <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="px-5 py-2 rounded-full bg-gradient-to-r from-gold-accent to-emerald-accent text-slate-950 text-xs font-bold uppercase">
+                Contact Now
+              </a>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* HERO SECTION */}
+      <section className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden px-4 md:px-6">
+        <div className="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-center">
+          
+          {/* Left Text Column */}
+          <div className="md:col-span-7 flex flex-col items-center md:items-start text-center md:text-left">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-accent/8 border border-emerald-accent/20 text-emerald-accent font-bold text-xs uppercase tracking-wider mb-6 animate-pulse">
+              <Sparkles className="w-3.5 h-3.5" /> Open for Freelance & Recruiter Projects
+            </div>
+
+            <h1 className="font-outfit text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6 leading-[1.1]">
+              Hi, I’m <span className="text-gradient-gold-emerald">Smit Parmar</span> 👋
+            </h1>
+
+            <h2 className="text-lg md:text-2xl font-semibold tracking-wide text-slate-300 mb-5 font-outfit uppercase">
+              AI Builder | MIS Executive & Automation | Freelancer
+            </h2>
+
+            <p className="text-base md:text-lg text-slate-400 mb-8 max-w-xl leading-relaxed">
+              I build AI-powered solutions, dashboards, and workflow automation using AI tools, Excel, and no-code platforms. Specialize in connecting business operations to high-efficiency automated systems.
+            </p>
+
+            <div className="flex flex-wrap justify-center md:justify-start gap-4">
+              <a href="#projects" className="px-8 py-3.5 rounded-full bg-gradient-to-r from-gold-accent to-emerald-accent text-slate-950 font-bold hover:shadow-lg hover:shadow-emerald-500/20 hover:-translate-y-0.5 transition-all duration-300">
+                View Projects
+              </a>
+              <a href="#contact" className="px-8 py-3.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-gold-accent hover:text-gold-accent transition-all duration-300">
+                Contact Me
+              </a>
+              <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer" className="p-3.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 hover:text-white transition-colors duration-300">
+                <Github className="w-5 h-5" />
+              </a>
+            </div>
+
+            {/* Quick Hero Achievements */}
+            <div className="grid grid-cols-3 gap-6 md:gap-10 mt-12 border-t border-white/5 pt-8 w-full max-w-md">
+              <div className="text-center md:text-left">
+                <div className="font-outfit text-2xl md:text-3xl font-extrabold text-white">95%+</div>
+                <div className="text-[10px] text-slate-500 uppercase tracking-widest font-semibold mt-1">Automation Rate</div>
+              </div>
+              <div className="text-center md:text-left">
+                <div className="font-outfit text-2xl md:text-3xl font-extrabold text-white">10k+</div>
+                <div className="text-[10px] text-slate-500 uppercase tracking-widest font-semibold mt-1">Cleaned Rows</div>
+              </div>
+              <div className="text-center md:text-left">
+                <div className="font-outfit text-2xl md:text-3xl font-extrabold text-white">n8n</div>
+                <div className="text-[10px] text-slate-500 uppercase tracking-widest font-semibold mt-1">Flow Orchestrator</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Image/Cyber Deck Column */}
+          <div className="md:col-span-5 flex justify-center relative">
+            <div className="relative w-72 h-96 md:w-80 md:h-[420px] rounded-3xl p-1 bg-gradient-to-br from-gold-accent/40 via-white/5 to-emerald-accent/40 shadow-2xl shadow-emerald-500/5 animate-float">
+              
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-accent/20 to-transparent blur-xl opacity-30 -z-10" />
+
+              <div className="w-full h-full rounded-[20px] overflow-hidden bg-obsidian-medium relative">
+                <img src={smitPhoto} alt="Smit Parmar - AI Builder & MIS Executive" className="w-full h-full object-cover grayscale brightness-90 contrast-105" />
+                
+                {/* Cyberpunk Vignette */}
+                <div className="absolute inset-0 bg-gradient-to-t from-obsidian-deep via-transparent to-white/5" />
+              </div>
+
+              {/* Floating badges */}
+              <div className="absolute -right-6 top-16 px-4 py-2.5 rounded-2xl glass-card border-l-2 border-l-emerald-accent flex items-center gap-3 animate-float-slow shadow-xl">
+                <span className="text-xl">🚀</span>
+                <div>
+                  <div className="text-xs font-bold text-white">MIS Executive</div>
+                  <div className="text-[9px] text-slate-400">Advanced Analytics</div>
+                </div>
+              </div>
+
+              <div className="absolute -left-6 bottom-16 px-4 py-2.5 rounded-2xl glass-card border-l-2 border-l-gold-accent flex items-center gap-3 animate-float-delayed shadow-xl">
+                <span className="text-xl">🤖</span>
+                <div>
+                  <div className="text-xs font-bold text-white">AI Builder</div>
+                  <div className="text-[9px] text-slate-400">Prompt Automator</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ABOUT ME SECTION */}
+      <section id="about" className="py-20 md:py-28 relative px-4 md:px-6 border-t border-white/5 bg-obsidian-medium/40">
+        <div className="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+          
+          {/* Symmetrical Left Column - Profile Portrait */}
+          <div className="md:col-span-5 flex justify-center">
+            <div className="relative w-64 h-80 md:w-72 md:h-96 rounded-2xl p-0.5 bg-gradient-to-tr from-emerald-accent/20 to-gold-accent/20">
+              <div className="w-full h-full rounded-[14px] overflow-hidden bg-obsidian-medium">
+                <img src={photo3} alt="Smit Parmar" className="w-full h-full object-cover brightness-95" />
+              </div>
+              <div className="absolute -bottom-4 right-4 px-4 py-2 bg-emerald-accent text-slate-950 rounded-xl text-xs font-black uppercase shadow-lg shadow-emerald-500/20">
+                100% Practical grit
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Text Details */}
+          <div className="md:col-span-7 flex flex-col">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-emerald-accent mb-3 font-mono">My Narrative</span>
+            <h2 className="font-outfit text-3xl md:text-4xl font-bold text-white mb-6">
+              Empowering Operations With <span className="text-gradient-gold-emerald">AI & Automated Systems</span>
+            </h2>
+
+            <div className="space-y-4 text-slate-300 text-sm md:text-base leading-relaxed">
+              <p>
+                My background is grounded in practical grit, rather than a conventional IT degree. This is a deliberate advantage. Instead of coding simple modules from scratch, I leverage bleeding-edge <strong className="text-white">AI models</strong>, robust <strong className="text-white">n8n workflows</strong>, and optimized <strong className="text-white">Advanced Excel</strong> configurations to build, validate, and deploy solutions in a fraction of the traditional timeframe.
+              </p>
+              <p>
+                As an active <strong className="text-white">MIS Executive and Automation Professional</strong>, I understand that data only delivers value when it is structured, clean, and immediately actionable. I specialize in parsing massive datasets, implementing strict dynamic calculations, and structuring customized intelligence dashboards.
+              </p>
+              <p>
+                My <strong className="text-gradient-gold-emerald">Data Analytics learning journey</strong> is an active, continuous pursuit. Currently, I am deepening my proficiency in <strong className="text-white">Power BI</strong> and relational modeling to further translate raw database clusters into strategic, executive-level business decisions.
+              </p>
+            </div>
+
+            {/* highlights mini grid */}
+            <div className="grid grid-cols-2 gap-4 mt-8">
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 flex gap-3 items-start">
+                <CheckCircle2 className="w-5 h-5 text-emerald-accent flex-shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-1">MIS Excellence</h4>
+                  <p className="text-[11px] text-slate-400">Structured reporting pipelines and auto-refresh schemas.</p>
+                </div>
+              </div>
+              
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 flex gap-3 items-start">
+                <CheckCircle2 className="w-5 h-5 text-gold-accent flex-shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-1">AI Prompt Strategy</h4>
+                  <p className="text-[11px] text-slate-400">Prompt engineering for systemic summarization & auditing.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* SKILLS SECTION */}
+      <section id="skills" className="py-20 md:py-28 relative px-4 md:px-6 border-t border-white/5">
+        <div className="max-w-6xl mx-auto w-full">
+          
+          <div className="text-center max-w-xl mx-auto mb-16">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-emerald-accent mb-3 font-mono">My Toolkit</span>
+            <h2 className="font-outfit text-3xl md:text-4xl font-bold text-white mb-4">
+              Advanced Tools That <span className="text-gradient-gold-emerald">Multiply Efficiency</span>
+            </h2>
+            <p className="text-slate-400 text-sm md:text-base">
+              A carefully structured set of operational, statistical, and automation skills designed to ship results, reduce overhead, and scale outputs.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+            {SKILLS.map((sk, idx) => (
+              <div key={idx} className="p-5 rounded-2xl glass-card relative group overflow-hidden">
+                
+                {/* Micro hovering lighting effect */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-accent/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <h3 className="text-sm md:text-base font-bold text-white leading-tight group-hover:text-gold-accent transition-colors">
+                      {sk.name}
+                    </h3>
+                    <p className="text-[10px] text-slate-500 mt-1">{sk.desc}</p>
+                  </div>
+                  <span className="text-xs font-black font-mono text-emerald-accent">{sk.level}%</span>
+                </div>
+
+                <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden border border-white/5 p-0.5">
+                  <div 
+                    className="bg-gradient-to-r from-gold-accent to-emerald-accent h-full rounded-full transition-all duration-1000 ease-out" 
+                    style={{ width: `${sk.level}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* PROJECTS SECTION */}
+      <section id="projects" className="py-20 md:py-28 relative px-4 md:px-6 border-t border-white/5 bg-obsidian-medium/40">
+        <div className="max-w-6xl mx-auto w-full">
+          
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div>
+              <span className="text-xs font-extrabold uppercase tracking-widest text-emerald-accent mb-3 font-mono">Realized Case Studies</span>
+              <h2 className="font-outfit text-3xl md:text-4xl font-bold text-white">
+                Engineered Solutions, <span className="text-gradient-gold-emerald">Measurable Impact</span>
+              </h2>
+            </div>
+            
+            {/* Filter buttons */}
+            <div className="flex flex-wrap gap-2.5">
+              {['ALL', 'EXCEL', 'AUTOMATION', 'AI'].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 border ${
+                    activeTab === tab
+                      ? 'bg-gradient-to-r from-gold-accent to-emerald-accent text-slate-950 border-transparent shadow-lg shadow-emerald-500/10'
+                      : 'bg-white/5 text-slate-400 border-white/5 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Projects Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {PROJECTS.filter(p => {
+              if (activeTab === 'ALL') return true
+              if (activeTab === 'EXCEL') return p.title.toLowerCase().includes('excel') || p.title.toLowerCase().includes('inventory') || p.title.toLowerCase().includes('cleaning')
+              if (activeTab === 'AUTOMATION') return p.title.toLowerCase().includes('n8n') || p.title.toLowerCase().includes('cleaning')
+              if (activeTab === 'AI') return p.title.toLowerCase().includes('ai')
+              return true
+            }).map((proj) => (
+              <div 
+                key={proj.id}
+                onClick={() => setSelectedProject(proj)}
+                className="group flex flex-col rounded-2xl glass-card overflow-hidden hover:scale-[1.01] cursor-pointer"
+              >
+                {/* Interactive Dynamic Mockup instead of screenshot placeholder */}
+                {renderProjectVisual(proj.id)}
+
+                {/* Card Body */}
+                <div className="p-6 flex flex-col flex-grow justify-between">
+                  <div>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-2xl">{proj.emoji}</span>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 font-mono">Case Study</span>
+                    </div>
+
+                    <h3 className="font-outfit text-base md:text-lg font-bold text-white group-hover:text-gold-accent transition-colors duration-200">
+                      {proj.title}
+                    </h3>
+                    <p className="text-xs text-slate-400 font-semibold mb-4">{proj.subtitle}</p>
+
+                    <p className="text-xs text-slate-400 line-clamp-3 mb-5 leading-relaxed">
+                      {proj.shortDesc}
+                    </p>
+                  </div>
+
+                  <div>
+                    <div className="flex flex-wrap gap-1.5 mb-5">
+                      {proj.tools.slice(0, 3).map((t, i) => (
+                        <span key={i} className="px-2 py-0.5 text-[9px] font-bold text-slate-300 bg-white/5 border border-white/5 rounded-full">
+                          {t}
+                        </span>
+                      ))}
+                      {proj.tools.length > 3 && (
+                        <span className="px-2 py-0.5 text-[9px] font-bold text-emerald-accent bg-emerald-accent/5 border border-emerald-accent/10 rounded-full">
+                          +{proj.tools.length - 3} more
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex items-center text-xs font-bold text-emerald-accent gap-1 group-hover:gap-2 transition-all">
+                      Read Full Deep Dive <ArrowRight className="w-3.5 h-3.5" />
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* EXPERIENCE SECTION */}
+      <section id="experience" className="py-20 md:py-28 relative px-4 md:px-6 border-t border-white/5">
+        <div className="max-w-4xl mx-auto w-full">
+          
+          <div className="text-center mb-16">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-emerald-accent mb-3 font-mono">My Commitment</span>
+            <h2 className="font-outfit text-3xl md:text-4xl font-bold text-white mb-4">
+              Professional Journey
+            </h2>
+          </div>
+
+          <div className="space-y-12">
+            
+            {/* Main Title Block Card */}
+            <div className="p-6 md:p-8 rounded-2xl glass-card border-l-4 border-l-emerald-accent relative">
+              <div className="absolute top-6 right-6 text-2xl animate-pulse">⚡</div>
+              
+              <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-black uppercase font-mono">
+                Active Position
+              </span>
+
+              <h3 className="font-outfit text-xl md:text-2xl font-black text-white mt-4 mb-2">
+                AI Builder | MIS Executive & Automation | Freelancer
+              </h3>
+
+              <div className="flex items-center gap-1.5 text-xs text-slate-400 font-semibold mb-6">
+                <MapPin className="w-3.5 h-3.5 text-gold-accent" /> Gujarat, India (Remote & Hybrid availability)
+              </div>
+
+              <p className="text-sm text-slate-300 leading-relaxed mb-6">
+                Actively managing end-to-end executive reporting frameworks, structuring custom dynamic dashboards, and implementing autonomous AI pipelines to save client work hours. Operating at the intersections of structural operational databases and smart generative model parameters.
+              </p>
+
+              <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-3.5">Primary Directives:</h4>
+              <ul className="space-y-2.5 text-xs text-slate-400">
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-emerald-accent flex-shrink-0 mt-0.5" />
+                  <span>Synthesizing large datasets into visual corporate reports with robust Pivot configurations.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-emerald-accent flex-shrink-0 mt-0.5" />
+                  <span>Writing structured system prompts and analytical triggers using leading Large Language Models.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-emerald-accent flex-shrink-0 mt-0.5" />
+                  <span>Configuring n8n and webhook arrays to eliminate repetitive administrative manual work.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-emerald-accent flex-shrink-0 mt-0.5" />
+                  <span>Deepening skills in <strong className="text-white">Data Analytics</strong> pipelines (Power BI, DAX, relational schema optimization).</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Learning Roadmap Flow */}
+            <div className="relative pl-8 timeline-item">
+              <div className="absolute left-[17px] top-1.5 w-2.5 h-2.5 rounded-full bg-gold-accent shadow-md shadow-amber-500/40" />
+              
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-[10px] font-black uppercase text-gold-accent font-mono">Learning Phase</span>
+                <span className="text-[10px] text-slate-500 font-bold">• Active Journey</span>
+              </div>
+
+              <h4 className="font-outfit text-sm md:text-base font-bold text-white mb-2">
+                Advanced Data Analytics & Power BI Relational Modeling
+              </h4>
+              <p className="text-xs text-slate-400 leading-relaxed max-w-2xl">
+                Deepening knowledge of structured SQL database extraction patterns and visual DAX metrics in Power BI. Transitioning clean spreadsheet datasets into live, cloud-hosted enterprise intelligence models.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* CONTACT SECTION */}
+      <section id="contact" className="py-20 md:py-28 relative px-4 md:px-6 border-t border-white/5 bg-obsidian-medium/40">
+        <div className="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-12">
+          
+          {/* Contact Details Left */}
+          <div className="md:col-span-5 flex flex-col justify-between">
+            <div>
+              <span className="text-xs font-extrabold uppercase tracking-widest text-emerald-accent mb-3 font-mono">Initiate Pipeline</span>
+              <h2 className="font-outfit text-3xl md:text-4xl font-bold text-white mb-6">
+                Let's Build <span className="text-gradient-gold-emerald">Something Incredible</span>
+              </h2>
+              <p className="text-sm text-slate-400 leading-relaxed mb-8 max-w-sm">
+                Have a convoluted business spreadsheet that needs automated parsing, or a manual workspace workflow requiring prompt strategy and n8n? Get in touch and let's optimize your operations together.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="p-4 rounded-2xl bg-white/5 border border-white/5 flex items-center gap-4 hover:border-emerald-accent/20 transition-all duration-300">
+                <div className="w-10 h-10 rounded-xl bg-emerald-accent/10 border border-emerald-accent/20 flex items-center justify-center text-emerald-accent">
+                  <Mail className="w-4.5 h-4.5" />
+                </div>
+                <div>
+                  <div className="text-[9px] font-black uppercase text-slate-500 tracking-wider">Direct Email</div>
+                  <a href="mailto:tattvayan.ai@gmail.com" className="text-sm font-bold text-white hover:text-gold-accent transition-colors">
+                    tattvayan.ai@gmail.com
+                  </a>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-white/5 border border-white/5 flex items-center gap-4 hover:border-emerald-accent/20 transition-all duration-300">
+                <div className="w-10 h-10 rounded-xl bg-gold-accent/10 border border-gold-accent/20 flex items-center justify-center text-gold-accent">
+                  <MapPin className="w-4.5 h-4.5" />
+                </div>
+                <div>
+                  <div className="text-[9px] font-black uppercase text-slate-500 tracking-wider">Location</div>
+                  <span className="text-sm font-bold text-white">Gujarat, India (IST timezone)</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 mt-8 pt-6 border-t border-white/5">
+              <a href="https://github.com/Smart123-12" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-emerald-accent/10 hover:border-emerald-accent/20 text-slate-300 hover:text-emerald-accent transition-all duration-300">
+                <Github className="w-5 h-5" />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-gold-accent/10 hover:border-gold-accent/20 text-slate-300 hover:text-gold-accent transition-all duration-300">
+                <Linkedin className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+
+          {/* Contact Form Card Right */}
+          <div className="md:col-span-7">
+            <div className="p-6 md:p-8 rounded-3xl glass-card relative overflow-hidden">
+              
+              {contactSubmitted && (
+                <div className="absolute inset-0 bg-slate-950/95 backdrop-blur-md z-20 flex flex-col items-center justify-center text-center p-6 animate-fade-in">
+                  <span className="text-5xl mb-4">🎉</span>
+                  <h3 className="font-outfit text-xl font-bold text-white mb-2">Message Sent Successfully!</h3>
+                  <p className="text-xs text-slate-400 max-w-xs leading-relaxed">
+                    Thank you for reaching out, Smit. Your data packet has been logged. I will review and reply within 24 hours.
+                  </p>
+                </div>
+              )}
+
+              <h3 className="font-outfit text-lg md:text-xl font-bold text-white mb-6">Send A Dynamic Packet</h3>
+
+              <form onSubmit={handleContactSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-500 mb-2 font-mono">Full Name</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="E.g., Recruiter / Business Lead"
+                    value={formState.name}
+                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-slate-950/60 border border-white/5 text-white placeholder-slate-600 focus:outline-none focus:border-emerald-accent focus:bg-slate-950/90 text-sm transition-all duration-300"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-500 mb-2 font-mono">Email Address</label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="your.address@company.com"
+                    value={formState.email}
+                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-slate-950/60 border border-white/5 text-white placeholder-slate-600 focus:outline-none focus:border-emerald-accent focus:bg-slate-950/90 text-sm transition-all duration-300"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-500 mb-2 font-mono">Message / Requirement Details</label>
+                  <textarea
+                    required
+                    rows={4}
+                    placeholder="Specify spreadsheet errors, required dashboards, or operational automation tasks..."
+                    value={formState.message}
+                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-slate-950/60 border border-white/5 text-white placeholder-slate-600 focus:outline-none focus:border-emerald-accent focus:bg-slate-950/90 text-sm transition-all duration-300 resize-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3.5 mt-2 rounded-xl bg-gradient-to-r from-gold-accent to-emerald-accent text-slate-950 font-bold text-sm tracking-wide uppercase hover:shadow-lg hover:shadow-emerald-500/10 active:scale-99 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  Transmit Packet <Send className="w-4 h-4" />
+                </button>
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="py-12 px-4 md:px-6 border-t border-white/5 bg-slate-950/80">
+        <div className="max-w-6xl mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+          
+          <div>
+            <div className="flex items-center justify-center md:justify-start gap-2.5 font-bold tracking-tight text-white font-outfit text-base">
+              <span className="w-7 h-7 rounded-lg bg-gradient-to-br from-gold-accent to-emerald-accent text-slate-950 flex items-center justify-center font-extrabold text-xs">
+                SP
+              </span>
+              Smit Parmar
+            </div>
+            <p className="text-[10px] text-slate-500 uppercase tracking-widest mt-2 font-semibold">
+              AI Builder | MIS Executive & Automation | Freelancer
+            </p>
+          </div>
+
+          <p className="text-xs text-slate-600">
+            © {new Date().getFullYear()} Smit Parmar. Engineered with React & Tailwind CSS. All Rights Reserved.
+          </p>
+
+        </div>
+      </footer>
+
+      {/* CASE STUDY IMMERSIVE OVERLAY MODAL */}
+      {selectedProject && (
+        <div className="fixed inset-0 z-50 bg-obsidian-deep/80 backdrop-blur-md flex items-center justify-center p-4 md:p-6 overflow-y-auto animate-fade-in">
+          <div className="relative w-full max-w-3xl glass-card rounded-3xl overflow-hidden my-8 max-h-[90vh] flex flex-col animate-scale-up">
+            
+            {/* Header Area */}
+            <div className="p-6 md:p-8 bg-gradient-to-r from-indigo-accent/15 via-emerald-accent/5 to-transparent border-b border-white/5 flex justify-between items-start">
+              <div>
+                <div className="flex items-center gap-2 text-xs font-black uppercase text-gold-accent tracking-wider font-mono mb-2">
+                  <span className="text-xl">{selectedProject.emoji}</span> IMMERSIVE CASE STUDY DEEP DIVE
+                </div>
+                <h3 className="font-outfit text-2xl md:text-3xl font-black text-white leading-tight">
+                  {selectedProject.title}
+                </h3>
+                <p className="text-xs text-slate-400 font-semibold mt-1">{selectedProject.subtitle}</p>
+              </div>
+
+              <button 
+                onClick={() => setSelectedProject(null)}
+                className="p-2 rounded-full bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 active:scale-90 transition-all border border-white/5"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Scrollable Content Body */}
+            <div className="p-6 md:p-8 overflow-y-auto flex-grow space-y-8 text-sm md:text-base leading-relaxed text-slate-300">
+              
+              {/* Challenge vs Resolution columns */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="p-5 rounded-2xl bg-red-500/5 border border-red-500/15">
+                  <div className="flex items-center gap-2 mb-3 text-red-400 font-bold text-xs uppercase tracking-wider font-mono">
+                    <AlertTriangle className="w-4.5 h-4.5" /> Operational Obstacle
+                  </div>
+                  <p className="text-xs md:text-sm text-slate-300 leading-relaxed">
+                    {selectedProject.caseStudy.problem}
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-emerald-500/5 border border-emerald-500/15">
+                  <div className="flex items-center gap-2 mb-3 text-emerald-400 font-bold text-xs uppercase tracking-wider font-mono">
+                    <CheckCircle2 className="w-4.5 h-4.5" /> Programmatic Resolution
+                  </div>
+                  <p className="text-xs md:text-sm text-slate-300 leading-relaxed">
+                    {selectedProject.caseStudy.solution}
+                  </p>
+                </div>
+              </div>
+
+              {/* Core Features list */}
+              <div>
+                <h4 className="text-xs font-black uppercase text-white tracking-widest font-mono mb-4 border-b border-white/5 pb-2">
+                  Key Technical Features
+                </h4>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                  {selectedProject.caseStudy.features.map((feat, i) => (
+                    <li key={i} className="flex gap-2.5 items-start text-xs md:text-sm text-slate-400">
+                      <Check className="w-4 h-4 text-emerald-accent flex-shrink-0 mt-0.5" />
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Dynamic Stats Grid */}
+              <div>
+                <h4 className="text-xs font-black uppercase text-white tracking-widest font-mono mb-4 border-b border-white/5 pb-2">
+                  Efficiency & Performance Metrics
+                </h4>
+                <div className="grid grid-cols-3 gap-4">
+                  {selectedProject.caseStudy.stats.map((stat, i) => (
+                    <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/5 text-center">
+                      <div className="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-1">{stat.label}</div>
+                      <div className="font-outfit text-xl md:text-2xl font-black text-white tracking-tight">{stat.val}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Technologies summary */}
+              <div className="flex flex-wrap items-center gap-2 border-t border-white/5 pt-6">
+                <span className="text-[10px] font-black uppercase text-slate-500 font-mono tracking-widest mr-2">Orchestration Tools:</span>
+                {selectedProject.tools.map((t, i) => (
+                  <span key={i} className="px-3 py-1 text-xs font-bold text-emerald-accent bg-emerald-accent/5 border border-emerald-accent/15 rounded-full">
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+            </div>
+
+            {/* Footer Buttons Area */}
+            <div className="p-6 md:p-8 border-t border-white/5 bg-slate-950/60 flex flex-wrap gap-4 items-center justify-between">
+              <a 
+                href={selectedProject.githubUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-gold-accent hover:text-gold-accent transition-all text-xs font-bold uppercase tracking-wider flex items-center gap-2"
+              >
+                <Github className="w-4 h-4" /> View Git Code Repository
+              </a>
+
+              <div className="flex items-center gap-3">
+                <button 
+                  onClick={() => setSelectedProject(null)}
+                  className="px-6 py-3 text-xs font-bold text-slate-400 hover:text-white transition-colors"
+                >
+                  Close Case Study
+                </button>
+                <a 
+                  href="#contact" 
+                  onClick={() => setSelectedProject(null)}
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-gold-accent to-emerald-accent text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20"
+                >
+                  Ask About This Project
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
       )}
-    </>
+
+    </div>
   )
 }
