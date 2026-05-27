@@ -714,7 +714,7 @@ export default function App() {
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-accent/5 to-transparent blur-xl opacity-30 -z-10" />
 
               <div className="w-full h-full rounded-[20px] overflow-hidden bg-white relative">
-                <img src={smitPhoto} alt="Smit Parmar - AI Builder & Data Analytics" className="w-full h-full object-cover grayscale brightness-95 contrast-[1.02]" />
+                <img src={smitPhoto} alt="Smit Parmar - AI Builder & Data Analytics" className="w-full h-full object-cover brightness-95 contrast-[1.02]" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-100/50 via-transparent to-white/5" />
               </div>
 
@@ -899,7 +899,7 @@ export default function App() {
             <div>
               <span className="text-xs font-extrabold uppercase tracking-widest text-emerald-accent mb-3 font-mono">15 Live Deployments</span>
               <h2 className="font-outfit text-3xl md:text-4xl font-bold text-slate-900">
-                Engineered Solutions, <span className="text-gradient-gold-emerald">Real Demo Links</span>
+                AI-First Applications, <span className="text-gradient-gold-emerald">Live Working Demos</span>
               </h2>
             </div>
             
@@ -1213,121 +1213,176 @@ export default function App() {
         </div>
       </footer>
 
-      {/* 15 PROJECTS DYNAMIC IMMERSIVE MODAL VIEW */}
+      {/* 15 PROJECTS DYNAMIC IMMERSIVE FULL-PAGE CASE STUDY */}
       {selectedProject && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 md:p-6 overflow-y-auto animate-fade-in">
-          <div className="relative w-full max-w-3xl glass-card rounded-3xl overflow-hidden my-8 max-h-[90vh] flex flex-col animate-scale-up bg-white">
-            
-            {/* Header Area */}
-            <div className="p-6 md:p-8 bg-gradient-to-r from-gold-accent/10 via-emerald-accent/5 to-transparent border-b border-slate-100 flex justify-between items-start">
+        <div className="fixed inset-0 z-50 bg-[#f0f9ff] overflow-y-auto animate-fade-in flex flex-col min-h-screen">
+          {/* Header Bar */}
+          <div className="bg-white border-b border-slate-200/60 py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 z-10 shadow-sm">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">{selectedProject.emoji}</span>
               <div>
-                <div className="flex items-center gap-2 text-xs font-black uppercase text-gold-accent tracking-wider font-mono mb-2">
-                  <span className="text-xl">{selectedProject.emoji}</span> IMMERSIVE CASE STUDY DEEP DIVE
-                </div>
-                <h3 className="font-outfit text-2xl md:text-3xl font-black text-slate-900 leading-tight">
+                <span className="text-[9px] font-black uppercase text-gold-accent tracking-wider font-mono">DEDICATED CASE STUDY</span>
+                <h3 className="font-outfit text-base md:text-lg font-black text-slate-900 leading-tight">
                   {selectedProject.title}
                 </h3>
-                <p className="text-xs text-slate-500 font-semibold mt-1">{selectedProject.details.tagline}</p>
               </div>
-
-              <button 
-                onClick={() => setSelectedProject(null)}
-                className="p-2 rounded-full bg-slate-100 text-slate-500 hover:text-slate-800 hover:bg-slate-200 active:scale-90 transition-all border border-slate-200"
-              >
-                <X className="w-5 h-5" />
-              </button>
             </div>
-
-            {/* Scrollable Content Body */}
-            <div className="p-6 md:p-8 overflow-y-auto flex-grow space-y-6 text-sm md:text-base leading-relaxed text-slate-700 font-medium">
-              
-              {/* Challenge vs Resolution columns */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-5 rounded-2xl bg-red-500/5 border border-red-200">
-                  <div className="flex items-center gap-2 mb-3 text-red-600 font-black text-xs uppercase tracking-wider font-mono">
-                    <AlertTriangle className="w-4.5 h-4.5" /> Operational Obstacle
-                  </div>
-                  <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
-                    {selectedProject.details.problem}
-                  </p>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-emerald-500/5 border border-emerald-200">
-                  <div className="flex items-center gap-2 mb-3 text-emerald-600 font-black text-xs uppercase tracking-wider font-mono">
-                    <CheckCircle2 className="w-4.5 h-4.5" /> Programmatic Resolution
-                  </div>
-                  <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
-                    {selectedProject.details.solution}
-                  </p>
-                </div>
-              </div>
-
-              {/* Core Features list */}
-              <div>
-                <h4 className="text-xs font-black uppercase text-slate-800 tracking-widest font-mono mb-4 border-b border-slate-100 pb-2">
-                  Key Technical Features
-                </h4>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-                  {selectedProject.details.features.map((feat, i) => (
-                    <li key={i} className="flex gap-2.5 items-start text-xs md:text-sm text-slate-600">
-                      <Check className="w-4 h-4 text-emerald-accent flex-shrink-0 mt-0.5" />
-                      <span>{feat}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Dynamic Stats Grid */}
-              <div>
-                <h4 className="text-xs font-black uppercase text-slate-800 tracking-widest font-mono mb-4 border-b border-slate-100 pb-2">
-                  Efficiency & Performance Metrics
-                </h4>
-                <div className="grid grid-cols-3 gap-4">
-                  {selectedProject.details.stats.map((stat, i) => (
-                    <div key={i} className="p-4 rounded-xl bg-slate-50 border border-slate-100 text-center">
-                      <div className="text-[9px] text-slate-400 uppercase tracking-widest font-bold mb-1">{stat.label}</div>
-                      <div className="font-outfit text-xl md:text-2xl font-black text-slate-900 tracking-tight">{stat.val}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Technologies summary */}
-              <div className="flex flex-wrap items-center gap-2 border-t border-slate-100 pt-6">
-                <span className="text-[9px] font-black uppercase text-slate-400 font-mono tracking-widest mr-2">Orchestration Tools:</span>
-                {selectedProject.tech.map((t, i) => (
-                  <span key={i} className="px-3 py-1 text-xs font-bold text-emerald-accent bg-emerald-accent/5 border border-emerald-accent/15 rounded-full">
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-            </div>
-
-            {/* Footer Buttons Area */}
-            <div className="p-6 md:p-8 border-t border-slate-100 bg-slate-50 flex flex-wrap gap-4 items-center justify-between">
-              
-              {/* Actual live demo links */}
+            
+            <div className="flex items-center gap-3">
               <a 
                 href={selectedProject.link} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-gold-accent to-emerald-accent text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
+                className="px-5 py-2 rounded-full bg-gradient-to-r from-gold-accent to-emerald-accent text-white font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
               >
-                <Globe className="w-4 h-4" /> Visit Live Demo Link
+                <Globe className="w-3.5 h-3.5" /> Live Demo
               </a>
+              <button 
+                onClick={() => setSelectedProject(null)}
+                className="p-2.5 rounded-full bg-slate-100 text-slate-500 hover:text-slate-800 hover:bg-slate-200 transition-all border border-slate-200 cursor-pointer flex items-center justify-center"
+                title="Go Back"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
 
-              <div className="flex items-center gap-3">
-                <button 
-                  onClick={() => setSelectedProject(null)}
-                  className="px-5 py-2.5 text-xs font-bold text-slate-500 hover:text-slate-800 transition-colors"
-                >
-                  Close
-                </button>
+          {/* Immersive Case Study Container */}
+          <div className="flex-grow max-w-5xl mx-auto w-full px-6 py-12 md:py-16">
+            
+            {/* Title Hero Area */}
+            <div className="text-center mb-12 border-b border-slate-200/50 pb-8">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 text-[10px] font-black tracking-widest uppercase mb-4 font-mono">
+                {selectedProject.emoji} {selectedProject.label} PROJECT
+              </span>
+              <h1 className="font-outfit text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">
+                {selectedProject.title}
+              </h1>
+              <p className="text-sm md:text-base text-slate-500 max-w-2xl mx-auto font-semibold">
+                {selectedProject.details.tagline}
+              </p>
+            </div>
+
+            {/* Main Content Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+              
+              {/* Left Panel: Overview & Tech Specs */}
+              <div className="space-y-6 lg:col-span-1">
+                
+                {/* Tech Stack Drawer */}
+                <div className="p-6 rounded-2xl bg-white border border-slate-200/60 shadow-sm">
+                  <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-wider font-mono mb-4 border-b border-slate-100 pb-2">
+                    🛠️ Tech Stack & Integrations
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedProject.tech.map((t, i) => (
+                      <span key={i} className="px-3 py-1.5 text-xs font-bold text-emerald-accent bg-emerald-accent/5 border border-emerald-accent/15 rounded-full">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Automation & Strategy Badge */}
+                <div className="p-6 rounded-2xl bg-gradient-to-br from-gold-accent/5 to-emerald-accent/5 border border-gold-accent/15 shadow-sm">
+                  <div className="flex items-center gap-2 mb-3 text-gold-accent">
+                    <span className="text-xl">⚡</span>
+                    <h4 className="text-xs font-black uppercase tracking-wider font-mono">
+                      Development Method
+                    </h4>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed font-semibold">
+                    This full-stack system was engineered and deployed completely without manual coding. Powered entirely by AI generation tools and systemic prompt orchestrations.
+                  </p>
+                </div>
+
+                {/* Direct Link Panel */}
+                <div className="p-6 rounded-2xl bg-white border border-slate-200/60 shadow-sm text-center">
+                  <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-wider font-mono mb-3">
+                    Experience It Live
+                  </h4>
+                  <a 
+                    href={selectedProject.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-full inline-flex justify-center items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-gold-accent to-emerald-accent text-white font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+                  >
+                    <Globe className="w-4 h-4" /> Open Working Application
+                  </a>
+                </div>
+
               </div>
+
+              {/* Right Panel: Challenge, Solution, Features, Stats */}
+              <div className="lg:col-span-2 space-y-8">
+                
+                {/* Problem vs Solution Split */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="p-6 rounded-2xl bg-red-500/5 border border-red-200">
+                    <div className="flex items-center gap-2 mb-3.5 text-red-600 font-black text-xs uppercase tracking-wider font-mono">
+                      <AlertTriangle className="w-4.5 h-4.5" /> Operational Obstacle
+                    </div>
+                    <p className="text-xs md:text-sm text-slate-600 leading-relaxed font-medium">
+                      {selectedProject.details.problem}
+                    </p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-200">
+                    <div className="flex items-center gap-2 mb-3.5 text-emerald-600 font-black text-xs uppercase tracking-wider font-mono">
+                      <CheckCircle2 className="w-4.5 h-4.5" /> Programmatic Resolution
+                    </div>
+                    <p className="text-xs md:text-sm text-slate-600 leading-relaxed font-medium">
+                      {selectedProject.details.solution}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Features Showcase */}
+                <div className="p-6 rounded-2xl bg-white border border-slate-200/60 shadow-sm">
+                  <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-wider font-mono mb-4 border-b border-slate-100 pb-2">
+                    🚀 Key Technical & Functional Features
+                  </h4>
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {selectedProject.details.features.map((feat, i) => (
+                      <li key={i} className="flex gap-2.5 items-start text-xs md:text-sm text-slate-600 font-medium">
+                        <Check className="w-4 h-4 text-emerald-accent flex-shrink-0 mt-0.5" />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Performance Metrics */}
+                <div className="p-6 rounded-2xl bg-white border border-slate-200/60 shadow-sm">
+                  <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-wider font-mono mb-4 border-b border-slate-100 pb-2 font-mono">
+                    📈 Business & Efficiency Metrics
+                  </h4>
+                  <div className="grid grid-cols-3 gap-4">
+                    {selectedProject.details.stats.map((stat, i) => (
+                      <div key={i} className="p-4 rounded-xl bg-slate-50 border border-slate-200/50 text-center">
+                        <div className="text-[9px] text-slate-400 uppercase tracking-widest font-bold mb-1 font-mono">{stat.label}</div>
+                        <div className="font-outfit text-xl md:text-2xl font-black text-slate-900 tracking-tight">{stat.val}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* Back Button Footer */}
+            <div className="mt-12 text-center">
+              <button 
+                onClick={() => setSelectedProject(null)}
+                className="px-8 py-3 rounded-full bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 hover:text-slate-900 text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-sm cursor-pointer"
+              >
+                Back To All Projects
+              </button>
             </div>
 
           </div>
+
         </div>
       )}
 
