@@ -25,6 +25,12 @@ import {
   Briefcase
 } from 'lucide-react'
 
+// Import assets
+import photo2 from './assets/photo2.jpg'
+import photo3 from './assets/photo3.jpg'
+import smitPhoto from './assets/smit.jpg'
+import smitAboutPhoto from './assets/smit_about.jpg'
+
 // Custom robust SVGs to replace Github and Linkedin
 const Github = ({ className }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -41,11 +47,19 @@ const Linkedin = ({ className }) => (
   </svg>
 )
 
-// Import assets
-import photo2 from './assets/photo2.jpg'
-import photo3 from './assets/photo3.jpg'
-import smitPhoto from './assets/smit.jpg'
-import smitAboutPhoto from './assets/smit_about.jpg'
+// SKILLS DATA
+const SKILLS = [
+  { name: 'Advanced Excel', level: 95, desc: 'Nested formulas, dynamic arrays, solver & data modeling' },
+  { name: 'Dashboard Creation', level: 92, desc: 'Interactive KPI dashboards, dynamic slicers & advanced charting' },
+  { name: 'MIS Reporting', level: 90, desc: 'Structured corporate reporting, periodic summaries & auditing' },
+  { name: 'Pivot Tables & Charting', level: 95, desc: 'Consolidated source modeling, group trends & filters' },
+  { name: 'VLOOKUP / XLOOKUP', level: 98, desc: 'Complex relational lookups, error-handling & matrix indexing' },
+  { name: 'AI Tools Integration', level: 88, desc: 'Leveraging Claude, Gemini, ChatGPT for daily coding & writing' },
+  { name: 'Prompt Engineering', level: 90, desc: 'Structured prompts, systemic instructions & custom models' },
+  { name: 'Basic n8n Automation', level: 82, desc: 'Webhook triggers, API nodes, sheets sync & slack alerts' },
+  { name: 'Power BI', level: 75, desc: 'Data modeling, DAX fundamentals & custom reports (Active Learning)' },
+  { name: 'GitHub & Versioning', level: 80, desc: 'Repo management, branch pipelines & deployment hooks' }
+]
 
 // 15 ORIGINAL PROJECTS DATA WITH COMPLETE DETAILS
 const PROJECTS = [
